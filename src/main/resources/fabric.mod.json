@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "andromeda_status",
+  "version": "${version}",
+  "name": "Andromeda Status",
+  "description": "RP-focused status options for Andromeda MC, built as an addon for Max Henkel's Status mod.",
+  "authors": [
+    "pokesmells",
+    "Bare Minimum Studios"
+  ],
+  "license": "BML-1.0",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.andromedamc.status.AndromedaStatus"
+    ],
+    "client": [
+      "com.andromedamc.status.client.AndromedaStatusClient"
+    ]
+  },
+  "mixins": [
+    "andromeda_status.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.11",
+    "minecraft": "1.21.1",
+    "fabric-api": "*",
+    "status": ">=1.21.1-1.0.8"
+  },
+  "icon": "icon.png"
+}

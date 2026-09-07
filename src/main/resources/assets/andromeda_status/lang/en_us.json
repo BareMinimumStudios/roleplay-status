@@ -1,0 +1,13 @@
+{
+  "gui.andromeda_status.title": "Set Your Status",
+  "gui.andromeda_status.no_sleep": "No Sleep",
+  "gui.andromeda_status.help": "Status colors and labels are controlled by the server.",
+  "status.andromeda_status.ic": "In Character",
+  "status.andromeda_status.ooc": "Out of Character",
+  "status.andromeda_status.open_rp": "Open to RP",
+  "status.andromeda_status.busy_afk": "Busy / AFK",
+  "status.andromeda_status.event": "Event",
+  "status.andromeda_status.new": "New",
+  "status.andromeda_status.recording": "Recording",
+  "status.andromeda_status.streaming": "Streaming"
+}
