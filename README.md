@@ -122,7 +122,7 @@ The built addon jar will be under `build/libs/`. The Status jar is a dependency 
 - Login initialization now preserves an already-present state instead of blindly overwriting it with the default.
 
 
-## 1.0.4
+## 1.0.5
 
 - Renamed the project from Andromeda Status Addon to Andromeda Status.
 - Updated the mod ID, package namespace, config folder, translation namespace, mixin config, and archive name to match.

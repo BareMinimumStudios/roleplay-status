@@ -1,9 +1,9 @@
 package com.andromedamc.status.client;
 
 import com.andromedamc.status.StatusCatalog;
+import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
-import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.LinkedHashMap;
@@ -38,6 +38,7 @@ public final class ClientStatusRuntime {
     }
 
     public static void resetToDefaults() {
+        releaseIcons();
         applyDefinitions(StatusCatalog.defaults());
     }
 
@@ -53,12 +54,6 @@ public final class ClientStatusRuntime {
         return ICONS.get(id);
     }
 
-    /**
-     * Rebuilds dynamic status textures only from the normal client tick loop.
-     * ClientModInitializer runs while Minecraft is still being constructed, before
-     * LWJGL/OpenGL is guaranteed to have a usable context. Creating DynamicTexture
-     * instances there can native-crash in glGenTextures.
-     */
     public static void rebuildIconsIfNeeded() {
         if (!iconsDirty) {
             return;
@@ -73,14 +68,11 @@ public final class ClientStatusRuntime {
 
     private static void rebuildIcons() {
         Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft == null) {
+        if (minecraft == null || minecraft.getTextureManager() == null) {
             return;
         }
 
-        for (ResourceLocation location : ICONS.values()) {
-            minecraft.getTextureManager().release(location);
-        }
-        ICONS.clear();
+        releaseIcons();
 
         int index = 0;
         for (StatusCatalog.Definition definition : DEFINITIONS.values()) {
@@ -90,6 +82,18 @@ public final class ClientStatusRuntime {
             ResourceLocation location = minecraft.getTextureManager().register("andromeda_status_" + path, texture);
             ICONS.put(definition.id(), location);
         }
+    }
+
+    private static void releaseIcons() {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft == null || minecraft.getTextureManager() == null) {
+            ICONS.clear();
+            return;
+        }
+        for (ResourceLocation location : ICONS.values()) {
+            minecraft.getTextureManager().release(location);
+        }
+        ICONS.clear();
     }
 
     private static NativeImage makeIcon(StatusCatalog.Definition definition) {

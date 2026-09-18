@@ -9,6 +9,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
 import java.util.List;
+import java.util.Objects;
 
 public class AndromedaStatusScreen extends Screen {
 
@@ -31,9 +32,18 @@ public class AndromedaStatusScreen extends Screen {
         left = (width - PANEL_WIDTH) / 2;
         top = (height - PANEL_HEIGHT) / 2;
 
+        if (StatusClient.STATE_MANAGER == null) {
+            return;
+        }
+
         // The addon replaces Status' availability system entirely.
         if (StatusClient.STATE_MANAGER.getAvailabilityIcon() != Availability.NONE) {
             StatusClient.STATE_MANAGER.setAvailability(Availability.NONE);
+        }
+
+        String currentState = StatusCatalog.sanitize(StatusClient.STATE_MANAGER.getState());
+        if (!Objects.equals(currentState, StatusClient.STATE_MANAGER.getState())) {
+            StatusClient.STATE_MANAGER.setState(currentState);
         }
 
         List<StatusCatalog.Definition> definitions = ClientStatusRuntime.definitions();
@@ -50,7 +60,7 @@ public class AndromedaStatusScreen extends Screen {
                     })
                     .bounds(x, y, BUTTON_WIDTH, BUTTON_HEIGHT)
                     .build();
-            button.active = !StatusClient.STATE_MANAGER.getState().equals(definition.id());
+            button.active = !Objects.equals(currentState, definition.id());
             addRenderableWidget(button);
         }
 
@@ -64,14 +74,12 @@ public class AndromedaStatusScreen extends Screen {
     }
 
     private Component noSleepText() {
-        return Component.literal("No Sleep: " + (StatusClient.STATE_MANAGER.getNoSleep() ? "ON" : "OFF"));
+        String state = StatusClient.STATE_MANAGER != null && StatusClient.STATE_MANAGER.getNoSleep() ? "ON" : "OFF";
+        return Component.literal(Component.translatable("gui.andromeda_status.no_sleep").getString() + ": " + state);
     }
 
     @Override
     public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        // Screen#render already invokes the background pass on 1.21.1. Keep all
-        // background/panel drawing here so the blur is completed before widgets,
-        // status swatches, and text are rendered.
         super.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
         guiGraphics.fill(left, top, left + PANEL_WIDTH, top + PANEL_HEIGHT, 0xD9101010);
         guiGraphics.fill(left + 1, top + 1, left + PANEL_WIDTH - 1, top + 2, 0xFF6B6B6B);
@@ -79,8 +87,6 @@ public class AndromedaStatusScreen extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        // Let vanilla render the background and widgets first. Custom foreground
-        // elements are intentionally last so they cannot be caught by the blur pass.
         super.render(guiGraphics, mouseX, mouseY, partialTick);
 
         List<StatusCatalog.Definition> definitions = ClientStatusRuntime.definitions();
