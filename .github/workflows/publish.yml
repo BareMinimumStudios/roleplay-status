@@ -1,0 +1,63 @@
+name: Publish
+on:
+  workflow_dispatch:
+concurrency:
+  group: roleplay-status-modrinth-publish
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Read release version
+        id: meta
+        shell: bash
+        run: |
+          version=$(sed -n 's/^mod_version=//p' gradle.properties | tr -d '\r')
+          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+([.-][A-Za-z0-9.-]+)?$ ]]; then
+            echo "Invalid or missing mod_version" >&2
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "file=build/libs/roleplay-status-$version.jar" >> "$GITHUB_OUTPUT"
+      - name: Build and test release
+        run: |
+          chmod +x ./gradlew
+          ./gradlew clean build --warning-mode all
+      - name: Verify release artifact
+        env:
+          RELEASE_FILE: ${{ steps.meta.outputs.file }}
+          RELEASE_VERSION: ${{ steps.meta.outputs.version }}
+        run: python3 scripts/verify_release.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: roleplay-status-release
+          path: |
+            ${{ steps.meta.outputs.file }}
+            CHANGELOG.md
+          if-no-files-found: error
+      - name: Publish to Modrinth
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: v5aMEMjW
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          files: ${{ steps.meta.outputs.file }}
+          name: Roleplay Status ${{ steps.meta.outputs.version }} — Minecraft 1.21.1
+          version: ${{ steps.meta.outputs.version }}+1.21.1-fabric
+          version-type: release
+          changelog-file: CHANGELOG.md
+          game-versions: 1.21.1
+          loaders: fabric
+          java: 21
+          dependencies: |
+            fabric-api(required){modrinth:P7dR8mSH}
+            status(required){modrinth:b93awgkg}
+            fzzy_config(required){modrinth:fzzy-config}
+            fabric-language-kotlin(required){modrinth:fabric-language-kotlin}

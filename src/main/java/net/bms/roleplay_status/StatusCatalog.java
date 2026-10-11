@@ -1,4 +1,4 @@
-package com.andromedamc.status;
+package net.bms.roleplay_status;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -7,12 +7,12 @@ import java.util.Map;
 
 public final class StatusCatalog {
 
-    public static final String IC = "andromeda:ic";
-    public static final String OOC = "andromeda:ooc";
-    public static final String OPEN_RP = "andromeda:open_rp";
-    public static final String BUSY_AFK = "andromeda:busy_afk";
-    public static final String EVENT = "andromeda:event";
-    public static final String NEW = "andromeda:new";
+    public static final String IC = "roleplay_status:ic";
+    public static final String OOC = "roleplay_status:ooc";
+    public static final String OPEN_RP = "roleplay_status:open_rp";
+    public static final String BUSY_AFK = "roleplay_status:busy_afk";
+    public static final String EVENT = "roleplay_status:event";
+    public static final String NEW = "roleplay_status:new";
     public static final String RECORDING = "recording";
     public static final String STREAMING = "streaming";
 
@@ -46,11 +46,29 @@ public final class StatusCatalog {
     }
 
     public static String sanitize(String state) {
+        if (state != null && state.startsWith("andromeda:")) {
+            state = "roleplay_status:" + state.substring("andromeda:".length());
+        }
         return isAllowed(state) ? state : OOC;
+    }
+
+    public static String sanitizeLabel(String label, String fallback) {
+        if (label == null) return fallback;
+        StringBuilder clean = new StringBuilder();
+        label.codePoints().filter(c -> !Character.isISOControl(c) && Character.getType(c) != Character.FORMAT && c != 0x00A7)
+                .forEach(clean::appendCodePoint);
+        String value = clean.toString().strip();
+        if (value.isEmpty()) return fallback;
+        if (value.length() > 64) {
+            int end = Character.isHighSurrogate(value.charAt(63)) ? 63 : 64;
+            value = value.substring(0, end);
+        }
+        return value;
     }
 
     public record Definition(String id, String label, int rgb) {
         public Definition {
+            label = sanitizeLabel(label, DEFAULTS.containsKey(id) ? DEFAULTS.get(id).label() : id);
             rgb &= 0xFFFFFF;
         }
     }

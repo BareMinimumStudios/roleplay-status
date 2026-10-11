@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "andromeda_status",
+  "id": "roleplay_status",
   "version": "${version}",
-  "name": "Andromeda Status",
-  "description": "RP-focused status options for Andromeda MC, built as an addon for Max Henkel's Status mod.",
+  "name": "Roleplay Status",
+  "description": "Roleplay status choices, a clean status screen, and server-owned labels and colors. An addon for Status by Max Henkel.",
   "authors": [
     "pokesmells",
     "Bare Minimum Studios"
@@ -12,20 +12,26 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.andromedamc.status.AndromedaStatus"
+      "net.bms.roleplay_status.RoleplayStatus"
     ],
     "client": [
-      "com.andromedamc.status.client.AndromedaStatusClient"
+      "net.bms.roleplay_status.client.RoleplayStatusClient"
     ]
   },
   "mixins": [
-    "andromeda_status.mixins.json"
+    "roleplay_status.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.15.11",
+    "fabricloader": ">=0.19.5",
     "minecraft": "1.21.1",
     "fabric-api": "*",
-    "status": ">=1.21.1-1.0.8"
+    "status": "1.21.1-1.0.8",
+    "fzzy_config": ">=0.7.7+1.21"
   },
-  "icon": "icon.png"
+  "icon": "assets/roleplay_status/icon.png",
+  "contact": {
+    "homepage": "https://modrinth.com/mod/v5aMEMjW",
+    "sources": "https://github.com/BareMinimumStudios/roleplay-status",
+    "issues": "https://github.com/BareMinimumStudios/roleplay-status/issues"
+  }
 }

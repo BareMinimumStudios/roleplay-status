@@ -1,40 +1,30 @@
-# Andromeda Status
+# Roleplay Status
 
-A small Fabric 1.21.1 addon for [Status](https://modrinth.com/mod/status), made for Andromeda MC.
+**Roleplay choices. Clear indicators. Server-owned labels and colors.**
 
-It replaces the normal status choices with RP-focused options:
+Roleplay Status is an addon for **Status by Max Henkel**, made by **pokesmells / Bare Minimum Studios** for Minecraft 1.21.1 on Fabric.
 
-- In Character
-- Out of Character
-- Open to RP
-- Busy / AFK
-- Event
-- New
-- Recording
-- Streaming
+Press **U** to choose **In Character**, **Out of Character**, **Open to RP**, **Busy / AFK**, **Event**, **New**, **Recording**, or **Streaming**. Keep Status's original **No Sleep** toggle nearby.
 
-**Out of Character** is the default. The original availability and neutral options are removed from the menu. No Sleep is still available.
+The clean status screen replaces the original screen before it opens. It adapts to smaller windows, marks your current choice, and shows full labels in tooltips.
 
-Status names and colors are controlled by the server config at:
+## Make it fit your server
 
-`config/andromeda_status/statuses.json`
-
-The server sends those names and colors to clients so everyone using the addon sees the same setup.
+Open **Configure** to edit labels and colors using **Fzzy Config**, including its color picker and presets. Changes are controlled by the server and require operator permission level 2. Accepted in-game edits apply live and sync to connected players. JSON configuration is also available at `config/roleplay_status/statuses.json`.
 
 ## Requirements
 
-- Minecraft 1.21.1
-- Fabric Loader
-- Fabric API
-- [Status](https://modrinth.com/mod/status) 1.21.1-1.0.8+
-- Install Andromeda Status on the server and clients
+- Minecraft **1.21.1**, **Fabric Loader 0.19.5+**, and **Java 21**.
+- **Fabric API**.
+- **Status 1.21.1-1.0.8** by Max Henkel.
+- **Fzzy Config 0.7.7+1.21** and its required dependencies, including Fabric Language Kotlin.
+
+Install Roleplay Status and these dependencies on the server and all clients. Remove the old Andromeda Status JAR when upgrading. Existing labels and colors are migrated when no new config exists; the original file is preserved.
 
 ## Credits
 
-Made by **pokesmells** and **Bare Minimum Studios**.
+Roleplay Status is a separate addon. Status is required and is not bundled or redistributed. Fzzy Config supplies the configuration editor and synchronization.
 
-## License
+[Source and documentation](https://github.com/BareMinimumStudios/roleplay-status) · [Report an issue](https://github.com/BareMinimumStudios/roleplay-status/issues) · [Bare Minimum Studios community](https://discord.gg/pcRw79hwey)
 
-Bare Minimum License (BML) v1.0.
-
-Status is a separate dependency and remains licensed by its original author.
+Licensed under **BML 1.0**. Third-party dependencies retain their own licenses.

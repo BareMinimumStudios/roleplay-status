@@ -1,4 +1,4 @@
-package com.andromedamc.status.mixin;
+package net.bms.roleplay_status.mixin;
 
 import de.maxhenkel.status.playerstate.PlayerState;
 import de.maxhenkel.status.playerstate.PlayerStateManager;
@@ -12,5 +12,5 @@ import java.util.concurrent.ConcurrentHashMap;
 public interface PlayerStateManagerAccessor {
 
     @Accessor("states")
-    ConcurrentHashMap<UUID, PlayerState> andromeda$getStates();
+    ConcurrentHashMap<UUID, PlayerState> roleplay$getStates();
 }

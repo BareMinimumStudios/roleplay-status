@@ -1,6 +1,6 @@
-package com.andromedamc.status.client;
+package net.bms.roleplay_status.client;
 
-import com.andromedamc.status.StatusCatalog;
+import net.bms.roleplay_status.StatusCatalog;
 import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
@@ -32,6 +32,7 @@ public final class ClientStatusRuntime {
             merged.put(fallback.id(), replacement);
         }
 
+        if (DEFINITIONS.equals(merged)) return;
         DEFINITIONS.clear();
         DEFINITIONS.putAll(merged);
         iconsDirty = true;
@@ -40,6 +41,7 @@ public final class ClientStatusRuntime {
     public static void resetToDefaults() {
         releaseIcons();
         applyDefinitions(StatusCatalog.defaults());
+        iconsDirty = true;
     }
 
     public static List<StatusCatalog.Definition> definitions() {
@@ -79,7 +81,7 @@ public final class ClientStatusRuntime {
             NativeImage image = makeIcon(definition);
             DynamicTexture texture = new DynamicTexture(image);
             String path = "status_" + index++ + "_" + definition.id().replace(':', '_');
-            ResourceLocation location = minecraft.getTextureManager().register("andromeda_status_" + path, texture);
+            ResourceLocation location = minecraft.getTextureManager().register("roleplay_status_" + path, texture);
             ICONS.put(definition.id(), location);
         }
     }

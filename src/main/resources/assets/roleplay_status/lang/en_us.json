@@ -1,0 +1,20 @@
+{
+  "gui.roleplay_status.title": "Roleplay Status",
+  "gui.roleplay_status.no_sleep": "No Sleep: %s",
+  "gui.roleplay_status.help": "Server-owned labels and colors. Editing requires operator permission level 2.",
+  "status.roleplay_status.ic": "In Character",
+  "status.roleplay_status.ooc": "Out of Character",
+  "status.roleplay_status.open_rp": "Open to RP",
+  "status.roleplay_status.busy_afk": "Busy / AFK",
+  "status.roleplay_status.event": "Event",
+  "status.roleplay_status.new": "New",
+  "status.roleplay_status.recording": "Recording",
+  "status.roleplay_status.streaming": "Streaming",
+  "gui.roleplay_status.subtitle": "Choose how you appear to other players",
+  "gui.roleplay_status.no_sleep.help": "Keep the original Status No Sleep setting.",
+  "gui.roleplay_status.configure": "Configure",
+  "roleplay_status": "Roleplay Status",
+  "roleplay_status.statuses": "Roleplay Status",
+  "roleplay_status.statuses.desc": "Server-owned status labels and colors. Accepted changes apply live.",
+  "key.status_gui": "Open Roleplay Status GUI"
+}

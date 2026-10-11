@@ -1,6 +1,7 @@
 plugins {
     id 'fabric-loom' version "${loom_version}"
     id 'maven-publish'
+    id 'dev.mixinmcp.decompile' version '1.5.0'
 }
 
 version = project.mod_version
@@ -11,6 +12,8 @@ base {
 }
 
 repositories {
+    mavenCentral()
+    maven { url = 'https://maven.fzzyhmstrs.me/' }
     maven { url = 'https://maven.fabricmc.net/' }
     exclusiveContent {
         forRepository {
@@ -29,12 +32,19 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
     modImplementation "maven.modrinth:b93awgkg:${project.status_version_id}"
+    modImplementation "me.fzzyhmstrs:fzzy_config:${project.fzzy_config_version}"
+    testImplementation platform("org.junit:junit-bom:5.14.0")
+    testImplementation "org.junit.jupiter:junit-jupiter"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 }
 
+def releaseVersion = project.version.toString()
+def archiveName = project.archives_base_name.toString()
+
 processResources {
-    inputs.property 'version', project.version
+    inputs.property 'version', releaseVersion
     filesMatching('fabric.mod.json') {
-        expand 'version': project.version
+        expand 'version': releaseVersion
     }
 }
 
@@ -50,9 +60,13 @@ java {
 
 jar {
     from('LICENSE') {
-        rename { "${it}_${project.archives_base_name}" }
+        rename { "${it}_${archiveName}" }
     }
     from('NOTICE.md') {
-        rename { "${it}_${project.archives_base_name}" }
+        rename { "${it}_${archiveName}" }
     }
 }
+
+test { useJUnitPlatform() }
+
+java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }

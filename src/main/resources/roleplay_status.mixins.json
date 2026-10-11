@@ -1,14 +1,15 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.andromedamc.status.mixin",
+  "package": "net.bms.roleplay_status.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "PlayerStateMixin",
     "PlayerStateManagerAccessor"
   ],
   "client": [
-    "ClientPlayerStateManagerMixin"
+    "ClientPlayerStateManagerMixin",
+    "StatusScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

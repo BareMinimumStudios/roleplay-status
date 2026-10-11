@@ -1,130 +1,66 @@
-# Andromeda Status
+<p align="center"><img src="docs/branding/roleplay-status-banner.png" alt="Roleplay Status — Bare Minimum Studios" width="900"></p>
 
-By **pokesmells** / **Bare Minimum Studios**.
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/LICENSE-BML_1.0-FFFFFF?style=for-the-badge&amp;labelColor=1A1A1A" alt="BML 1.0"></a>
+  <a href="https://github.com/BareMinimumStudios/roleplay-status/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/BareMinimumStudios/roleplay-status/build.yml?style=for-the-badge&amp;label=BUILD&amp;labelColor=1A1A1A" alt="Build"></a>
+  <a href="https://github.com/BareMinimumStudios/roleplay-status/issues"><img src="https://img.shields.io/github/issues/BareMinimumStudios/roleplay-status?style=for-the-badge&amp;labelColor=1A1A1A&amp;color=FFFFFF" alt="Issues"></a>
+</p>
 
-Fabric 1.21.1 addon for Max Henkel's **Status** mod.
+<p align="center"><strong>Minecraft 1.21.1 · Fabric · Java 21 · Client &amp; Server</strong><br>
+<a href="https://modrinth.com/mod/v5aMEMjW">Modrinth</a> · <a href="CONFIGURATION.md">Configuration</a> · <a href="https://github.com/BareMinimumStudios/roleplay-status">Source</a> · <a href="https://discord.gg/pcRw79hwey">Discord</a></p>
 
-This project does **not** fork, bundle, copy, or redistribute Status. Status remains a required external dependency. The build pulls the published Fabric 1.21.1 Status artifact from Modrinth Maven.
+# Roleplay Status
 
-## Required mods
+Let other players know whether you are in character, available for roleplay, or taking a break. Roleplay Status adds eight roleplay-focused choices and a clean replacement screen to [Status by Max Henkel](https://modrinth.com/mod/status).
 
-- Minecraft 1.21.1
-- Fabric Loader 0.15.11+
-- Fabric API
-- Status 1.21.1-1.0.8
-- Andromeda Status
+Created by **pokesmells / Bare Minimum Studios**. Previously named Andromeda Status.
 
-Install Status and this addon on the server and on modded clients.
+## Choose your status
 
-## Statuses
+Press **U** by default (or your rebound Status key), select a status, and return to the game. Your selected choice is marked on the screen; the colored indicators are supplied through Status's existing display system.
 
-The original availability choices and neutral/no-status choice are replaced by:
+| Choice | Default color |
+| --- | --- |
+| In Character | Green |
+| Out of Character | Red |
+| Open to RP | Gold |
+| Busy / AFK | Gray |
+| Event | Purple |
+| New | Cyan |
+| Recording | Red |
+| Streaming | Violet |
 
-- In Character
-- Out of Character
-- Open to RP
-- Busy / AFK
-- Event
-- New
-- Recording
-- Streaming
+Out of Character is the fallback. The original **No Sleep** setting remains available. The replacement screen opens before the original Status screen initializes, adapts to narrow windows, and shows full labels in tooltips.
 
-`Out of Character` is the fallback/default. Blank, neutral, unsupported, and legacy availability states are normalized to OOC/none.
+## Install
 
-The original **No Sleep** toggle is preserved.
+Install these mods on **both the server and every client**:
 
-## Server configuration
+- Fabric API for Minecraft 1.21.1.
+- Status **1.21.1-1.0.8** by Max Henkel.
+- [Fzzy Config **0.7.7+1.21**](https://modrinth.com/mod/fzzy-config/version/0.7.7+1.21) and its required dependencies (including Fabric Language Kotlin).
+- Roleplay Status **1.1.0**.
 
-On first server startup the addon writes:
+Use **Fabric Loader 0.19.5 or newer** and **Java 21**. Remove the old Andromeda Status JAR when updating. This release supports Fabric; other loaders are not supplied.
 
-`config/andromeda_status/statuses.json`
+## Configure
 
-Example defaults:
+Click **Configure** on the status screen to open the Fzzy Config editor. Each status has a **Label** and a **Color**, including a color picker, presets, and hex entry. Server operators with permission level **2** can submit changes; Fzzy Config applies accepted edits live and synchronizes them to players.
 
-```json
-{
-  "statuses": {
-    "andromeda:ic": {
-      "label": "In Character",
-      "color": "#2EEC23"
-    },
-    "andromeda:ooc": {
-      "label": "Out of Character",
-      "color": "#FF3347"
-    },
-    "andromeda:open_rp": {
-      "label": "Open to RP",
-      "color": "#FFC83D"
-    },
-    "andromeda:busy_afk": {
-      "label": "Busy / AFK",
-      "color": "#8A8A8A"
-    },
-    "andromeda:event": {
-      "label": "Event",
-      "color": "#A855F7"
-    },
-    "andromeda:new": {
-      "label": "New",
-      "color": "#42D9FF"
-    },
-    "recording": {
-      "label": "Recording",
-      "color": "#FF0014"
-    },
-    "streaming": {
-      "label": "Streaming",
-      "color": "#8821FF"
-    }
-  }
-}
-```
+The server file is `config/roleplay_status/statuses.json`. See [CONFIGURATION.md](CONFIGURATION.md) for examples, validation, and migration. Edit the JSON while the server is stopped, then restart; in-game changes apply without a restart.
 
-The server sends these labels/colors to clients with the addon when they join, keeping the display consistent for everyone using the server modpack.
+Existing `config/andromeda_status/statuses.json` labels and colors are imported when no new config exists. The original file is preserved. Old roleplay state IDs are mapped to the new namespace.
 
-The IDs are deliberately fixed so old/malicious/unknown Status strings cannot create arbitrary entries. Labels and colors are configurable.
+## Build and release
 
-## How it works
+Run `./gradlew build` (Windows: `gradlew.bat build`) with Java 21. Gradle **9.8.0** is supplied by the wrapper. Loom **1.17.21** is the stable Java 21-compatible build plugin. Mixin MCP **1.5.0** is enabled for dependency-source inspection; run `./gradlew genDependencySources` after importing the project in IntelliJ.
 
-- Status already serializes its base status as a string, so the addon uses custom string IDs through Status's existing networking.
-- A small mixin normalizes Status `PlayerState` objects so old Availability values are disabled and unsupported/blank base statuses become OOC.
-- The server explicitly stores OOC as a player's initial state so players who join later also receive that default.
-- The addon replaces the original U-key Status screen with an Andromeda screen without editing the Status jar.
-- Client-side dynamic icons are generated from the server-provided hex colors.
-- Recording and Streaming remain valid Status base states.
-- No Sleep remains functional.
+The installable file is `build/libs/roleplay-status-1.1.0.jar`. The sources JAR is for development.
 
-## Build
+[Build](.github/workflows/build.yml) verifies changes automatically. [Publish](.github/workflows/publish.yml) is manually dispatched and uploads the verified release to **Modrinth project `v5aMEMjW` only**, using the repository secret `MODRINTH_TOKEN`. See [RELEASING.md](RELEASING.md).
 
-```bash
-./gradlew build
-```
+## Credits and license
 
-The built addon jar will be under `build/libs/`. The Status jar is a dependency and is not included in the addon jar.
+Status remains a required external dependency. Roleplay Status does not include or redistribute its JAR, code, or assets. Fzzy Config supplies the configuration UI, validation, permissions, and synchronization.
 
-
-## 1.0.1
-
-- Fixed a native OpenGL crash on client startup by deferring dynamic status icon creation until the normal client tick loop, after the render context is initialized.
-
-
-## 1.0.2
-
-- Fixed the status screen render order so Minecraft's background blur runs only in the background pass.
-- The panel is now drawn after the world blur, while status color swatches and the "Set your Status" title are drawn as foreground elements after the widgets, keeping them crisp.
-
-## 1.0.3
-
-- Switched Andromeda Status to the Bare Minimum License (BML) v1.0.
-- Prevented the original neutral Status icon from briefly appearing while dynamic addon icons are still being prepared.
-- Added bounds validation to the server-to-client status-definition payload.
-- Status labels now strip control characters before being written/synced.
-- Login initialization now preserves an already-present state instead of blindly overwriting it with the default.
-
-
-## 1.0.5
-
-- Renamed the project from Andromeda Status Addon to Andromeda Status.
-- Updated the mod ID, package namespace, config folder, translation namespace, mixin config, and archive name to match.
-- Updated authors to pokesmells and Bare Minimum Studios.
-- Updated the mod icon.
+Roleplay Status code and artwork use the [Bare Minimum License v1.0](LICENSE). Dependencies retain their own licenses; see [NOTICE.md](NOTICE.md).
