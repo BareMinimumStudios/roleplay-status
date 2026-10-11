@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/LICENSE-BML_1.0-FFFFFF?style=for-the-badge&amp;labelColor=1A1A1A" alt="BML 1.0"></a>
-  <a href="https://github.com/BareMinimumStudios/roleplay-status/actions/workflows/build.yml"><img src="https://img.shields.io/github/actions/workflow/status/BareMinimumStudios/roleplay-status/build.yml?style=for-the-badge&amp;label=BUILD&amp;labelColor=1A1A1A" alt="Build"></a>
+  <a href="https://github.com/BareMinimumStudios/roleplay-status/actions/workflows/build.yml"><img src="https://github.com/BareMinimumStudios/roleplay-status/actions/workflows/build.yml/badge.svg?branch=main" alt="Build"></a>
   <a href="https://github.com/BareMinimumStudios/roleplay-status/issues"><img src="https://img.shields.io/github/issues/BareMinimumStudios/roleplay-status?style=for-the-badge&amp;labelColor=1A1A1A&amp;color=FFFFFF" alt="Issues"></a>
 </p>
 
@@ -39,7 +39,8 @@ Install these mods on **both the server and every client**:
 - Fabric API for Minecraft 1.21.1.
 - Status **1.21.1-1.0.8** by Max Henkel.
 - [Fzzy Config **0.7.7+1.21**](https://modrinth.com/mod/fzzy-config/version/0.7.7+1.21) and its required dependencies (including Fabric Language Kotlin).
-- Roleplay Status **1.0.6+1.21.1**.
+- Fabric Language Kotlin **1.13.7+kotlin.2.2.21 or newer**.
+- Roleplay Status **1.0.7+1.21.1**.
 
 Use **Fabric Loader 0.19.5 or newer** and **Java 21**. Remove the old Andromeda Status JAR when updating. This release supports Fabric; other loaders are not supplied.
 
@@ -55,7 +56,7 @@ Existing `config/andromeda_status/statuses.json` labels and colors are imported 
 
 Run `./gradlew build` (Windows: `gradlew.bat build`) with Java 21. Gradle **9.8.0** is supplied by the wrapper. Loom **1.17.21** is the stable Java 21-compatible build plugin. Mixin MCP **1.5.0** is enabled for dependency-source inspection; run `./gradlew genDependencySources` after importing the project in IntelliJ.
 
-The installable file is `build/libs/roleplay-status-1.0.6+1.21.1.jar`. The sources JAR is for development.
+The installable file is `build/libs/roleplay-status-1.0.7+1.21.1.jar`. The sources JAR is for development.
 
 [Build](.github/workflows/build.yml) verifies changes automatically. [Publish](.github/workflows/publish.yml) is manually dispatched and uploads the verified release to **Modrinth project `v5aMEMjW` only**, using the repository secret `MODRINTH_TOKEN`. See [RELEASING.md](RELEASING.md).
 
@@ -64,3 +65,5 @@ The installable file is `build/libs/roleplay-status-1.0.6+1.21.1.jar`. The sourc
 Status remains a required external dependency. Roleplay Status does not include or redistribute its JAR, code, or assets. Fzzy Config supplies the configuration UI, validation, permissions, and synchronization.
 
 Roleplay Status code and artwork use the [Bare Minimum License v1.0](LICENSE). Dependencies retain their own licenses; see [NOTICE.md](NOTICE.md).
+
+The mod implementation is written in Kotlin. The four small integration mixins remain in Java for compatibility with Status and Minecraft.

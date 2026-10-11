@@ -30,4 +30,13 @@ class StatusCatalogTest {
         list.clear();
         assertEquals(8, StatusCatalog.defaults().size());
     }
+
+    @Test void normalizedDefinitionsHaveStableEqualityAndPreserveRgb() {
+        var normalized = new StatusCatalog.Definition(StatusCatalog.IC, "\n", 0xFF123456);
+        var expected = new StatusCatalog.Definition(StatusCatalog.IC, "In Character", 0x123456);
+        assertEquals(expected, normalized);
+        assertEquals(expected.hashCode(), normalized.hashCode());
+        assertEquals(0x123456, normalized.rgb());
+        assertNotEquals(expected, new StatusCatalog.Definition(StatusCatalog.IC, "Changed", 0x123456));
+    }
 }

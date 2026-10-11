@@ -26,7 +26,8 @@
     "minecraft": "1.21.1",
     "fabric-api": "*",
     "status": "1.21.1-1.0.8",
-    "fzzy_config": ">=0.7.7+1.21"
+    "fzzy_config": ">=0.7.7+1.21",
+    "fabric-language-kotlin": ">=1.13.7+kotlin.2.2.21"
   },
   "icon": "assets/roleplay_status/icon.png",
   "contact": {

@@ -1,5 +1,12 @@
 # Roleplay Status 1.0.6+1.21.1
 
+## 1.0.7+1.21.1
+
+- Rewrite the mod initialization, status catalog, client runtime, screen, and configuration in Kotlin.
+- Preserve existing JSON settings, operator permissions, live synchronization, and Andromeda migration.
+- Require Fabric Language Kotlin 1.13.7+kotlin.2.2.21 or newer.
+- Use GitHub's native build badge linked to the main-branch workflow.
+
 - Rename Andromeda Status to Roleplay Status across metadata, namespaces, UI, artifacts, and branding.
 - Add a flat speech-bubble logo and coordinated project-page assets.
 - Replace the original Status screen before initialization; add responsive layout, selection markers, full-label tooltips, Configure, and Done.

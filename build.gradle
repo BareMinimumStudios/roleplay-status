@@ -1,5 +1,6 @@
 plugins {
     id 'fabric-loom' version "${loom_version}"
+    id 'org.jetbrains.kotlin.jvm' version "${kotlin_version}"
     id 'maven-publish'
     id 'dev.mixinmcp.decompile' version '1.5.0'
 }
@@ -29,6 +30,7 @@ repositories {
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
     modImplementation "maven.modrinth:b93awgkg:${project.status_version_id}"
@@ -70,3 +72,5 @@ jar {
 test { useJUnitPlatform() }
 
 java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
+
+kotlin { jvmToolchain(21) }

@@ -1,6 +1,6 @@
 # Release Roleplay Status
 
-1. Update `mod_version` in `gradle.properties` using the complete version, for example `1.0.6+1.21.1` and write the release notes in `CHANGELOG.md`.
+1. Update `mod_version` in `gradle.properties` using the complete version, for example `1.0.7+1.21.1` and write the release notes in `CHANGELOG.md`.
 2. Run `gradlew.bat clean build` (or `./gradlew clean build`). Review the runtime checks in `docs/VALIDATION.md`.
 3. Commit and push the reviewed changes. Ensure the GitHub Build workflow succeeds.
 4. Add the repository Actions secret `MODRINTH_TOKEN` with permission to publish to project **v5aMEMjW**. Never commit a token.

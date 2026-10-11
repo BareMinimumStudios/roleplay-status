@@ -17,7 +17,7 @@ Open **Configure** to edit labels and colors using **Fzzy Config**, including it
 - Minecraft **1.21.1**, **Fabric Loader 0.19.5+**, and **Java 21**.
 - **Fabric API**.
 - **Status 1.21.1-1.0.8** by Max Henkel.
-- **Fzzy Config 0.7.7+1.21** and its required dependencies, including Fabric Language Kotlin.
+- **Fzzy Config 0.7.7+1.21** and its required dependencies, including **Fabric Language Kotlin 1.13.7+kotlin.2.2.21 or newer**.
 
 Install Roleplay Status and these dependencies on the server and all clients. Remove the old Andromeda Status JAR when upgrading. Existing labels and colors are migrated when no new config exists; the original file is preserved.
 

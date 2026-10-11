@@ -15,6 +15,8 @@ with ZipFile(file) as jar:
     assert metadata["version"] == version
     assert metadata["depends"]["minecraft"] == "1.21.1"
     assert "fzzy_config" in metadata["depends"]
+    assert metadata["depends"]["fabric-language-kotlin"] == ">=1.13.7+kotlin.2.2.21"
+    assert "net/bms/roleplay_status/RoleplayStatus$Companion.class" in jar.namelist()
     assert metadata["icon"] in jar.namelist()
     mixins = json.loads(jar.read("roleplay_status.mixins.json"))
     assert "StatusScreenMixin" in mixins["client"]
