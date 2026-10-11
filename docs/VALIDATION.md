@@ -1,4 +1,4 @@
-# Roleplay Status 1.1.0 validation
+# Roleplay Status 1.0.6+1.21.1 validation
 
 ## Automated and startup checks
 

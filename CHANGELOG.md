@@ -1,4 +1,4 @@
-# Roleplay Status 1.1.0
+# Roleplay Status 1.0.6+1.21.1
 
 - Rename Andromeda Status to Roleplay Status across metadata, namespaces, UI, artifacts, and branding.
 - Add a flat speech-bubble logo and coordinated project-page assets.

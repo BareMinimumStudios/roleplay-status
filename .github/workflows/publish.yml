@@ -16,12 +16,21 @@ jobs:
           distribution: temurin
           java-version: 21
       - uses: gradle/actions/setup-gradle@v4
+      - name: Check publishing credential is configured
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        shell: bash
+        run: |
+          if [ -z "$MODRINTH_TOKEN" ]; then
+            echo "::error::Set the repository secret MODRINTH_TOKEN to a Modrinth token with Create versions scope from an account allowed to upload versions to project v5aMEMjW."
+            exit 1
+          fi
       - name: Read release version
         id: meta
         shell: bash
         run: |
           version=$(sed -n 's/^mod_version=//p' gradle.properties | tr -d '\r')
-          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+([.-][A-Za-z0-9.-]+)?$ ]]; then
+          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+\+1\.21\.1$ ]]; then
             echo "Invalid or missing mod_version" >&2
             exit 1
           fi
@@ -50,7 +59,7 @@ jobs:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           files: ${{ steps.meta.outputs.file }}
           name: Roleplay Status ${{ steps.meta.outputs.version }} — Minecraft 1.21.1
-          version: ${{ steps.meta.outputs.version }}+1.21.1-fabric
+          version: ${{ steps.meta.outputs.version }}
           version-type: release
           changelog-file: CHANGELOG.md
           game-versions: 1.21.1

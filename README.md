@@ -7,7 +7,7 @@
 </p>
 
 <p align="center"><strong>Minecraft 1.21.1 · Fabric · Java 21 · Client &amp; Server</strong><br>
-<a href="https://modrinth.com/mod/v5aMEMjW">Modrinth</a> · <a href="CONFIGURATION.md">Configuration</a> · <a href="https://github.com/BareMinimumStudios/roleplay-status">Source</a> · <a href="https://discord.gg/pcRw79hwey">Discord</a></p>
+<a href="https://modrinth.com/mod/roleplay-status">Modrinth</a> · <a href="CONFIGURATION.md">Configuration</a> · <a href="https://github.com/BareMinimumStudios/roleplay-status">Source</a> · <a href="https://discord.gg/pcRw79hwey">Discord</a></p>
 
 # Roleplay Status
 
@@ -39,7 +39,7 @@ Install these mods on **both the server and every client**:
 - Fabric API for Minecraft 1.21.1.
 - Status **1.21.1-1.0.8** by Max Henkel.
 - [Fzzy Config **0.7.7+1.21**](https://modrinth.com/mod/fzzy-config/version/0.7.7+1.21) and its required dependencies (including Fabric Language Kotlin).
-- Roleplay Status **1.1.0**.
+- Roleplay Status **1.0.6+1.21.1**.
 
 Use **Fabric Loader 0.19.5 or newer** and **Java 21**. Remove the old Andromeda Status JAR when updating. This release supports Fabric; other loaders are not supplied.
 
@@ -55,7 +55,7 @@ Existing `config/andromeda_status/statuses.json` labels and colors are imported 
 
 Run `./gradlew build` (Windows: `gradlew.bat build`) with Java 21. Gradle **9.8.0** is supplied by the wrapper. Loom **1.17.21** is the stable Java 21-compatible build plugin. Mixin MCP **1.5.0** is enabled for dependency-source inspection; run `./gradlew genDependencySources` after importing the project in IntelliJ.
 
-The installable file is `build/libs/roleplay-status-1.1.0.jar`. The sources JAR is for development.
+The installable file is `build/libs/roleplay-status-1.0.6+1.21.1.jar`. The sources JAR is for development.
 
 [Build](.github/workflows/build.yml) verifies changes automatically. [Publish](.github/workflows/publish.yml) is manually dispatched and uploads the verified release to **Modrinth project `v5aMEMjW` only**, using the repository secret `MODRINTH_TOKEN`. See [RELEASING.md](RELEASING.md).
 
