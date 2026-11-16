@@ -17,8 +17,8 @@ object StatusCatalog {
         BUSY_AFK to Definition(BUSY_AFK, "Busy / AFK", 0x8A8A8A),
         EVENT to Definition(EVENT, "Event", 0xA855F7),
         NEW to Definition(NEW, "New", 0x42D9FF),
-        RECORDING to Definition(RECORDING, "Recording", 0xFF0014),
-        STREAMING to Definition(STREAMING, "Streaming", 0x8821FF)
+        RECORDING to Definition(RECORDING, "Recording", 0xFF7A18),
+        STREAMING to Definition(STREAMING, "Streaming", 0x3B82F6)
     )
 
     @JvmStatic fun defaults(): MutableList<Definition> = ArrayList(defaults.values)

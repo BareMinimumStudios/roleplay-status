@@ -1,7 +1,7 @@
 {
   "gui.roleplay_status.title": "Roleplay Status",
   "gui.roleplay_status.no_sleep": "No Sleep: %s",
-  "gui.roleplay_status.help": "Server-owned labels and colors. Editing requires operator permission level 2.",
+  "gui.roleplay_status.help": "Server labels and colors require operator level 2. Local accessibility settings are available to everyone.",
   "status.roleplay_status.ic": "In Character",
   "status.roleplay_status.ooc": "Out of Character",
   "status.roleplay_status.open_rp": "Open to RP",
@@ -19,5 +19,9 @@
   "key.roleplay_status.open": "Open Roleplay Status",
   "key.categories.roleplay_status": "Roleplay Status",
   "gui.roleplay_status.unavailable": "This server has not enabled Roleplay Status",
-  "disconnect.roleplay_status.protocol": "Roleplay Status versions do not match. Install the same release on the server and client."
+  "disconnect.roleplay_status.protocol": "Roleplay Status versions do not match. Install the same release on the server and client.",
+  "message.roleplay_status.join": "Please make sure to set your status with %s!",
+  "gui.roleplay_status.colorblind": "Colorblind mode: %s",
+  "gui.roleplay_status.colorblind.help": "Use unique status shapes and text labels. Changes only your display; no operator permission required.",
+  "roleplay_status.accessibility": "Accessibility"
 }

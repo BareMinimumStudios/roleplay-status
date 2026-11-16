@@ -48,11 +48,15 @@ for loader in loaders:
             assert broken not in screen, f"Corrupted UI symbol: {symbol!a}"
         config = jar.read("net/bms/roleplay_status/config/RoleplayStatusConfig$StatusEntry.class")
         assert "\u00c2\u00a7".encode("utf-8") not in config, "Corrupted config label validator"
+        indicator_font = json.loads(jar.read("assets/roleplay_status/font/indicator.json"))
+        assert indicator_font["providers"][0]["advances"]["\ue000"] == 10
+        assert indicator_font["providers"][0]["advances"]["\ue001"] == 10
+        assert "net/bms/roleplay_status/client/TabIndicator.class" in names
         assert "assets/roleplay_status/icon.png" in names
         assert "net/bms/roleplay_status/state/StatusData.class" in names
         mixins = json.loads(jar.read("roleplay_status.mixins.json"))
         assert mixins["mixins"] == ["SleepStatusMixin"]
-        assert mixins["client"] == ["PlayerTabOverlayMixin"]
+        assert mixins["client"] == ["PlayerTabOverlayMixin", "ChatComponentAccessor"]
         assert not any(n.startswith(("de/maxhenkel/", "me/fzzyhmstrs/")) for n in names)
         assert not any(b"de/maxhenkel/status" in jar.read(n) for n in names if n.endswith(".class")), "Status references remain"
     print(f"Verified standalone {loader}: {file}")

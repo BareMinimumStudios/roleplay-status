@@ -20,19 +20,21 @@ class RoleplayStatusScreen : Screen(Component.translatable("gui.roleplay_status.
     private var snapshot = emptyList<StatusCatalog.Definition>()
     private var selected: String? = null
     private var noSleep = false
+    private var colorblind = false
 
     override fun init() {
         panelWidth = minOf(340, width - 12)
         columns = if (panelWidth >= 290) 2 else 1
-        val rows = ((height - 128) / 24).coerceIn(1, 4)
+        val rows = ((height - 152) / 24).coerceIn(1, 4)
         val perPage = rows * columns
         snapshot = ClientStatusRuntime.definitions()
         val pages = maxOf(1, (snapshot.size + perPage - 1) / perPage)
         page = page.coerceIn(0, pages - 1)
         visible = snapshot.subList(page * perPage, minOf(snapshot.size, (page + 1) * perPage))
-        panelHeight = 112 + rows * 24
+        panelHeight = 136 + rows * 24
         left = (width - panelWidth) / 2
         top = (height - panelHeight) / 2
+        colorblind = ClientStatusRuntime.colorblindMode()
         val manager = ClientStatusRuntime.self()
         selected = manager.status
         noSleep = manager.noSleep
@@ -75,6 +77,12 @@ class RoleplayStatusScreen : Screen(Component.translatable("gui.roleplay_status.
             .tooltip(Tooltip.create(Component.translatable("gui.roleplay_status.help"))).build())
         addRenderableWidget(Button.builder(Component.translatable("gui.done")) { onClose() }
             .bounds(left + 18 + half, footer + 24, half, 20).build())
+        addRenderableWidget(Button.builder(Component.translatable("gui.roleplay_status.colorblind",
+            Component.translatable(if (colorblind) "options.on" else "options.off"))) {
+            ClientStatusRuntime.toggleColorblindMode()
+            rebuildWidgets()
+        }.bounds(left + 12, footer + 48, panelWidth - 24, 20)
+            .tooltip(Tooltip.create(Component.translatable("gui.roleplay_status.colorblind.help"))).build())
     }
 
     override fun tick() {
@@ -82,7 +90,7 @@ class RoleplayStatusScreen : Screen(Component.translatable("gui.roleplay_status.
         val manager = ClientStatusRuntime.self()
         val state = manager.status
         val sleep = manager.noSleep
-        if (snapshot != ClientStatusRuntime.definitions() || selected != state || sleep != noSleep) rebuildWidgets()
+        if (snapshot != ClientStatusRuntime.definitions() || selected != state || sleep != noSleep || colorblind != ClientStatusRuntime.colorblindMode()) rebuildWidgets()
     }
 
     override fun renderBackground(graphics: GuiGraphics, mouseX: Int, mouseY: Int, delta: Float) {
@@ -100,7 +108,8 @@ class RoleplayStatusScreen : Screen(Component.translatable("gui.roleplay_status.
         visible.forEachIndexed { i, definition ->
             val x = left + 12 + (i % columns) * cellWidth
             val y = top + 49 + (i / columns) * 24
-            graphics.fill(x, y, x + 8, y + 8, 0xFF000000.toInt() or definition.rgb)
+            IndicatorRenderer.draw(graphics, x, y, 0xFF000000.toInt() or definition.rgb,
+                IndicatorShapes.forStatus(definition.id, colorblind))
         }
     }
 

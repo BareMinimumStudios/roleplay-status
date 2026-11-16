@@ -1,3 +1,23 @@
+# Roleplay Status 2.0.1+1.21.1 validation
+
+- Both loader builds pass, with 25 regression tests each (50 total).
+- Tab badges now use a drawn rectangle and a private space-only font reserving ten pixels, independent of the server pack's text glyphs. Tests verify original TAB formatting and custom font styles remain intact and indicators are not duplicated.
+- Status packets now carry bounded account names. Tests cover changed Tab UUIDs, exact UUID precedence, unique case-insensitive account-name fallback, disconnect cleanup, and rejection of ambiguous/fake layout identities. Formatted nicknames are not guessed.
+- Handshake retries run once per second until acknowledged; server replay is throttled and snapshots are repeatable. Protocol 3 requires both client and server to update to 2.0.1.
+- Packaged release verification passes for both loaders; the Fabric rectangle-rendering invocation target is remapped to intermediary names correctly.
+- The live server's TAB configuration and the rendered result have not been tested here. Server-side installation of Roleplay Status is required. Anonymous TAB Layout entries with neither the real UUID nor account name cannot be reliably attributed to a player.
+
+
+- Additional fix: the installed Figura mod also replaces getNameForDisplay results. Roleplay now wraps the completed name call inside render, so later RETURN handlers cannot discard the indicator marker. A replacement-name regression test covers this ordering.
+- Indicators are automatic: synchronized snapshots include all online players and missing selections use Out of Character. The green bound-key reminder is displayed once per connection without any opt-in or handshake dependency. Reminder wording, key color, session reset, and default statuses are tested.
+
+- Visual polish: full indicators are now 6x6 with one-pixel vertical padding, centered in a 10-pixel slot. Recording and Streaming use right-half-square indicators with orange/blue new defaults. Existing saved colors are preserved.
+- A recent empty chat entry immediately before the join reminder is trimmed from visible history. Tests verify ordinary chat and old separators are preserved; no global Chat Patches settings are changed.
+
+- Client-only Accessibility config is registered with Fzzy RegisterType.CLIENT. Colorblind mode applies immediately through the U-screen toggle or Configure and is not synchronized to the server.
+- All eight six-pixel silhouettes are distinct without color. Tests cover shape uniqueness, bounds, normal-mode compatibility, text labels, and preservation of custom player names.
+
+## Previous release validation
 # Roleplay Status 2.0.0+1.21.1 validation
 
 ## Automated checks

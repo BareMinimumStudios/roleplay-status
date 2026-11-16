@@ -36,6 +36,9 @@ class NeoForgeEntrypoint(bus: IEventBus) {
                 context.enqueueWork { NeoForgeClient.sync(packet) }
             }
         }
+        NeoForge.EVENT_BUS.addListener<PlayerEvent.PlayerLoggedInEvent> { event ->
+            (event.entity as? ServerPlayer)?.let(ServerStatuses::join)
+        }
         NeoForge.EVENT_BUS.addListener<PlayerEvent.PlayerLoggedOutEvent> { event ->
             (event.entity as? ServerPlayer)?.let(ServerStatuses::leave)
         }

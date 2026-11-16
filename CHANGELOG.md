@@ -1,5 +1,23 @@
 # Changelog
 
+## 2.0.1+1.21.1
+
+- Inset indicators to 6x6 with vertical padding while preserving their Tab slot spacing, including colorblind shapes.
+
+- Add client-only colorblind mode with eight unique shapes, readable Tab status labels, a status-screen toggle, and a local Fzzy Accessibility config.
+
+- Align 8-pixel-high Tab indicators with player heads and center them in a 10-pixel slot.
+- Restore right-half-square activity indicators for Recording and Streaming, with new orange and blue defaults; preserve saved colors.
+
+- Apply indicators after all player-name replacement hooks, including Figura, instead of allowing later hooks to discard them.
+- Enable default indicators for online players without requiring a status selection; synchronize all online players on join.
+- Show the join reminder automatically, with the bound status key highlighted green.
+
+- Draw Tab indicators as color blocks with reserved space so resource-pack fonts cannot hide them.
+- Preserve TAB formatting and custom fonts; resolve changed UUIDs by unambiguous account names.
+- Retry the client handshake and make throttled server snapshots repeatable.
+- Include bounded account names in synchronization; update both server and client to 2.0.1.
+
 ## 2.0.0+1.21.1
 
 - Fix incorrectly encoded selected-status checkmarks, pagination arrows, ellipses, and config text; verify UI symbols in both release JARs.

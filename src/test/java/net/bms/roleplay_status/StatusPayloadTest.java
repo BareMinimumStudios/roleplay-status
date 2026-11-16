@@ -12,7 +12,7 @@ class StatusPayloadTest {
     @Test void roundTripsPlayerIdentityStateAndRemovalOnTheWire() {
         var buf = new RegistryFriendlyByteBuf(Unpooled.buffer(), RegistryAccess.EMPTY);
         try {
-            var payload = new StatusPayloads.Sync(UUID.randomUUID(), StatusCatalog.STREAMING, true, false);
+            var payload = new StatusPayloads.Sync(UUID.randomUUID(), StatusCatalog.STREAMING, true, false, "Poke097");
             StatusPayloads.INSTANCE.getSYNC_CODEC().encode(buf, payload);
             assertEquals(payload, StatusPayloads.INSTANCE.getSYNC_CODEC().decode(buf));
             var removed = new StatusPayloads.Sync(payload.getPlayer(), "", false, true);

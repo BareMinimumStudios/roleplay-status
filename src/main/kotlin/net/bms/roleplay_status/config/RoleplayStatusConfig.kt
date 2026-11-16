@@ -35,9 +35,9 @@ class RoleplayStatusConfig : Config(ResourceLocation.fromNamespaceAndPath(Rolepl
     @Translatable.Name("New")
     var newPlayer = StatusEntry("New", 0x42D9FF)
     @Translatable.Name("Recording")
-    var recording = StatusEntry("Recording", 0xFF0014)
+    var recording = StatusEntry("Recording", 0xFF7A18)
     @Translatable.Name("Streaming")
-    var streaming = StatusEntry("Streaming", 0x8821FF)
+    var streaming = StatusEntry("Streaming", 0x3B82F6)
 
     override fun fileType() = FileType.JSON
     override fun defaultPermLevel() = 2

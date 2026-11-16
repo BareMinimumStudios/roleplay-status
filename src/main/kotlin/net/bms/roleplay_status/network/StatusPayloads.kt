@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation
 import java.util.UUID
 
 object StatusPayloads {
-    const val PROTOCOL = 2
+    const val PROTOCOL = 3
     private fun <T : CustomPacketPayload> type(path: String) =
         CustomPacketPayload.Type<T>(ResourceLocation.fromNamespaceAndPath(RoleplayStatus.MOD_ID, path))
     val HELLO = type<Hello>("hello")
@@ -21,9 +21,9 @@ object StatusPayloads {
         buf.writeUtf(value.status, 64); buf.writeBoolean(value.noSleep)
     })
     val READY_CODEC = codec({ Ready(it.readVarInt()) }, { buf, value -> buf.writeVarInt(value.protocol) })
-    val SYNC_CODEC = codec({ Sync(it.readUUID(), it.readUtf(64), it.readBoolean(), it.readBoolean()) }, { buf, value ->
+    val SYNC_CODEC = codec({ Sync(it.readUUID(), it.readUtf(64), it.readBoolean(), it.readBoolean(), it.readUtf(16)) }, { buf, value ->
         buf.writeUUID(value.player); buf.writeUtf(value.status, 64)
-        buf.writeBoolean(value.noSleep); buf.writeBoolean(value.removed)
+        buf.writeBoolean(value.noSleep); buf.writeBoolean(value.removed); buf.writeUtf(value.profileName, 16)
     })
 
     private fun <T : Any> codec(read: (RegistryFriendlyByteBuf) -> T, write: (RegistryFriendlyByteBuf, T) -> Unit) =
@@ -35,7 +35,7 @@ object StatusPayloads {
     data class Hello(val protocol: Int = PROTOCOL) : CustomPacketPayload { override fun type() = HELLO }
     data class Change(val status: String, val noSleep: Boolean) : CustomPacketPayload { override fun type() = CHANGE }
     data class Ready(val protocol: Int = PROTOCOL) : CustomPacketPayload { override fun type() = READY }
-    data class Sync(val player: UUID, val status: String, val noSleep: Boolean, val removed: Boolean = false) : CustomPacketPayload {
+    data class Sync @JvmOverloads constructor(val player: UUID, val status: String, val noSleep: Boolean, val removed: Boolean = false, val profileName: String = "") : CustomPacketPayload {
         override fun type() = SYNC
     }
 }

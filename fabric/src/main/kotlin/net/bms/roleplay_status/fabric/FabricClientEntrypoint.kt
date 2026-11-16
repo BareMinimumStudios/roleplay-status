@@ -13,6 +13,9 @@ class FabricClientEntrypoint : ClientModInitializer {
         ClientStatusRuntime.initialize()
         KeyBindingHelper.registerKeyBinding(ClientStatusRuntime.KEY)
         ClientStatusRuntime.sendChange = { ClientPlayNetworking.send(it) }
+        ClientStatusRuntime.sendHello = {
+            if (ClientPlayNetworking.canSend(StatusPayloads.HELLO)) ClientPlayNetworking.send(StatusPayloads.Hello())
+        }
         ClientPlayNetworking.registerGlobalReceiver(StatusPayloads.READY) { packet, context ->
             context.client().execute { ClientStatusRuntime.acceptReady(packet) }
         }

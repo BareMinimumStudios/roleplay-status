@@ -9,24 +9,28 @@ import java.util.UUID
 
 object ServerStatuses {
     private val subscribed = mutableSetOf<UUID>()
+    private val lastHello = mutableMapOf<UUID, Int>()
     private val lastChange = mutableMapOf<UUID, Int>()
     lateinit var send: (ServerPlayer, CustomPacketPayload) -> Unit
 
     private fun data(server: MinecraftServer): StatusData =
         server.overworld().dataStorage.computeIfAbsent(StatusData.FACTORY, "roleplay_status")
 
-    fun clear() { subscribed.clear(); lastChange.clear() }
+    fun clear() { subscribed.clear(); lastChange.clear(); lastHello.clear() }
     fun hello(player: ServerPlayer, protocol: Int) {
         if (player.server.playerList.getPlayer(player.uuid) !== player) return
         if (protocol != StatusPayloads.PROTOCOL) {
             player.connection.disconnect(Component.translatable("disconnect.roleplay_status.protocol"))
             return
         }
-        if (!subscribed.add(player.uuid)) return
-        send(player, StatusPayloads.Ready())
         val server = player.server
-        for (other in server.playerList.players.filter { it.uuid in subscribed }) send(player, packet(other, data(server).get(other.uuid)))
-        broadcast(server, packet(player, data(server).get(player.uuid)))
+        val previous = lastHello[player.uuid]
+        if (previous != null && server.tickCount - previous < 20) return
+        lastHello[player.uuid] = server.tickCount
+        val newlySubscribed = subscribed.add(player.uuid)
+        send(player, StatusPayloads.Ready())
+        for (other in server.playerList.players) send(player, packet(other, data(server).get(other.uuid)))
+        if (newlySubscribed) broadcast(server, packet(player, data(server).get(player.uuid)))
     }
 
     fun change(player: ServerPlayer, status: String, noSleep: Boolean) {
@@ -49,14 +53,19 @@ object ServerStatuses {
         broadcast(server, packet(player, value))
     }
 
+    fun join(player: ServerPlayer) {
+        broadcast(player.server, packet(player, data(player.server).get(player.uuid)))
+    }
+
     fun leave(player: ServerPlayer) {
         subscribed.remove(player.uuid)
         lastChange.remove(player.uuid)
+        lastHello.remove(player.uuid)
         broadcast(player.server, StatusPayloads.Sync(player.uuid, "", false, true))
     }
 
     @JvmStatic fun excludedFromSleep(player: ServerPlayer): Boolean = data(player.server).get(player.uuid).noSleep
-    private fun packet(player: ServerPlayer, state: PlayerStatus) = StatusPayloads.Sync(player.uuid, state.status, state.noSleep)
+    private fun packet(player: ServerPlayer, state: PlayerStatus) = StatusPayloads.Sync(player.uuid, state.status, state.noSleep, false, player.gameProfile.name.take(16))
     private fun broadcast(server: MinecraftServer, payload: CustomPacketPayload) {
         server.playerList.players.filter { it.uuid in subscribed }.forEach { send(it, payload) }
     }

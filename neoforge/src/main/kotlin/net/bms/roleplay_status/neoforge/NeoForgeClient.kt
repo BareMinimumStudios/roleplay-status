@@ -17,6 +17,7 @@ object NeoForgeClient {
         }
         bus.addListener<RegisterKeyMappingsEvent> { it.register(ClientStatusRuntime.KEY) }
         ClientStatusRuntime.sendChange = { PacketDistributor.sendToServer(it) }
+        ClientStatusRuntime.sendHello = { PacketDistributor.sendToServer(StatusPayloads.Hello()) }
         NeoForge.EVENT_BUS.addListener<ClientPlayerNetworkEvent.LoggingIn> {
             PacketDistributor.sendToServer(StatusPayloads.Hello())
         }

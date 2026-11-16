@@ -24,6 +24,7 @@ class FabricEntrypoint : ModInitializer {
         ServerPlayNetworking.registerGlobalReceiver(StatusPayloads.CHANGE) { packet, context ->
             context.server().execute { ServerStatuses.change(context.player(), packet.status, packet.noSleep) }
         }
+        ServerPlayConnectionEvents.JOIN.register { handler, _, _ -> ServerStatuses.join(handler.player) }
         ServerPlayConnectionEvents.DISCONNECT.register { handler, _ -> ServerStatuses.leave(handler.player) }
         ServerLifecycleEvents.SERVER_STARTED.register { ServerStatuses.clear() }
         ServerLifecycleEvents.SERVER_STOPPED.register { ServerStatuses.clear() }
