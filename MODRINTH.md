@@ -1,30 +1,26 @@
 # Roleplay Status
 
-**Roleplay choices. Clear indicators. Server-owned labels and colors.**
+**Standalone roleplay statuses for Fabric and NeoForge on Minecraft 1.21.1.**
 
-Roleplay Status is an addon for **Status by Max Henkel**, made by **pokesmells / Bare Minimum Studios** for Minecraft 1.21.1 on Fabric.
+Made by **pokesmells / Bare Minimum Studios**. Press **U** to choose In Character, Out of Character, Open to RP, Busy / AFK, Event, New, Recording, or Streaming. Colored indicators appear in the Tab player list.
 
-Press **U** to choose **In Character**, **Out of Character**, **Open to RP**, **Busy / AFK**, **Event**, **New**, **Recording**, or **Streaming**. Keep Status's original **No Sleep** toggle nearby.
-
-The clean status screen replaces the original screen before it opens. It adapts to smaller windows, marks your current choice, and shows full labels in tooltips.
+Use the clean status screen to choose a status, toggle **No Sleep**, or configure labels and colors. No Sleep excludes you from the players required to skip night. Player choices are validated by the server and persist per world.
 
 ## Make it fit your server
 
-Open **Configure** to edit labels and colors using **Fzzy Config**, including its color picker and presets. Changes are controlled by the server and require operator permission level 2. Accepted in-game edits apply live and sync to connected players. JSON configuration is also available at `config/roleplay_status/statuses.json`.
+Fzzy Config provides an in-game label editor, RGB color picker, presets, and hex entry. Server edits require operator permission level 2. Accepted changes synchronize live. JSON is also available at `config/roleplay_status/statuses.json`.
 
 ## Requirements
 
-- Minecraft **1.21.1**, **Fabric Loader 0.19.5+**, and **Java 21**.
-- **Fabric API**.
-- **Status 1.21.1-1.0.8** by Max Henkel.
-- **Fzzy Config 0.7.7+1.21** and its required dependencies, including **Fabric Language Kotlin 1.13.7+kotlin.2.2.21 or newer**.
+Install the correct loader build on the server and clients. Use Minecraft 1.21.1 and Java 21.
 
-Install Roleplay Status and these dependencies on the server and all clients. Remove the old Andromeda Status JAR when upgrading. Existing labels and colors are migrated when no new config exists; the original file is preserved.
+- **Fabric:** Fabric Loader 0.19.5+, Fabric API, Fabric Language Kotlin 1.13.7+kotlin.2.2.21+, and Fzzy Config 0.7.7+1.21.
+- **NeoForge:** NeoForge 21.1.266+, Kotlin for Forge 5.11.0+, and Fzzy Config 0.7.7+fix1+1.21+neoforge.
+
+**Status is no longer required. Remove it and the old addon JAR when installing version 2.** Existing Roleplay Status labels/colors are preserved. Legacy Andromeda labels/colors migrate when no new config exists, with the original preserved. Old Status player selections start fresh; standalone selections persist afterward.
 
 ## Credits
 
-Roleplay Status is a separate addon. Status is required and is not bundled or redistributed. Fzzy Config supplies the configuration editor and synchronization.
+Roleplay Status began as an addon for Status by Max Henkel. Version 2 uses its own implementation and does not include Status code or assets. Fzzy Config supplies the editor and configuration synchronization.
 
-[Source and documentation](https://github.com/BareMinimumStudios/roleplay-status) · [Report an issue](https://github.com/BareMinimumStudios/roleplay-status/issues) · [Bare Minimum Studios community](https://discord.gg/pcRw79hwey)
-
-Licensed under **BML 1.0**. Third-party dependencies retain their own licenses.
+Code and artwork: Bare Minimum License v1.0. Source and issue tracker: [GitHub](https://github.com/BareMinimumStudios/roleplay-status).

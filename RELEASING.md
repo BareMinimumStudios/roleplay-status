@@ -1,19 +1,24 @@
 # Release Roleplay Status
 
-1. Update `mod_version` in `gradle.properties` using the complete version, for example `1.0.7+1.21.1` and write the release notes in `CHANGELOG.md`.
-2. Run `gradlew.bat clean build` (or `./gradlew clean build`). Review the runtime checks in `docs/VALIDATION.md`.
-3. Commit and push the reviewed changes. Ensure the GitHub Build workflow succeeds.
-4. Add the repository Actions secret `MODRINTH_TOKEN` with permission to publish to project **v5aMEMjW**. Never commit a token.
-5. Run **Publish → Run workflow** from the intended branch. The workflow builds, tests, verifies the exact release JAR, and publishes it through MC Publish.
+1. Set the complete `mod_version`, currently `2.0.0+1.21.1`, in `gradle.properties`. Add the matching `## 2.0.0+1.21.1` section to `CHANGELOG.md`.
+2. With Java 21 and Python 3.11+, run `gradlew.bat clean build` and `python scripts/verify_release.py`. Linux/macOS: use `./gradlew`. Both loader builds must pass.
+3. Complete the in-game checks in `docs/VALIDATION.md`. Commit and push the reviewed changes and wait for both Build jobs to pass.
+4. Keep the repository Actions secret `MODRINTH_TOKEN` configured with Create versions access for project **v5aMEMjW**.
+5. Run **Publish â†’ Run workflow** from the intended branch.
 
-Only Modrinth is configured. The workflow does not create a GitHub release or publish to CurseForge. To add CurseForge later, supply its real project ID and token and review the dependency mappings first.
+Publish builds/tests both loaders and verifies both exact JARs before either upload. It extracts only the current changelog section, then uses MC Publish to create two Modrinth versions:
 
-`MODRINTH.md` and `CURSEFORGE.md` contain ready-to-use description copy. Upload `docs/branding/roleplay-status.png` as the project icon. The banner is `docs/branding/roleplay-status-banner.png`. Project description/logo updates are separate from the version-upload workflow.
+| Upload | Artifact | Required dependencies |
+| --- | --- | --- |
+| Fabric | `fabric/build/libs/roleplay-status-fabric-2.0.0+1.21.1.jar` | Fabric API, Fabric Language Kotlin, Fzzy Config |
+| NeoForge | `neoforge/build/libs/roleplay-status-neoforge-2.0.0+1.21.1.jar` | Kotlin for Forge, Fzzy Config |
 
-## Modrinth 401: no permission to upload this version
+Both use the exact version `2.0.0+1.21.1`. Loader labels appear in the release titles and loader metadata. The Status dependency is absent from both uploads. Sources/development JARs are never uploaded. The same Modrinth project and secret work for both loaders.
 
-The project ID `v5aMEMjW` is valid. A version upload requires a Modrinth personal access token with **Create versions** (`VERSION_CREATE`) scope. The token owner must also own this project or be an accepted team/organization member with permission to upload versions. A token that publishes another mod may not have permission for this project.
+Uploads are sequential and independent: Modrinth does not offer an atomic two-loader upload. If one succeeds and the other fails, inspect the project, then choose only the failed loader when retrying to avoid duplicating the successful upload. A failed preflight build prevents all uploads.
 
-Update the GitHub repository Actions secret `MODRINTH_TOKEN` with the correct token. Check organization-secret access if the secret is shared from an organization. An expired/revoked token must be replaced. Do not paste tokens into issues, workflow logs, or chat. GitHub's `GITHUB_TOKEN` cannot authenticate to Modrinth.
+Only Modrinth is configured. CurseForge and GitHub release publishing remain disabled. `MODRINTH.md` and `CURSEFORGE.md` contain updated standalone page copy; project description and icon updates are separate from version uploads. Upload `docs/branding/roleplay-status.png` as the project icon.
 
-The workflow checks that the secret exists before building. A nonempty secret alone does not prove its scope or project permissions; those must be checked in Modrinth. Then manually rerun Publish from the branch containing this workflow. The uploaded version number is exactly `mod_version`, with no additional Minecraft or loader suffix.
+## Authentication errors
+
+For HTTP 401, replace `MODRINTH_TOKEN` with a valid Modrinth token with **Create versions** (`VERSION_CREATE`) scope. Its owner must own the project or have upload permission on its team/organization. A nonempty secret does not prove access. Never commit or paste tokens into logs, issues, or chat.

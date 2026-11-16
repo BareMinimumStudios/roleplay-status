@@ -13,7 +13,7 @@ import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedColor
 import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedString
 import net.bms.roleplay_status.RoleplayStatus
 import net.bms.roleplay_status.StatusCatalog
-import net.fabricmc.loader.api.FabricLoader
+import java.nio.file.Path
 import net.minecraft.resources.ResourceLocation
 import java.nio.file.Files
 
@@ -55,8 +55,7 @@ class RoleplayStatusConfig : Config(ResourceLocation.fromNamespaceAndPath(Rolepl
         private var clientListener: (List<StatusCatalog.Definition>) -> Unit = {}
         fun setClientListener(listener: (List<StatusCatalog.Definition>) -> Unit) { clientListener = listener }
 
-        fun register(): RoleplayStatusConfig {
-            val dir = FabricLoader.getInstance().configDir
+        fun register(dir: Path): RoleplayStatusConfig {
             val target = dir.resolve("roleplay_status/statuses.json")
             val migrate = listOf("json", "toml", "json5", "jsonc").none {
                 Files.exists(target.resolveSibling("statuses.$it"))
@@ -84,8 +83,8 @@ class RoleplayStatusConfig : Config(ResourceLocation.fromNamespaceAndPath(Rolepl
 
     class StatusEntry(name: String, rgb: Int) : ConfigSection() {
         @Translatable.Name("Label")
-        @Translatable.Desc("Display name, 1–64 characters. Used by the status screen and its tooltips.")
-        var label = ValidatedString(name, "[^\\p{Cc}\\p{Cf}§]{1,64}")
+        @Translatable.Desc("Display name, 1-64 characters. Used by the status screen and its tooltips.")
+        var label = ValidatedString(name, "[^\\p{Cc}\\p{Cf}\u00a7]{1,64}")
         @Translatable.Name("Color")
         @Translatable.Desc("Status icon and screen swatch color. Choose a color or enter its RGB hex value.")
         var color = ValidatedColor((rgb ushr 16) and 255, (rgb ushr 8) and 255, rgb and 255).withDyeColorPresets()

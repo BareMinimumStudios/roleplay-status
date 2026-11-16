@@ -1,0 +1,19 @@
+plugins { id 'net.neoforged.moddev' }
+neoForge {
+    version = rootProject.neoforge_version
+    runs {
+        client { client() }
+        server { server(); programArgument '--nogui' }
+    }
+    mods {
+        roleplay_status { sourceSet sourceSets.main }
+    }
+    unitTest {
+        enable()
+        testedMod = mods.roleplay_status
+    }
+}
+dependencies {
+    implementation "maven.modrinth:fzzy-config:${rootProject.fzzy_neoforge_version}"
+    implementation "thedarkcolour:kotlinforforge-neoforge:${rootProject.kotlin_for_forge_version}"
+}

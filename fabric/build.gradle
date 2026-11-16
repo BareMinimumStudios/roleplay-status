@@ -1,0 +1,12 @@
+plugins {
+    id 'fabric-loom'
+    id 'dev.mixinmcp.decompile'
+}
+dependencies {
+    minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
+    modImplementation "net.fabricmc:fabric-language-kotlin:${rootProject.fabric_kotlin_version}"
+    modImplementation "me.fzzyhmstrs:fzzy_config:${rootProject.fzzy_config_version}"
+}

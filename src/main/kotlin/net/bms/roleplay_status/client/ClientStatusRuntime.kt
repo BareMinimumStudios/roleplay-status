@@ -1,63 +1,67 @@
 package net.bms.roleplay_status.client
 
-import com.mojang.blaze3d.platform.NativeImage
+import net.bms.roleplay_status.RoleplayStatus
 import net.bms.roleplay_status.StatusCatalog
+import net.bms.roleplay_status.config.RoleplayStatusConfig
+import net.bms.roleplay_status.network.StatusPayloads
+import net.bms.roleplay_status.state.PlayerStatus
+import net.minecraft.client.KeyMapping
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.texture.DynamicTexture
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.client.multiplayer.PlayerInfo
+import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.HoverEvent
+import org.lwjgl.glfw.GLFW
+import java.util.UUID
 
 object ClientStatusRuntime {
-    private val definitions = StatusCatalog.defaults().associateByTo(linkedMapOf()) { it.id }
-    private val icons = linkedMapOf<String, ResourceLocation>()
-    private var iconsDirty = true
+    @JvmField val KEY = KeyMapping("key.roleplay_status.open", GLFW.GLFW_KEY_U, "key.categories.roleplay_status")
+    private val players = mutableMapOf<UUID, PlayerStatus>()
+    private var definitions = StatusCatalog.defaults().toList()
+    var ready = false
+        private set
+    var sendChange: (StatusPayloads.Change) -> Unit = {}
 
+    fun initialize() {
+        RoleplayStatusConfig.setClientListener { incoming ->
+            Minecraft.getInstance().execute { applyDefinitions(incoming) }
+        }
+        applyDefinitions(RoleplayStatus.CONFIG.definitions())
+    }
     fun applyDefinitions(incoming: List<StatusCatalog.Definition>) {
-        val merged = StatusCatalog.defaults().associateTo(linkedMapOf()) { fallback ->
-            fallback.id to (incoming.firstOrNull { it.id == fallback.id } ?: fallback)
-        }
-        if (definitions == merged) return
-        definitions.clear()
-        definitions.putAll(merged)
-        iconsDirty = true
+        definitions = StatusCatalog.defaults().map { fallback -> incoming.firstOrNull { it.id == fallback.id } ?: fallback }
     }
-
-    fun resetToDefaults() {
-        releaseIcons()
+    fun definitions(): List<StatusCatalog.Definition> = definitions.toList()
+    fun self(): PlayerStatus = Minecraft.getInstance().player?.uuid?.let(players::get) ?: PlayerStatus()
+    fun request(status: String, noSleep: Boolean) {
+        if (ready && PlayerStatus.validated(status, noSleep) != null) sendChange(StatusPayloads.Change(status, noSleep))
+    }
+    fun acceptReady(payload: StatusPayloads.Ready) {
+        players.clear()
+        ready = payload.protocol == StatusPayloads.PROTOCOL
+    }
+    fun acceptSync(payload: StatusPayloads.Sync) {
+        if (!ready) return
+        if (payload.removed) players.remove(payload.player)
+        else players[payload.player] = PlayerStatus(StatusCatalog.sanitize(payload.status), payload.noSleep)
+    }
+    fun reset() {
+        ready = false
+        players.clear()
         applyDefinitions(StatusCatalog.defaults())
-        iconsDirty = true
     }
-
-    fun definitions(): List<StatusCatalog.Definition> = java.util.List.copyOf(definitions.values)
-    @JvmStatic fun icon(id: String): ResourceLocation? = icons[id]
-
-    fun rebuildIconsIfNeeded() {
-        if (!iconsDirty) return
-        val manager = Minecraft.getInstance()?.textureManager ?: return
-        releaseIcons()
-        definitions.values.forEachIndexed { index, definition ->
-            val texture = DynamicTexture(makeIcon(definition))
-            val path = "roleplay_status_status_${index}_${definition.id.replace(':', '_')}"
-            icons[definition.id] = manager.register(path, texture)
+    fun tick() {
+        val client = Minecraft.getInstance()
+        while (KEY.consumeClick()) {
+            if (client.player != null && client.screen == null) client.setScreen(RoleplayStatusScreen())
         }
-        iconsDirty = false
     }
-
-    private fun releaseIcons() {
-        val manager = Minecraft.getInstance()?.textureManager
-        if (manager != null) icons.values.forEach(manager::release)
-        icons.clear()
-    }
-
-    private fun makeIcon(definition: StatusCatalog.Definition): NativeImage {
-        val image = NativeImage(8, 8, true)
-        val rgb = definition.rgb
-        val abgr = (0xFF shl 24) or ((rgb and 255) shl 16) or
-            (rgb and 0xFF00) or ((rgb ushr 16) and 255)
-        for (y in 0..7) for (x in 0..7) image.setPixelRGBA(x, y, 0)
-        val activity = definition.id == StatusCatalog.RECORDING || definition.id == StatusCatalog.STREAMING
-        val ys = if (activity) 0..7 else 1..6
-        val xs = if (activity) 4..7 else 1..6
-        for (y in ys) for (x in xs) image.setPixelRGBA(x, y, abgr)
-        return image
+    @JvmStatic fun decorate(info: PlayerInfo, original: Component): Component {
+        if (!ready) return original
+        val state = players[info.profile.id] ?: return original
+        val definition = definitions.firstOrNull { it.id == state.status } ?: return original
+        val badge = Component.literal("\u25a0 ").withStyle {
+            it.withColor(definition.rgb).withHoverEvent(HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal(definition.label)))
+        }
+        return badge.append(original)
     }
 }

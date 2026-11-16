@@ -4,12 +4,10 @@
   "package": "net.bms.roleplay_status.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "PlayerStateMixin",
-    "PlayerStateManagerAccessor"
+    "SleepStatusMixin"
   ],
   "client": [
-    "ClientPlayerStateManagerMixin",
-    "StatusScreenMixin"
+    "PlayerTabOverlayMixin"
   ],
   "injectors": {
     "defaultRequire": 1

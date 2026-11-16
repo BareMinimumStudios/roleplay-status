@@ -1,4 +1,19 @@
-# Roleplay Status 1.0.6+1.21.1
+# Changelog
+
+## 2.0.0+1.21.1
+
+- Fix incorrectly encoded selected-status checkmarks, pagination arrows, ellipses, and config text; verify UI symbols in both release JARs.
+
+- Become a standalone mod; remove Status as a runtime and build dependency.
+- Add native Fabric and NeoForge builds sharing the Kotlin implementation.
+- Implement server-owned player statuses, bounded/versioned packets, request validation, rate limiting, join synchronization, and disconnect cleanup.
+- Save status and No Sleep preferences by UUID in each world's `data/roleplay_status.dat`.
+- Open the status screen directly with its own rebindable U key and show original colored Tab-list badges.
+- Implement No Sleep using the world's sleeping percentage and immediately refresh sleep calculations after changes.
+- Preserve the existing Fzzy JSON schema, admin editor, color picker, live config sync, and non-destructive Andromeda config migration.
+- Add separate loader builds, tests, artifact verification, local build helpers, and Modrinth-only uploads with loader-specific dependencies.
+- Keep Gradle 9.8.0 and Java 21; use NeoForge 21.1.266, ModDevGradle 2.0.148, and the compatible NeoForge Fzzy Config build.
+- Remove Status and older addon JARs when upgrading. Old Status player selections start fresh; existing labels/colors are retained.
 
 ## 1.0.7+1.21.1
 
@@ -6,6 +21,8 @@
 - Preserve existing JSON settings, operator permissions, live synchronization, and Andromeda migration.
 - Require Fabric Language Kotlin 1.13.7+kotlin.2.2.21 or newer.
 - Use GitHub's native build badge linked to the main-branch workflow.
+
+## 1.0.6+1.21.1
 
 - Rename Andromeda Status to Roleplay Status across metadata, namespaces, UI, artifacts, and branding.
 - Add a flat speech-bubble logo and coordinated project-page assets.

@@ -1,76 +1,62 @@
 plugins {
-    id 'fabric-loom' version "${loom_version}"
-    id 'org.jetbrains.kotlin.jvm' version "${kotlin_version}"
-    id 'maven-publish'
-    id 'dev.mixinmcp.decompile' version '1.5.0'
+    id 'base'
+    id 'org.jetbrains.kotlin.jvm' version "${kotlin_version}" apply false
+    id 'fabric-loom' version "${loom_version}" apply false
+    id 'net.neoforged.moddev' version "${moddev_version}" apply false
+    id 'dev.mixinmcp.decompile' version '1.5.0' apply false
 }
 
-version = project.mod_version
-group = project.maven_group
-
-base {
-    archivesName = project.archives_base_name
+allprojects {
+    group = rootProject.maven_group
+    version = rootProject.mod_version
 }
 
-repositories {
-    mavenCentral()
-    maven { url = 'https://maven.fzzyhmstrs.me/' }
-    maven { url = 'https://maven.fabricmc.net/' }
-    exclusiveContent {
-        forRepository {
-            maven {
-                name = 'Modrinth'
-                url = 'https://api.modrinth.com/maven'
-            }
+subprojects {
+    apply plugin: 'org.jetbrains.kotlin.jvm'
+    repositories {
+        mavenCentral()
+        maven { url = 'https://api.modrinth.com/maven' }
+        maven { url = 'https://maven.fzzyhmstrs.me/' }
+        maven { url = 'https://maven.fabricmc.net/' }
+        maven { url = 'https://maven.neoforged.net/releases' }
+        maven { url = 'https://thedarkcolour.github.io/KotlinForForge/' }
+    }
+    base { archivesName = "${rootProject.archives_base_name}-${project.name}" }
+    java {
+        toolchain { languageVersion = JavaLanguageVersion.of(21) }
+        withSourcesJar()
+    }
+    kotlin { jvmToolchain(21) }
+    sourceSets {
+        main {
+            java.srcDir rootProject.file('src/main/java')
+            kotlin.srcDir rootProject.file('src/main/kotlin')
+            resources.srcDir rootProject.file('src/main/resources')
         }
-        filter { includeGroup 'maven.modrinth' }
+        test { java.srcDir rootProject.file('src/test/java') }
+    }
+    tasks.withType(JavaCompile).configureEach {
+        options.release = 21
+        options.encoding = 'UTF-8'
+    }
+    dependencies {
+        testImplementation platform('org.junit:junit-bom:5.14.0')
+        testImplementation 'org.junit.jupiter:junit-jupiter'
+        testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    }
+    tasks.withType(Test).configureEach { useJUnitPlatform() }
+    tasks.withType(ProcessResources).configureEach {
+        filteringCharset = 'UTF-8'
+        inputs.property 'version', project.version
+        filesMatching(['fabric.mod.json', 'META-INF/neoforge.mods.toml']) {
+            expand version: project.version
+        }
+    }
+    tasks.withType(Jar).configureEach {
+        from(rootProject.file('LICENSE'))
+        from(rootProject.file('NOTICE.md'))
     }
 }
 
-dependencies {
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings loom.officialMojangMappings()
-    modImplementation "net.fabricmc:fabric-language-kotlin:${project.fabric_kotlin_version}"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
-    modImplementation "maven.modrinth:b93awgkg:${project.status_version_id}"
-    modImplementation "me.fzzyhmstrs:fzzy_config:${project.fzzy_config_version}"
-    testImplementation platform("org.junit:junit-bom:5.14.0")
-    testImplementation "org.junit.jupiter:junit-jupiter"
-    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
-}
-
-def releaseVersion = project.version.toString()
-def archiveName = project.archives_base_name.toString()
-
-processResources {
-    inputs.property 'version', releaseVersion
-    filesMatching('fabric.mod.json') {
-        expand 'version': releaseVersion
-    }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    it.options.release = 21
-}
-
-java {
-    withSourcesJar()
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-}
-
-jar {
-    from('LICENSE') {
-        rename { "${it}_${archiveName}" }
-    }
-    from('NOTICE.md') {
-        rename { "${it}_${archiveName}" }
-    }
-}
-
-test { useJUnitPlatform() }
-
-java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
-
-kotlin { jvmToolchain(21) }
+tasks.named('build') { dependsOn ':fabric:build', ':neoforge:build' }
+tasks.named('clean') { dependsOn ':fabric:clean', ':neoforge:clean' }

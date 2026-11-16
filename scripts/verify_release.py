@@ -1,26 +1,58 @@
-"""Verify the exact installable release before publishing; never select a sources JAR."""
+"""Verify one or both standalone loader artifacts before publishing."""
 import json
 import os
+import tomllib
 from pathlib import Path
 from zipfile import ZipFile
 
-properties = dict(line.split("=", 1) for line in Path("gradle.properties").read_text().splitlines() if "=" in line and not line.startswith("#"))
+properties = dict(line.split("=", 1) for line in Path("gradle.properties").read_text().splitlines()
+                  if "=" in line and not line.startswith("#"))
 version = os.environ.get("RELEASE_VERSION", properties["mod_version"])
-file = Path(os.environ.get("RELEASE_FILE", f"build/libs/roleplay-status-{version}.jar"))
-assert file.is_file(), f"Missing release artifact: {file}"
-with ZipFile(file) as jar:
-    metadata = json.loads(jar.read("fabric.mod.json"))
-    assert metadata["id"] == "roleplay_status"
-    assert metadata["name"] == "Roleplay Status"
-    assert metadata["version"] == version
-    assert metadata["depends"]["minecraft"] == "1.21.1"
-    assert "fzzy_config" in metadata["depends"]
-    assert metadata["depends"]["fabric-language-kotlin"] == ">=1.13.7+kotlin.2.2.21"
-    assert "net/bms/roleplay_status/RoleplayStatus$Companion.class" in jar.namelist()
-    assert metadata["icon"] in jar.namelist()
-    mixins = json.loads(jar.read("roleplay_status.mixins.json"))
-    assert "StatusScreenMixin" in mixins["client"]
-    assert not any(name.startswith("de/maxhenkel/status/") for name in jar.namelist()), "Status must not be bundled"
-    assert not any(name.startswith("me/fzzyhmstrs/") for name in jar.namelist()), "Fzzy Config must not be bundled"
-assert Path("CHANGELOG.md").is_file()
-print(f"Verified {file}")
+requested = os.environ.get("RELEASE_LOADER")
+assert requested in (None, "fabric", "neoforge"), "Unknown release loader"
+loaders = [requested] if requested else ["fabric", "neoforge"]
+for loader in loaders:
+    file = Path(os.environ.get("RELEASE_FILE", f"{loader}/build/libs/roleplay-status-{loader}-{version}.jar"))
+    assert file.is_file(), f"Missing installable artifact: {file}"
+    assert not file.name.endswith("-sources.jar")
+    with ZipFile(file) as jar:
+        names = set(jar.namelist())
+        if loader == "fabric":
+            metadata = json.loads(jar.read("fabric.mod.json"))
+            assert metadata["id"] == "roleplay_status"
+            assert metadata["name"] == "Roleplay Status"
+            assert metadata["version"] == version
+            assert metadata["depends"]["minecraft"] == "1.21.1"
+            assert "status" not in metadata["depends"]
+            assert "fabric-language-kotlin" in metadata["depends"]
+            assert "fzzy_config" in metadata["depends"]
+            assert "META-INF/neoforge.mods.toml" not in names
+            assert "net/bms/roleplay_status/fabric/FabricEntrypoint.class" in names
+            assert not any(n.startswith("net/bms/roleplay_status/neoforge/") for n in names)
+        else:
+            metadata = tomllib.loads(jar.read("META-INF/neoforge.mods.toml").decode())
+            mod = metadata["mods"][0]
+            assert mod["modId"] == "roleplay_status" and mod["version"] == version
+            deps = {d["modId"]: d for d in metadata["dependencies"]["roleplay_status"]}
+            assert deps["fzzy_config"]["type"] == "required"
+            assert deps["kotlinforforge"]["type"] == "required"
+            assert deps["minecraft"]["versionRange"] == "[1.21.1]"
+            assert "status" not in deps or deps["status"]["type"] == "incompatible"
+            assert "fabric.mod.json" not in names
+            assert "net/bms/roleplay_status/neoforge/NeoForgeEntrypoint.class" in names
+            assert not any(n.startswith("net/bms/roleplay_status/fabric/") for n in names)
+        screen = jar.read("net/bms/roleplay_status/client/RoleplayStatusScreen.class")
+        for symbol in ("\u2713", "\u2026", "\u2039", "\u203a"):
+            assert symbol.encode("utf-8") in screen, f"Missing UI symbol: {symbol!a}"
+            broken = symbol.encode("utf-8").decode("cp1252").encode("utf-8")
+            assert broken not in screen, f"Corrupted UI symbol: {symbol!a}"
+        config = jar.read("net/bms/roleplay_status/config/RoleplayStatusConfig$StatusEntry.class")
+        assert "\u00c2\u00a7".encode("utf-8") not in config, "Corrupted config label validator"
+        assert "assets/roleplay_status/icon.png" in names
+        assert "net/bms/roleplay_status/state/StatusData.class" in names
+        mixins = json.loads(jar.read("roleplay_status.mixins.json"))
+        assert mixins["mixins"] == ["SleepStatusMixin"]
+        assert mixins["client"] == ["PlayerTabOverlayMixin"]
+        assert not any(n.startswith(("de/maxhenkel/", "me/fzzyhmstrs/")) for n in names)
+        assert not any(b"de/maxhenkel/status" in jar.read(n) for n in names if n.endswith(".class")), "Status references remain"
+    print(f"Verified standalone {loader}: {file}")

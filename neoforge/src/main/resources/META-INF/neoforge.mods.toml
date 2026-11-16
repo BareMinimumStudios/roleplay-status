@@ -1,0 +1,42 @@
+modLoader="kotlinforforge"
+loaderVersion="[5.11,)"
+license="BML-1.0"
+[[mods]]
+modId="roleplay_status"
+version="${version}"
+displayName="Roleplay Status"
+authors="pokesmells, Bare Minimum Studios"
+description="Standalone roleplay statuses, player indicators, and server-owned labels and colors."
+logoFile="assets/roleplay_status/icon.png"
+[[mixins]]
+config="roleplay_status.mixins.json"
+[[dependencies.roleplay_status]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.266,)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.roleplay_status]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1]"
+ordering="NONE"
+side="BOTH"
+[[dependencies.roleplay_status]]
+modId="kotlinforforge"
+type="required"
+versionRange="[5.11,)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.roleplay_status]]
+modId="fzzy_config"
+type="required"
+versionRange="[0.7.7+fix1+1.21+neoforge,)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.roleplay_status]]
+modId="status"
+type="incompatible"
+versionRange="[0,)"
+ordering="NONE"
+side="BOTH"
