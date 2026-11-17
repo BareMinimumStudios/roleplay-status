@@ -78,6 +78,6 @@ Recording and Streaming use right-half-square indicators. New default colors are
 
 ## Colorblind mode
 
-Toggle **Colorblind mode** on the U screen or open **Configure → Accessibility**. This client-only setting uses eight distinct shapes and adds status labels beside names in Tab. It is available to every player, applies immediately, and saves locally in `config/roleplay_status/accessibility.json`. Server colors and other players' settings are unchanged.
+Toggle **Colorblind mode** on the U screen or open **Configure → Accessibility**. This client-only setting uses eight distinct shapes. **Show status labels** is a separate option in **Configure → Accessibility**, off by default. Enable it to add a gray status suffix beside names in Tab, with or without colorblind mode. It is available to every player, applies immediately, and saves locally in `config/roleplay_status/accessibility.json`. Server colors and other players' settings are unchanged.
 
 Shapes: In Character = solid square; Out of Character = outline square; Open to RP = plus; Busy / AFK = dash; Event = diamond; New = triangle; Recording = right half; Streaming = left half.

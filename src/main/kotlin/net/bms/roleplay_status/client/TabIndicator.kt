@@ -22,7 +22,7 @@ object TabIndicator {
         }
         // A neutral root prevents our font/color from leaking into TAB's formatted name.
         val result = Component.empty().append(spacer).append(original)
-        if (showLabel) result.append(Component.literal(" [$label]").withStyle { it.withColor(0xFFFFFF).withFont(net.minecraft.network.chat.Style.DEFAULT_FONT) })
+        if (showLabel) result.append(Component.literal(" [$label]").withStyle { it.withColor(0xAAAAAA).withFont(net.minecraft.network.chat.Style.DEFAULT_FONT) })
         return result
     }
 

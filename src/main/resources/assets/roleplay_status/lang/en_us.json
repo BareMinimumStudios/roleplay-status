@@ -22,6 +22,6 @@
   "disconnect.roleplay_status.protocol": "Roleplay Status versions do not match. Install the same release on the server and client.",
   "message.roleplay_status.join": "Please make sure to set your status with %s!",
   "gui.roleplay_status.colorblind": "Colorblind mode: %s",
-  "gui.roleplay_status.colorblind.help": "Use unique status shapes and text labels. Changes only your display; no operator permission required.",
+  "gui.roleplay_status.colorblind.help": "Use unique shapes without adding text. Optional status labels are in Configure > Accessibility. Changes only your display.",
   "roleplay_status.accessibility": "Accessibility"
 }

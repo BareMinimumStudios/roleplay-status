@@ -48,3 +48,13 @@ The old dependency's stored player selections are not migrated. Each player init
 ## No Sleep
 
 When enabled, that player is excluded from the active and sleeping populations used to calculate Minecraft's required sleeping percentage. At least one eligible player must sleep; opting everyone out does not automatically skip night. Changes update the current dimension's sleep calculation immediately.
+
+
+## Local accessibility
+
+**Configure → Accessibility** contains two independent client-only settings:
+
+- **Colorblind mode:** distinct shapes for each status, also available on the U screen.
+- **Show status labels:** optional gray status suffixes in Tab, **off by default**. Works with colorblind mode on or off.
+
+These preferences are saved in `config/roleplay_status/accessibility.json`, require no operator permission, and never change server settings. Existing colorblind preferences are preserved; an absent `showStatusLabels` entry defaults to false.

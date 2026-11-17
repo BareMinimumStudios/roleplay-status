@@ -1,6 +1,6 @@
 # Roleplay Status 2.0.1+1.21.1 validation
 
-- Both loader builds pass, with 25 regression tests each (50 total).
+- Both loader builds pass, with 26 regression tests each (52 total).
 - Tab badges now use a drawn rectangle and a private space-only font reserving ten pixels, independent of the server pack's text glyphs. Tests verify original TAB formatting and custom font styles remain intact and indicators are not duplicated.
 - Status packets now carry bounded account names. Tests cover changed Tab UUIDs, exact UUID precedence, unique case-insensitive account-name fallback, disconnect cleanup, and rejection of ambiguous/fake layout identities. Formatted nicknames are not guessed.
 - Handshake retries run once per second until acknowledged; server replay is throttled and snapshots are repeatable. Protocol 3 requires both client and server to update to 2.0.1.
@@ -16,6 +16,8 @@
 
 - Client-only Accessibility config is registered with Fzzy RegisterType.CLIENT. Colorblind mode applies immediately through the U-screen toggle or Configure and is not synchronized to the server.
 - All eight six-pixel silhouettes are distinct without color. Tests cover shape uniqueness, bounds, normal-mode compatibility, text labels, and preservation of custom player names.
+
+- Issue #68: status text suffixes are independently optional and off by default. Tests exercise all colorblind/label combinations, preserve custom name styles, and verify enabled labels use gray text. Existing client configs receive the default-off missing field without changing colorblind preferences.
 
 ## Previous release validation
 # Roleplay Status 2.0.0+1.21.1 validation

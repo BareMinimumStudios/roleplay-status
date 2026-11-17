@@ -15,8 +15,12 @@ import net.minecraft.resources.ResourceLocation
 @Translatable.Desc("Your display preferences. These never change server settings or other players' displays.")
 class AccessibilityConfig : Config(ResourceLocation.fromNamespaceAndPath(RoleplayStatus.MOD_ID, "accessibility")) {
     @Translatable.Name("Colorblind mode")
-    @Translatable.Desc("Use a different shape for every status and show its label beside player names. Applies immediately on your client only.")
+    @Translatable.Desc("Use a different shape for every status. Text labels are controlled separately below. Applies immediately on your client only.")
     var colorblindMode = ValidatedBoolean(false)
+    @Translatable.Name("Show status labels")
+    @Translatable.Desc("Add a status suffix beside player names in Tab. Optional, off by default, and independent of colorblind mode.")
+    var showStatusLabels = ValidatedBoolean(false)
+
     override fun fileType() = FileType.JSON
 
     companion object {

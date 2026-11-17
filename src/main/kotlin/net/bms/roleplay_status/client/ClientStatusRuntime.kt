@@ -18,6 +18,7 @@ object ClientStatusRuntime {
     @JvmField val KEY = KeyMapping("key.roleplay_status.open", GLFW.GLFW_KEY_U, "key.categories.roleplay_status")
     private lateinit var accessibility: AccessibilityConfig
     fun colorblindMode(): Boolean = accessibility.colorblindMode.get()
+    fun showStatusLabels(): Boolean = accessibility.showStatusLabels.get()
     fun toggleColorblindMode() {
         accessibility.colorblindMode.validateAndSet(!colorblindMode())
         accessibility.save()
@@ -90,6 +91,6 @@ object ClientStatusRuntime {
         val definition = definitions.firstOrNull { it.id == state.status } ?: return original
         return TabIndicator.decorate(original, definition.label, definition.rgb,
             state.status == StatusCatalog.RECORDING || state.status == StatusCatalog.STREAMING,
-            if (colorblindMode()) IndicatorShapes.forStatus(state.status, true) else -1, colorblindMode())
+            if (colorblindMode()) IndicatorShapes.forStatus(state.status, true) else -1, showStatusLabels())
     }
 }

@@ -42,4 +42,28 @@ class IndicatorShapesTest {
         assertEquals("[DEV] Vaelith", name.getString());
         assertFalse(TabIndicator.decorate(name, "Streaming", 0x3B82F6, true).getString().endsWith("[Streaming]"));
     }
+
+    @Test void textSuffixIsOffByDefaultAndIndependentOfColorblindShapes() {
+        var config = new net.bms.roleplay_status.config.AccessibilityConfig();
+        assertFalse(config.getShowStatusLabels().get());
+        var name = Component.literal("Vaelith").withStyle(style -> style.withColor(0xAA0011));
+        for (boolean colorblind : new boolean[] {false, true}) {
+            config.getColorblindMode().validateAndSet(colorblind);
+            assertFalse(config.getShowStatusLabels().get());
+            var shape = colorblind ? IndicatorShapes.OUTLINE : -1;
+            var shapesOnly = TabIndicator.decorate(name, "Out of Character", 0xFF3347, false, shape,
+                    config.getShowStatusLabels().get());
+            assertFalse(shapesOnly.getString().contains("[Out of Character]"));
+            assertEquals(colorblind ? IndicatorShapes.OUTLINE : IndicatorShapes.SOLID, TabIndicator.shape(shapesOnly));
+        }
+        config.getShowStatusLabels().validateAndSet(true);
+        for (boolean colorblind : new boolean[] {false, true}) {
+            config.getColorblindMode().validateAndSet(colorblind);
+            var withLabel = TabIndicator.decorate(name, "Out of Character", 0xFF3347, false,
+                    colorblind ? IndicatorShapes.OUTLINE : -1, config.getShowStatusLabels().get());
+            assertTrue(withLabel.getString().endsWith("Vaelith [Out of Character]"));
+            assertEquals(0xAAAAAA, withLabel.getSiblings().get(2).getStyle().getColor().getValue());
+            assertSame(name, withLabel.getSiblings().get(1));
+        }
+    }
 }
