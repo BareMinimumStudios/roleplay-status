@@ -19,6 +19,8 @@
 
 - Issue #68: status text suffixes are independently optional and off by default. Tests exercise all colorblind/label combinations, preserve custom name styles, and verify enabled labels use gray text. Existing client configs receive the default-off missing field without changing colorblind preferences.
 
+- Build tooling update: the complete Gradle wrapper was refreshed to stable 9.9.1. Distribution and wrapper JAR SHA-256 values match Gradle's official release metadata. Clean Fabric and NeoForge builds, all 52 tests, and both artifact verifications pass with the existing plugins on Java 21.
+
 ## Previous release validation
 # Roleplay Status 2.0.0+1.21.1 validation
 

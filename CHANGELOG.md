@@ -2,6 +2,8 @@
 
 ## 2.0.1+1.21.1
 
+- Update the full Gradle wrapper to stable 9.9.1 and pin the official distribution SHA-256 checksum.
+
 - Address andromeda-mc #68: make Tab status labels independently optional and off by default, preserving colorblind shapes. Optional suffixes use gray text to distinguish them from player names.
 
 - Inset indicators to 6x6 with vertical padding while preserving their Tab slot spacing, including colorblind shapes.

@@ -54,7 +54,7 @@ The server file is `config/roleplay_status/statuses.json`. Stop the server befor
 
 ## Build and publish
 
-Java 21, Python 3.11+, and the supplied **Gradle 9.8.0** wrapper are used for release checks.
+Java 21, Python 3.11+, and the supplied **Gradle 9.9.1** wrapper are used for release checks.
 
 ```text
 gradlew.bat clean build
