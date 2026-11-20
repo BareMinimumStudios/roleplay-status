@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.3+1.21.1
+
+- Add a draggable dice HUD positioning screen with live preview, a 50–150% size slider, Save/Cancel, and Reset. Open it with U → Position dice.
+- Save position and size per client in Fzzy Config; scale and clamp the panel to fit the screen after GUI scale or resolution changes. Default to the top-left corner to avoid top-right minimaps.
+
 ## 2.0.2+1.21.1
 
 - Add server-generated nearby dice rolls with optional reasons, a configurable 25-block sharing range, cooldown controls, and optional polyhedral dice animations on Fabric and NeoForge.

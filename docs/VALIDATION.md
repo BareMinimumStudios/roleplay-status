@@ -1,3 +1,11 @@
+# Roleplay Status 2.0.3+1.21.1 validation
+
+- Added shared Fabric/NeoForge dice panel positioning and size controls, with a local preview and explicit Save/Cancel behavior.
+- Layout regression tests cover corner placements, normalized position round trips, clamping, 50–150% sizing, and resolution changes across 160–1920 pixel GUI widths and 90–1080 pixel GUI heights.
+- Both loader builds, all 72 tests (36 per loader), and release artifact verification pass. Live dragging and minimap interaction still require in-game verification.
+
+## Previous release validation
+
 # Roleplay Status 2.0.2+1.21.1 validation
 
 - Both loader builds pass with 33 tests per loader (66 total).

@@ -25,6 +25,16 @@ class AccessibilityConfig : Config(ResourceLocation.fromNamespaceAndPath(Rolepla
     @Translatable.Desc("Show a short dice animation for nearby rolls. Chat results always appear, even with animations disabled.")
     var diceAnimations = ValidatedBoolean(true)
 
+    @Translatable.Name("Dice panel horizontal position")
+    @Translatable.Desc("0 is the left edge, 100 is the right edge. You can also drag the panel using Position dice on the U screen.")
+    var dicePanelX = me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt(0, 100, 0)
+    @Translatable.Name("Dice panel vertical position")
+    @Translatable.Desc("0 is the top edge, 100 is the bottom edge. Saved relative to your screen size.")
+    var dicePanelY = me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt(0, 100, 0)
+    @Translatable.Name("Dice panel size (%)")
+    @Translatable.Desc("Scale the dice panel from 50% to 150%. Automatically fits within the screen at small resolutions.")
+    var dicePanelScale = me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt(100, 150, 50)
+
     override fun fileType() = FileType.JSON
 
     companion object {

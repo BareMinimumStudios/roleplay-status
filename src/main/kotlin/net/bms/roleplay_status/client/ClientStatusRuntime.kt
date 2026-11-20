@@ -17,6 +17,15 @@ import org.lwjgl.glfw.GLFW
 object ClientStatusRuntime {
     @JvmField val KEY = KeyMapping("key.roleplay_status.open", GLFW.GLFW_KEY_U, "key.categories.roleplay_status")
     private lateinit var accessibility: AccessibilityConfig
+    fun dicePanelX(): Int = accessibility.dicePanelX.get()
+    fun dicePanelY(): Int = accessibility.dicePanelY.get()
+    fun dicePanelScale(): Int = accessibility.dicePanelScale.get()
+    fun saveDicePanel(x: Int, y: Int, scale: Int) {
+        accessibility.dicePanelX.validateAndSet(x.coerceIn(0,100))
+        accessibility.dicePanelY.validateAndSet(y.coerceIn(0,100))
+        accessibility.dicePanelScale.validateAndSet(scale.coerceIn(50,150))
+        accessibility.save()
+    }
     fun diceAnimations(): Boolean = ::accessibility.isInitialized && accessibility.diceAnimations.get()
     fun colorblindMode(): Boolean = accessibility.colorblindMode.get()
     fun showStatusLabels(): Boolean = accessibility.showStatusLabels.get()

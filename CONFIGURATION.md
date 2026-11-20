@@ -60,6 +60,16 @@ When enabled, that player is excluded from the active and sleeping populations u
 These preferences are saved in `config/roleplay_status/accessibility.json`, require no operator permission, and never change server settings. Existing colorblind preferences are preserved; an absent `showStatusLabels` entry defaults to false.
 
 
+## Move and resize the dice panel
+
+Open **U → Position dice** to drag a live preview away from your minimap or other HUD elements.
+Use the **Dice size** slider (50–150%), then choose **Save**. **Cancel** or Escape discards edits;
+**Reset** previews the top-left position at 100% size until saved.
+
+Position and size are personal settings, also available under **Configure → Accessibility**.
+They save locally and adapt to resolution and GUI scale changes. The panel automatically
+fits within your screen. This does not change chat results or anyone else's HUD.
+
 ## Nearby dice rolls
 
 Use `/roll` (defaults to d20), `/roll d20`, `/roll 2d6`, or `/roll 1d20+3 Stealth check`.

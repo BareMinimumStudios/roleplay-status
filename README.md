@@ -38,7 +38,7 @@ Use **Minecraft 1.21.1** and **Java 21**. Install the matching loader build and 
 | Fabric API 0.116.17+1.21.1 | — |
 | Fabric Language Kotlin 1.13.7+kotlin.2.2.21+ | Kotlin for Forge 5.11.0+ |
 | Fzzy Config 0.7.7+1.21 | Fzzy Config 0.7.7+fix1+1.21+neoforge |
-| `roleplay-status-fabric-2.0.2+1.21.1.jar` | `roleplay-status-neoforge-2.0.2+1.21.1.jar` |
+| `roleplay-status-fabric-2.0.3+1.21.1.jar` | `roleplay-status-neoforge-2.0.3+1.21.1.jar` |
 
 **Remove Status, older Roleplay Status, and Andromeda Status JARs before upgrading.** Version 2 replaces the addon with its own implementation. Keep `config/roleplay_status/statuses.json`; existing labels and colors retain their format. Legacy Andromeda labels and colors are imported when no new config exists, leaving the original file intact.
 
@@ -65,7 +65,7 @@ Build one loader with `gradlew.bat :fabric:build` or `gradlew.bat :neoforge:buil
 
 Installable JARs are written to `fabric/build/libs` and `neoforge/build/libs`. Sources JARs are for development. Shared Kotlin lives in `src/main/kotlin`; loader integration lives in each loader module. The two small Java mixins target Minecraft's Tab list and sleep counting. Fabric uses Loom 1.17.21, NeoForge uses ModDevGradle 2.0.148, and Mixin MCP 1.5.0 remains enabled in the Fabric module.
 
-[Build](.github/workflows/build.yml) tests each loader. [Publish](.github/workflows/publish.yml) first builds and verifies **both** JARs, then uploads a separate release for each loader to **Modrinth project v5aMEMjW** using the existing `MODRINTH_TOKEN` secret. Both use version `2.0.2+1.21.1`, with loader-specific titles and dependencies. CurseForge uploads remain disabled. See [RELEASING.md](RELEASING.md) and [validation notes](docs/VALIDATION.md).
+[Build](.github/workflows/build.yml) tests each loader. [Publish](.github/workflows/publish.yml) first builds and verifies **both** JARs, then uploads a separate release for each loader to **Modrinth project v5aMEMjW** using the existing `MODRINTH_TOKEN` secret. Both use version `2.0.3+1.21.1`, with loader-specific titles and dependencies. CurseForge uploads remain disabled. See [RELEASING.md](RELEASING.md) and [validation notes](docs/VALIDATION.md).
 
 ## Credits and license
 
@@ -82,6 +82,16 @@ Toggle **Colorblind mode** on the U screen or open **Configure → Accessibility
 
 Shapes: In Character = solid square; Out of Character = outline square; Open to RP = plus; Busy / AFK = dash; Event = diamond; New = triangle; Recording = right half; Streaming = left half.
 
+
+## Move and resize the dice panel
+
+Open **U → Position dice** to drag a live preview away from your minimap or other HUD elements.
+Use the **Dice size** slider (50–150%), then choose **Save**. **Cancel** or Escape discards edits;
+**Reset** previews the top-left position at 100% size until saved.
+
+Position and size are personal settings, also available under **Configure → Accessibility**.
+They save locally and adapt to resolution and GUI scale changes. The panel automatically
+fits within your screen. This does not change chat results or anyone else's HUD.
 
 ## Nearby dice rolls
 

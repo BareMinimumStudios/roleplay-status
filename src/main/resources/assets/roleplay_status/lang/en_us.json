@@ -23,5 +23,9 @@
   "message.roleplay_status.join": "Please make sure to set your status with %s!",
   "gui.roleplay_status.colorblind": "Colorblind mode: %s",
   "gui.roleplay_status.colorblind.help": "Use unique shapes without adding text. Optional status labels are in Configure > Accessibility. Changes only your display.",
-  "roleplay_status.accessibility": "Accessibility"
+  "roleplay_status.accessibility": "Accessibility",
+  "gui.roleplay_status.dice_position": "Position dice",
+  "gui.roleplay_status.dice_size": "Dice size: %s%%",
+  "gui.roleplay_status.dice_drag": "Drag the dice panel to move it.",
+  "gui.roleplay_status.save": "Save"
 }

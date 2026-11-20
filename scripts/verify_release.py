@@ -41,7 +41,7 @@ for loader in loaders:
             assert "fabric.mod.json" not in names
             assert "net/bms/roleplay_status/neoforge/NeoForgeEntrypoint.class" in names
             assert not any(n.startswith("net/bms/roleplay_status/fabric/") for n in names)
-        for feature in ("dice/DiceCommands", "dice/DiceExpression", "dice/DicePayload", "dice/DieGeometry", "client/DiceOverlay", "config/DiceConfig"):
+        for feature in ("dice/DiceCommands", "dice/DiceExpression", "dice/DicePayload", "dice/DieGeometry", "client/DiceOverlay", "client/DicePositionScreen", "client/DicePanelLayout", "config/DiceConfig"):
             assert f"net/bms/roleplay_status/{feature}.class" in names, f"Missing dice feature: {feature}"
         screen = jar.read("net/bms/roleplay_status/client/RoleplayStatusScreen.class")
         for symbol in ("\u2713", "\u2026", "\u2039", "\u203a"):

@@ -55,6 +55,16 @@ The server generates every result and shares the total, individual rolls, modifi
 
 *Renderer preview, not an in-game screenshot. A d2 is a coin; d100 uses two percentile d10s.*
 
+## Move and resize the dice panel
+
+Open **U → Position dice** to drag a live preview away from your minimap or other HUD elements.
+Use the **Dice size** slider (50–150%), then choose **Save**. **Cancel** or Escape discards edits;
+**Reset** previews the top-left position at 100% size until saved.
+
+Position and size are personal settings, also available under **Configure → Accessibility**.
+They save locally and adapt to resolution and GUI scale changes. The panel automatically
+fits within your screen. This does not change chat results or anyone else's HUD.
+
 ## Optional dice animations
 
 Nearby rolls can display a short animated dice panel on your HUD, using the matching polyhedral shapes.

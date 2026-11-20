@@ -81,8 +81,11 @@ class RoleplayStatusScreen : Screen(Component.translatable("gui.roleplay_status.
             Component.translatable(if (colorblind) "options.on" else "options.off"))) {
             ClientStatusRuntime.toggleColorblindMode()
             rebuildWidgets()
-        }.bounds(left + 12, footer + 48, panelWidth - 24, 20)
+        }.bounds(left + 12, footer + 48, half, 20)
             .tooltip(Tooltip.create(Component.translatable("gui.roleplay_status.colorblind.help"))).build())
+        addRenderableWidget(Button.builder(Component.translatable("gui.roleplay_status.dice_position")) {
+            minecraft?.setScreen(DicePositionScreen(this))
+        }.bounds(left + 18 + half, footer + 48, half, 20).build())
     }
 
     override fun tick() {

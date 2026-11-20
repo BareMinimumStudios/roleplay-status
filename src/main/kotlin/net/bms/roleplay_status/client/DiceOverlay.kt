@@ -25,29 +25,44 @@ object DiceOverlay {
         val entry=active ?: return
         if(mc.options.hideGui || mc.screen != null) return
         val age=(now-entry.start)/1e9
-        val spin=if(age < 1.2) (1.0-age/1.2).pow(2)*PI*5 else 0.0
-        val packet=entry.packet; val expression=packet.expression
-        val width=min(222,g.guiWidth()-16); val x=g.guiWidth()-width-8; val y=12
-        g.fill(x,y,x+width,y+113,0xDD11151D.toInt())
-        g.fill(x,y,x+2,y+113,0xFF68CDD1.toInt())
-        g.drawString(mc.font,mc.font.plainSubstrByWidth(packet.player+" rolled "+expression.notation,width-18),x+9,y+8,0xFFFFFF)
-        val dice=if(expression.sides==100) listOf(10,10) else List(min(4,expression.count)) { expression.sides }
-        val spacing=min(44,(width-16)/dice.size)
-        dice.forEachIndexed { i,sides ->
-            val cx=x+width/2+(i-(dice.size-1)/2.0)*spacing; val cy=y+48.0
-            drawDie(g,sides,spin+i*if(spin==0.0) 0.0 else .4,cx,cy,18.0)
-            if(age>=1.2) {
-                val value=if(expression.sides==100) {
-                    val v=packet.results[(age.toInt()/2)%packet.results.size]%100
-                    if(i==0) "%02d".format((v/10)*10) else (v%10).toString()
-                } else packet.results[i].toString()
-                g.drawCenteredString(mc.font,value,cx.roundToInt(),cy.roundToInt()-4,0xFFFFFF)
+        drawPanel(g, entry.packet, age, DicePanelLayout.bounds(g.guiWidth(), g.guiHeight(),
+            ClientStatusRuntime.dicePanelX(), ClientStatusRuntime.dicePanelY(), ClientStatusRuntime.dicePanelScale()))
+    }
+    fun preview(g: GuiGraphics, x: Int, y: Int, scale: Int): DicePanelLayout.Bounds {
+        val bounds=DicePanelLayout.bounds(g.guiWidth(),g.guiHeight(),x,y,scale)
+        drawPanel(g, DicePayload("Preview", net.bms.roleplay_status.dice.DiceExpression(1,20,3),listOf(17),"Stealth check"),2.0,bounds)
+        return bounds
+    }
+    private fun drawPanel(g: GuiGraphics, packet: DicePayload, age: Double, bounds: DicePanelLayout.Bounds) {
+        val mc=Minecraft.getInstance()
+        g.pose().pushPose()
+        try {
+            g.pose().translate(bounds.x.toFloat(),bounds.y.toFloat(),0f)
+            g.pose().scale(bounds.scale,bounds.scale,1f)
+            val spin=if(age < 1.2) (1.0-age/1.2).pow(2)*PI*5 else 0.0
+            val expression=packet.expression
+            val width=DicePanelLayout.WIDTH; val x=0; val y=0
+            g.fill(x,y,x+width,y+113,0xDD11151D.toInt())
+            g.fill(x,y,x+2,y+113,0xFF68CDD1.toInt())
+            g.drawString(mc.font,mc.font.plainSubstrByWidth(packet.player+" rolled "+expression.notation,width-18),x+9,y+8,0xFFFFFF)
+            val dice=if(expression.sides==100) listOf(10,10) else List(min(4,expression.count)) { expression.sides }
+            val spacing=min(44,(width-16)/dice.size)
+            dice.forEachIndexed { i,sides ->
+                val cx=x+width/2+(i-(dice.size-1)/2.0)*spacing; val cy=y+48.0
+                drawDie(g,sides,spin+i*if(spin==0.0) 0.0 else .4,cx,cy,18.0)
+                if(age>=1.2) {
+                    val value=if(expression.sides==100) {
+                        val v=packet.results[(age.toInt()/2)%packet.results.size]%100
+                        if(i==0) "%02d".format((v/10)*10) else (v%10).toString()
+                    } else packet.results[i].toString()
+                    g.drawCenteredString(mc.font,value,cx.roundToInt(),cy.roundToInt()-4,0xFFFFFF)
+                }
+                g.drawCenteredString(mc.font,if(expression.sides==100) (if(i==0) "d%" else "d10") else "d$sides",cx.roundToInt(),y+72,0xA8B5C3)
             }
-            g.drawCenteredString(mc.font,if(expression.sides==100) (if(i==0) "d%" else "d10") else "d$sides",cx.roundToInt(),y+72,0xA8B5C3)
-        }
-        val total=if(age<1.2) "Rolling..." else "Total: ${expression.total(packet.results)}" + if(expression.count>4 || (expression.sides==100 && expression.count>1)) " (${expression.count} dice)" else ""
-        g.drawCenteredString(mc.font,total,x+width/2,y+86,0x68CDD1)
-        if(packet.reason.isNotEmpty()) g.drawCenteredString(mc.font,mc.font.plainSubstrByWidth(packet.reason,width-18),x+width/2,y+100,0xBAC3CE)
+            val total=if(age<1.2) "Rolling..." else "Total: ${expression.total(packet.results)}" + if(expression.count>4 || (expression.sides==100 && expression.count>1)) " (${expression.count} dice)" else ""
+            g.drawCenteredString(mc.font,total,x+width/2,y+86,0x68CDD1)
+            if(packet.reason.isNotEmpty()) g.drawCenteredString(mc.font,mc.font.plainSubstrByWidth(packet.reason,width-18),x+width/2,y+100,0xBAC3CE)
+        } finally { g.pose().popPose() }
     }
     private fun drawDie(g: GuiGraphics,sides:Int,spin:Double,cx:Double,cy:Double,size:Double) {
         DieGeometry.project(sides,spin).forEach { face ->
