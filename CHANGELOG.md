@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.2+1.21.1
+
+- Add server-generated nearby dice rolls with optional reasons, a configurable 25-block sharing range, cooldown controls, and optional polyhedral dice animations on Fabric and NeoForge.
+
 ## 2.0.1+1.21.1
 
 - Update the full Gradle wrapper to stable 9.9.1 and pin the official distribution SHA-256 checksum.

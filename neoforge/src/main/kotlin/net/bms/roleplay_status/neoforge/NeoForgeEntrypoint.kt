@@ -20,8 +20,15 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 class NeoForgeEntrypoint(bus: IEventBus) {
     init {
         RoleplayStatus.initialize(FMLPaths.CONFIGDIR.get())
+        NeoForge.EVENT_BUS.addListener<net.neoforged.neoforge.event.RegisterCommandsEvent> { event -> net.bms.roleplay_status.dice.DiceCommands.register(event.dispatcher) }
+        net.bms.roleplay_status.dice.DiceCommands.sendAnimation = { player, packet ->
+            if (player.connection.hasChannel(net.bms.roleplay_status.dice.DicePayload.TYPE)) PacketDistributor.sendToPlayer(player, packet)
+        }
         ServerStatuses.send = { player, packet -> PacketDistributor.sendToPlayer(player, packet) }
         bus.addListener<RegisterPayloadHandlersEvent> { event ->
+            event.registrar("1").optional().playToClient(net.bms.roleplay_status.dice.DicePayload.TYPE, net.bms.roleplay_status.dice.DicePayload.CODEC) { packet, context ->
+                context.enqueueWork { NeoForgeClient.dice(packet) }
+            }
             val registrar = event.registrar(StatusPayloads.PROTOCOL.toString())
             registrar.playToServer(StatusPayloads.HELLO, StatusPayloads.HELLO_CODEC) { packet, context ->
                 context.enqueueWork { ServerStatuses.hello(context.player() as ServerPlayer, packet.protocol) }
@@ -40,10 +47,10 @@ class NeoForgeEntrypoint(bus: IEventBus) {
             (event.entity as? ServerPlayer)?.let(ServerStatuses::join)
         }
         NeoForge.EVENT_BUS.addListener<PlayerEvent.PlayerLoggedOutEvent> { event ->
-            (event.entity as? ServerPlayer)?.let(ServerStatuses::leave)
+            (event.entity as? ServerPlayer)?.let { ServerStatuses.leave(it); net.bms.roleplay_status.dice.DiceCommands.leave(it) }
         }
-        NeoForge.EVENT_BUS.addListener<ServerStartedEvent> { ServerStatuses.clear() }
-        NeoForge.EVENT_BUS.addListener<ServerStoppedEvent> { ServerStatuses.clear() }
+        NeoForge.EVENT_BUS.addListener<ServerStartedEvent> { ServerStatuses.clear(); net.bms.roleplay_status.dice.DiceCommands.clear() }
+        NeoForge.EVENT_BUS.addListener<ServerStoppedEvent> { ServerStatuses.clear(); net.bms.roleplay_status.dice.DiceCommands.clear() }
         if (FMLEnvironment.dist == Dist.CLIENT) NeoForgeClient.register(bus)
     }
 }

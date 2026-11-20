@@ -17,6 +17,11 @@ class FabricEntrypoint : ModInitializer {
         PayloadTypeRegistry.playC2S().register(StatusPayloads.CHANGE, StatusPayloads.CHANGE_CODEC)
         PayloadTypeRegistry.playS2C().register(StatusPayloads.READY, StatusPayloads.READY_CODEC)
         PayloadTypeRegistry.playS2C().register(StatusPayloads.SYNC, StatusPayloads.SYNC_CODEC)
+        PayloadTypeRegistry.playS2C().register(net.bms.roleplay_status.dice.DicePayload.TYPE, net.bms.roleplay_status.dice.DicePayload.CODEC)
+        net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback.EVENT.register { dispatcher, _, _ -> net.bms.roleplay_status.dice.DiceCommands.register(dispatcher) }
+        net.bms.roleplay_status.dice.DiceCommands.sendAnimation = { player, packet ->
+            if (ServerPlayNetworking.canSend(player, net.bms.roleplay_status.dice.DicePayload.TYPE)) ServerPlayNetworking.send(player, packet)
+        }
         ServerStatuses.send = { player, packet -> ServerPlayNetworking.send(player, packet) }
         ServerPlayNetworking.registerGlobalReceiver(StatusPayloads.HELLO) { packet, context ->
             context.server().execute { ServerStatuses.hello(context.player(), packet.protocol) }
@@ -25,8 +30,8 @@ class FabricEntrypoint : ModInitializer {
             context.server().execute { ServerStatuses.change(context.player(), packet.status, packet.noSleep) }
         }
         ServerPlayConnectionEvents.JOIN.register { handler, _, _ -> ServerStatuses.join(handler.player) }
-        ServerPlayConnectionEvents.DISCONNECT.register { handler, _ -> ServerStatuses.leave(handler.player) }
-        ServerLifecycleEvents.SERVER_STARTED.register { ServerStatuses.clear() }
-        ServerLifecycleEvents.SERVER_STOPPED.register { ServerStatuses.clear() }
+        ServerPlayConnectionEvents.DISCONNECT.register { handler, _ -> ServerStatuses.leave(handler.player); net.bms.roleplay_status.dice.DiceCommands.leave(handler.player) }
+        ServerLifecycleEvents.SERVER_STARTED.register { ServerStatuses.clear(); net.bms.roleplay_status.dice.DiceCommands.clear() }
+        ServerLifecycleEvents.SERVER_STOPPED.register { ServerStatuses.clear(); net.bms.roleplay_status.dice.DiceCommands.clear() }
     }
 }

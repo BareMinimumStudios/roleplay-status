@@ -21,6 +21,10 @@ class AccessibilityConfig : Config(ResourceLocation.fromNamespaceAndPath(Rolepla
     @Translatable.Desc("Add a status suffix beside player names in Tab. Optional, off by default, and independent of colorblind mode.")
     var showStatusLabels = ValidatedBoolean(false)
 
+    @Translatable.Name("Dice animations")
+    @Translatable.Desc("Show a short dice animation for nearby rolls. Chat results always appear, even with animations disabled.")
+    var diceAnimations = ValidatedBoolean(true)
+
     override fun fileType() = FileType.JSON
 
     companion object {

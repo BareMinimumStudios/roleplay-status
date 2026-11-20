@@ -38,7 +38,7 @@ Use **Minecraft 1.21.1** and **Java 21**. Install the matching loader build and 
 | Fabric API 0.116.17+1.21.1 | — |
 | Fabric Language Kotlin 1.13.7+kotlin.2.2.21+ | Kotlin for Forge 5.11.0+ |
 | Fzzy Config 0.7.7+1.21 | Fzzy Config 0.7.7+fix1+1.21+neoforge |
-| `roleplay-status-fabric-2.0.1+1.21.1.jar` | `roleplay-status-neoforge-2.0.1+1.21.1.jar` |
+| `roleplay-status-fabric-2.0.2+1.21.1.jar` | `roleplay-status-neoforge-2.0.2+1.21.1.jar` |
 
 **Remove Status, older Roleplay Status, and Andromeda Status JARs before upgrading.** Version 2 replaces the addon with its own implementation. Keep `config/roleplay_status/statuses.json`; existing labels and colors retain their format. Legacy Andromeda labels and colors are imported when no new config exists, leaving the original file intact.
 
@@ -65,7 +65,7 @@ Build one loader with `gradlew.bat :fabric:build` or `gradlew.bat :neoforge:buil
 
 Installable JARs are written to `fabric/build/libs` and `neoforge/build/libs`. Sources JARs are for development. Shared Kotlin lives in `src/main/kotlin`; loader integration lives in each loader module. The two small Java mixins target Minecraft's Tab list and sleep counting. Fabric uses Loom 1.17.21, NeoForge uses ModDevGradle 2.0.148, and Mixin MCP 1.5.0 remains enabled in the Fabric module.
 
-[Build](.github/workflows/build.yml) tests each loader. [Publish](.github/workflows/publish.yml) first builds and verifies **both** JARs, then uploads a separate release for each loader to **Modrinth project v5aMEMjW** using the existing `MODRINTH_TOKEN` secret. Both use version `2.0.1+1.21.1`, with loader-specific titles and dependencies. CurseForge uploads remain disabled. See [RELEASING.md](RELEASING.md) and [validation notes](docs/VALIDATION.md).
+[Build](.github/workflows/build.yml) tests each loader. [Publish](.github/workflows/publish.yml) first builds and verifies **both** JARs, then uploads a separate release for each loader to **Modrinth project v5aMEMjW** using the existing `MODRINTH_TOKEN` secret. Both use version `2.0.2+1.21.1`, with loader-specific titles and dependencies. CurseForge uploads remain disabled. See [RELEASING.md](RELEASING.md) and [validation notes](docs/VALIDATION.md).
 
 ## Credits and license
 
@@ -81,3 +81,23 @@ Recording and Streaming use right-half-square indicators. New default colors are
 Toggle **Colorblind mode** on the U screen or open **Configure → Accessibility**. This client-only setting uses eight distinct shapes. **Show status labels** is a separate option in **Configure → Accessibility**, off by default. Enable it to add a gray status suffix beside names in Tab, with or without colorblind mode. It is available to every player, applies immediately, and saves locally in `config/roleplay_status/accessibility.json`. Server colors and other players' settings are unchanged.
 
 Shapes: In Character = solid square; Out of Character = outline square; Open to RP = plus; Busy / AFK = dash; Event = diamond; New = triangle; Recording = right half; Streaming = left half.
+
+
+## Nearby dice rolls
+
+Use `/roll` (defaults to d20), `/roll d20`, `/roll 2d6`, or `/roll 1d20+3 Stealth check`.
+The reason is optional. Supported dice: d2, d4, d6, d8, d10, d12, d20 and d100;
+up to 20 dice per roll, with a modifier from -1000 to +1000.
+
+The server generates the results and shares them in chat with players within **25 blocks**
+(including the roller), measured in all directions in the same dimension.
+Operators can change the range (1–256 blocks), enable/disable rolling, and adjust the
+one-second cooldown through **Configure → Dice rolls** in Fzzy Config.
+Settings are saved in `config/roleplay_status/dice.json`.
+
+**Configure → Accessibility → Dice animations** controls the optional local HUD animation.
+It is enabled by default and can be disabled without hiding chat results. Dice use
+their corresponding polyhedral shapes; d2 is a coin, and d100 uses two percentile d10s
+(00 + 0 means 100). The overlay previews up to four dice at a time; chat lists every
+individual result and the modifier. For multiple d100s it cycles through percentile pairs.
+Animations do not affect outcomes. Fabric and NeoForge on Minecraft 1.21.1 are supported.

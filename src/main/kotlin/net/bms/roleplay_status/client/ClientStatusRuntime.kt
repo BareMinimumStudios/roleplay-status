@@ -17,6 +17,7 @@ import org.lwjgl.glfw.GLFW
 object ClientStatusRuntime {
     @JvmField val KEY = KeyMapping("key.roleplay_status.open", GLFW.GLFW_KEY_U, "key.categories.roleplay_status")
     private lateinit var accessibility: AccessibilityConfig
+    fun diceAnimations(): Boolean = ::accessibility.isInitialized && accessibility.diceAnimations.get()
     fun colorblindMode(): Boolean = accessibility.colorblindMode.get()
     fun showStatusLabels(): Boolean = accessibility.showStatusLabels.get()
     fun toggleColorblindMode() {
@@ -59,6 +60,7 @@ object ClientStatusRuntime {
         else players.set(payload.player, payload.profileName, PlayerStatus(StatusCatalog.sanitize(payload.status), payload.noSleep))
     }
     fun reset() {
+        DiceOverlay.clear()
         ready = false
         helloTicks = 0
         joinReminder.reset()

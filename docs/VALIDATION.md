@@ -1,3 +1,12 @@
+# Roleplay Status 2.0.2+1.21.1 validation
+
+- Both loader builds pass with 33 tests per loader (66 total).
+- Dice tests cover supported notation, limits, random result bounds, modifier arithmetic, reason sanitization, inclusive range boundaries, dimension filtering, payload validation, and correct polyhedral face counts.
+- Both release JARs include the dice command, configuration, network payload, and optional client animation.
+- Geometry previews are generated from the actual renderer meshes. Live multiplayer command and HUD testing remains outstanding.
+
+## Previous release validation
+
 # Roleplay Status 2.0.1+1.21.1 validation
 
 - Both loader builds pass, with 26 regression tests each (52 total).

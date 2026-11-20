@@ -58,3 +58,23 @@ When enabled, that player is excluded from the active and sleeping populations u
 - **Show status labels:** optional gray status suffixes in Tab, **off by default**. Works with colorblind mode on or off.
 
 These preferences are saved in `config/roleplay_status/accessibility.json`, require no operator permission, and never change server settings. Existing colorblind preferences are preserved; an absent `showStatusLabels` entry defaults to false.
+
+
+## Nearby dice rolls
+
+Use `/roll` (defaults to d20), `/roll d20`, `/roll 2d6`, or `/roll 1d20+3 Stealth check`.
+The reason is optional. Supported dice: d2, d4, d6, d8, d10, d12, d20 and d100;
+up to 20 dice per roll, with a modifier from -1000 to +1000.
+
+The server generates the results and shares them in chat with players within **25 blocks**
+(including the roller), measured in all directions in the same dimension.
+Operators can change the range (1–256 blocks), enable/disable rolling, and adjust the
+one-second cooldown through **Configure → Dice rolls** in Fzzy Config.
+Settings are saved in `config/roleplay_status/dice.json`.
+
+**Configure → Accessibility → Dice animations** controls the optional local HUD animation.
+It is enabled by default and can be disabled without hiding chat results. Dice use
+their corresponding polyhedral shapes; d2 is a coin, and d100 uses two percentile d10s
+(00 + 0 means 100). The overlay previews up to four dice at a time; chat lists every
+individual result and the modifier. For multiple d100s it cycles through percentile pairs.
+Animations do not affect outcomes. Fabric and NeoForge on Minecraft 1.21.1 are supported.

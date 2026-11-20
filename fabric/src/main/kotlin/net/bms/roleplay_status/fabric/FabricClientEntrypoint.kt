@@ -11,6 +11,10 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
 class FabricClientEntrypoint : ClientModInitializer {
     override fun onInitializeClient() {
         ClientStatusRuntime.initialize()
+        ClientPlayNetworking.registerGlobalReceiver(net.bms.roleplay_status.dice.DicePayload.TYPE) { packet, context ->
+            context.client().execute { net.bms.roleplay_status.client.DiceOverlay.accept(packet) }
+        }
+        net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback.EVENT.register { graphics, _ -> net.bms.roleplay_status.client.DiceOverlay.render(graphics) }
         KeyBindingHelper.registerKeyBinding(ClientStatusRuntime.KEY)
         ClientStatusRuntime.sendChange = { ClientPlayNetworking.send(it) }
         ClientStatusRuntime.sendHello = {
