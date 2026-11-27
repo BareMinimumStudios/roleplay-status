@@ -43,7 +43,8 @@ jobs:
       - name: Build and test both releases
         run: |
           chmod +x ./gradlew
-          ./gradlew clean build --warning-mode all
+          ./gradlew clean --warning-mode all
+          ./gradlew build --warning-mode all
           python scripts/verify_release.py
           python scripts/release_notes.py --output build/release-notes.md
       - uses: actions/upload-artifact@v4
