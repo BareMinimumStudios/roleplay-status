@@ -3,8 +3,8 @@
 1. Set the complete mod version in `gradle.properties`. Move published changes from `## [Unreleased]` into a dated heading such as `## [2.0.4+1.21.1] - 2026-11-27`, keeping the newest release first and grouping entries under change categories such as Added, Changed, or Fixed.
 2. With Java 21 and Python 3.11+, run `scripts/build.ps1` on Windows or `bash scripts/build.sh` on Linux/macOS. Both helpers validate the changelog before building and verifying the JARs.
 3. Complete the in-game checks in `docs/VALIDATION.md`. Commit and push the reviewed changes and wait for both Build jobs to pass.
-4. For Modrinth, configure the repository Actions secret `MODRINTH_TOKEN` with Create versions access for project **v5aMEMjW**.
-5. Open **Actions → Publish → Run workflow** on the intended branch. Choose `both`, `modrinth`, or `github` as the target. Choose a loader if retrying a Modrinth upload.
+4. For Modrinth, configure the repository Actions secret `MODRINTH_TOKEN` with Create versions access for project **v5aMEMjW**. For CurseForge, configure the Actions secret CURSEFORGE_TOKEN with upload access to project **1834639**.
+5. Open **Actions → Publish → Run workflow** on the intended branch. Choose `all`, `modrinth`, `curseforge`, or `github` as the target. Choose a loader if retrying a storefront upload.
 
 The workflow builds and tests both loaders, verifies their JARs, and extracts the matching changelog section as UTF-8 before publishing. The GitHub job creates a public release tagged `v<mod_version>`, attaches both verified JARs, and uses the built-in GitHub Actions token. Choose `github` to backfill a release already on Modrinth. An existing GitHub release must be managed separately.
 
@@ -19,11 +19,11 @@ Both use the exact version `2.0.4+1.21.1`. Loader labels appear in the release t
 
 Uploads are sequential and independent: Modrinth does not offer an atomic two-loader upload. If one succeeds and the other fails, inspect the project, then choose only the failed loader when retrying to avoid duplicating the successful upload. A failed preflight build prevents all uploads.
 
-CurseForge uploads are handled manually. `MODRINTH.md` and `CURSEFORGE.md` contain updated standalone page copy; project description and icon updates are separate from version uploads. Upload `docs/branding/roleplay-status.png` as the project icon.
+The CurseForge job uploads to project **1834639** and uses the version and loader in each display name, for example `2.0.4+1.21.1-fabric`. `MODRINTH.md` and `CURSEFORGE.md` contain updated standalone page copy; project description and icon updates are separate from version uploads. Upload `docs/branding/roleplay-status.png` as the project icon.
 
-## Create the CurseForge listing
+## CurseForge listing metadata
 
-Use the [CurseForge author dashboard](https://authors.curseforge.com/#/projects/create/choose-game) with the Bare Minimum Studios publishing account.
+Use the [CurseForge author dashboard](https://authors.curseforge.com/#/projects/1834639/files) with the Bare Minimum Studios publishing account.
 
 | Field | Value |
 | --- | --- |

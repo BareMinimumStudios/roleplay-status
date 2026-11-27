@@ -5,11 +5,11 @@ on:
       target:
         description: Choose where to publish
         required: true
-        default: both
+        default: all
         type: choice
-        options: [both, modrinth, github]
+        options: [all, modrinth, curseforge, github]
       loader:
-        description: Modrinth loaders to upload (GitHub always includes both)
+        description: Storefront loaders to upload (GitHub always includes both)
         required: true
         default: both
         type: choice
@@ -55,7 +55,7 @@ jobs:
             build/release-notes.md
           if-no-files-found: error
   publish:
-    if: inputs.target != 'github'
+    if: inputs.target == 'all' || inputs.target == 'modrinth'
     needs: build
     runs-on: ubuntu-latest
     strategy:
@@ -105,9 +105,57 @@ jobs:
           java: 21
           dependencies: ${{ matrix.dependencies }}
 
+  curseforge:
+    if: inputs.target == 'all' || inputs.target == 'curseforge'
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        include:
+          - loader: fabric
+            dependencies: |
+              fabric-api(required){curseforge:fabric-api}
+              fabric-language-kotlin(required){curseforge:fabric-language-kotlin}
+              fzzy_config(required){curseforge:fzzy-config}
+          - loader: neoforge
+            dependencies: |
+              kotlinforforge(required){curseforge:kotlin-for-forge}
+              fzzy_config(required){curseforge:fzzy-config}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: verified-standalone-releases
+          path: release
+      - name: Check publishing credential
+        if: ${{ inputs.loader == 'both' || inputs.loader == matrix.loader }}
+        env:
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+        shell: bash
+        run: |
+          if [ -z "$CURSEFORGE_TOKEN" ]; then
+            echo "::error::Configure CURSEFORGE_TOKEN with version upload access to CurseForge project 1834639."
+            exit 1
+          fi
+      - name: Publish loader release to CurseForge
+        if: ${{ inputs.loader == 'both' || inputs.loader == matrix.loader }}
+        uses: Kira-NT/mc-publish@52307b03863581dec6b652b83e597aec02ebb075 # v3.3.1
+        with:
+          curseforge-id: 1834639
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          files: release/${{ matrix.loader }}/build/libs/roleplay-status-${{ matrix.loader }}-${{ needs.build.outputs.version }}.jar
+          name: ${{ needs.build.outputs.version }}-${{ matrix.loader }}
+          version: ${{ needs.build.outputs.version }}-${{ matrix.loader }}
+          version-type: release
+          changelog-file: release/build/release-notes.md
+          game-versions: 1.21.1
+          loaders: ${{ matrix.loader }}
+          java: 21
+          dependencies: ${{ matrix.dependencies }}
 
   github-release:
-    if: inputs.target != 'modrinth'
+    if: inputs.target == 'all' || inputs.target == 'github'
     needs: build
     runs-on: ubuntu-latest
     permissions:
