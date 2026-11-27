@@ -6,3 +6,6 @@ runs/
 .idea/
 *.iml
 logs/
+crash-reports/
+*.log
+*.log.gz
