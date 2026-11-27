@@ -101,7 +101,7 @@ Build one loader with `gradlew.bat :fabric:build` or `gradlew.bat :neoforge:buil
 
 Installable JARs are written to `fabric/build/libs` and `neoforge/build/libs`. Sources JARs are for development. The Gradle build uses Kotlin DSL. Shared Kotlin lives in `src/main/kotlin`, and each loader module contains its own integration. The Java mixins handle Tab indicators, join reminder spacing, and sleep counting. Fabric uses Loom 1.17.21, NeoForge uses ModDevGradle 2.0.148, and Mixin MCP 1.5.0 remains enabled in the Fabric module.
 
-[Build](.github/workflows/build.yml) tests each loader. [Publish](.github/workflows/publish.yml) first builds and verifies **both** JARs, then uploads a separate release for each loader to **Modrinth project v5aMEMjW** using the existing `MODRINTH_TOKEN` secret. Both use version `2.0.4+1.21.1`, with loader-specific titles and dependencies. CurseForge uploads remain disabled. See [RELEASING.md](RELEASING.md) and the [validation notes](docs/VALIDATION.md). Storefront copy is available in [MODRINTH.md](MODRINTH.md) and [CURSEFORGE.md](CURSEFORGE.md).
+[Build](.github/workflows/build.yml) tests each loader. [Publish](.github/workflows/publish.yml) first builds and verifies **both** JARs, then can publish two loader entries to **Modrinth project v5aMEMjW**, a single [GitHub Release](https://github.com/BareMinimumStudios/roleplay-status/releases) with both JARs, or both. The workflow uses the matching changelog section. CurseForge uploads are handled manually. See [RELEASING.md](RELEASING.md) and the [validation notes](docs/VALIDATION.md). Storefront copy is available in [MODRINTH.md](MODRINTH.md) and [CURSEFORGE.md](CURSEFORGE.md).
 
 ## Credits and license
 

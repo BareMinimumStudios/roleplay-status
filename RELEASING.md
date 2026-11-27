@@ -3,10 +3,12 @@
 1. Set the complete mod version in `gradle.properties`. Move published changes from `## [Unreleased]` into a dated heading such as `## [2.0.4+1.21.1] - 2026-11-27`, keeping the newest release first and grouping entries under change categories such as Added, Changed, or Fixed.
 2. With Java 21 and Python 3.11+, run `scripts/build.ps1` on Windows or `bash scripts/build.sh` on Linux/macOS. Both helpers validate the changelog before building and verifying the JARs.
 3. Complete the in-game checks in `docs/VALIDATION.md`. Commit and push the reviewed changes and wait for both Build jobs to pass.
-4. Keep the repository Actions secret `MODRINTH_TOKEN` configured with Create versions access for project **v5aMEMjW**.
-5. Run **Publish â†’ Run workflow** from the intended branch.
+4. For Modrinth, configure the repository Actions secret `MODRINTH_TOKEN` with Create versions access for project **v5aMEMjW**.
+5. Open **Actions → Publish → Run workflow** on the intended branch. Choose `both`, `modrinth`, or `github` as the target. Choose a loader if retrying a Modrinth upload.
 
-Publish builds/tests both loaders and verifies both exact JARs before either upload. It validates the changelog and exports only the matching release section as UTF-8, then uses MC Publish to create two Modrinth versions:
+The workflow builds and tests both loaders, verifies their JARs, and extracts the matching changelog section as UTF-8 before publishing. The GitHub job creates a public release tagged `v<mod_version>`, attaches both verified JARs, and uses the built-in GitHub Actions token. Choose `github` to backfill a release already on Modrinth. An existing GitHub release must be managed separately.
+
+The Modrinth job uses MC Publish to create a version for each selected loader.
 
 | Upload | Artifact | Required dependencies |
 | --- | --- | --- |
@@ -17,7 +19,7 @@ Both use the exact version `2.0.4+1.21.1`. Loader labels appear in the release t
 
 Uploads are sequential and independent: Modrinth does not offer an atomic two-loader upload. If one succeeds and the other fails, inspect the project, then choose only the failed loader when retrying to avoid duplicating the successful upload. A failed preflight build prevents all uploads.
 
-Only Modrinth is configured. CurseForge and GitHub release publishing remain disabled. `MODRINTH.md` and `CURSEFORGE.md` contain updated standalone page copy; project description and icon updates are separate from version uploads. Upload `docs/branding/roleplay-status.png` as the project icon.
+CurseForge uploads are handled manually. `MODRINTH.md` and `CURSEFORGE.md` contain updated standalone page copy; project description and icon updates are separate from version uploads. Upload `docs/branding/roleplay-status.png` as the project icon.
 
 ## Create the CurseForge listing
 

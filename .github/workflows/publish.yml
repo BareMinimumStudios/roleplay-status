@@ -2,14 +2,20 @@ name: Publish
 on:
   workflow_dispatch:
     inputs:
+      target:
+        description: Choose where to publish
+        required: true
+        default: both
+        type: choice
+        options: [both, modrinth, github]
       loader:
-        description: Upload both loaders, or retry only one after a partial release
+        description: Modrinth loaders to upload (GitHub always includes both)
         required: true
         default: both
         type: choice
         options: [both, fabric, neoforge]
 concurrency:
-  group: roleplay-status-modrinth-publish
+  group: roleplay-status-publish
   cancel-in-progress: false
 permissions:
   contents: read
@@ -28,15 +34,6 @@ jobs:
         with:
           python-version: '3.12'
       - uses: gradle/actions/setup-gradle@v4
-      - name: Check publishing credential
-        env:
-          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-        shell: bash
-        run: |
-          if [ -z "$MODRINTH_TOKEN" ]; then
-            echo "::error::Configure MODRINTH_TOKEN with version upload access to project v5aMEMjW."
-            exit 1
-          fi
       - name: Validate changelog and read release version
         id: meta
         shell: bash
@@ -58,6 +55,7 @@ jobs:
             build/release-notes.md
           if-no-files-found: error
   publish:
+    if: inputs.target != 'github'
     needs: build
     runs-on: ubuntu-latest
     strategy:
@@ -81,6 +79,16 @@ jobs:
         with:
           name: verified-standalone-releases
           path: release
+      - name: Check publishing credential
+        if: ${{ inputs.loader == 'both' || inputs.loader == matrix.loader }}
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        shell: bash
+        run: |
+          if [ -z "$MODRINTH_TOKEN" ]; then
+            echo "::error::Configure MODRINTH_TOKEN with version upload access to project v5aMEMjW."
+            exit 1
+          fi
       - name: Publish loader release to Modrinth
         if: ${{ inputs.loader == 'both' || inputs.loader == matrix.loader }}
         uses: Kir-Antipov/mc-publish@v3.3
@@ -96,3 +104,28 @@ jobs:
           loaders: ${{ matrix.loader }}
           java: 21
           dependencies: ${{ matrix.dependencies }}
+
+
+  github-release:
+    if: inputs.target != 'modrinth'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: verified-standalone-releases
+          path: release
+      - name: Publish public GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.build.outputs.version }}
+        run: |
+          gh release create "v$VERSION" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "Roleplay Status $VERSION" \
+            --notes-file release/build/release-notes.md \
+            "release/fabric/build/libs/roleplay-status-fabric-$VERSION.jar" \
+            "release/neoforge/build/libs/roleplay-status-neoforge-$VERSION.jar"
