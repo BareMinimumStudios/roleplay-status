@@ -78,11 +78,19 @@ object DiceOverlay {
             val color=0xFF000000.toInt() or ((38*face.shade).toInt() shl 16) or ((139*face.shade).toInt() shl 8) or (159*face.shade).toInt()
             for(y in floor(points.minOf { it.second }).toInt()..ceil(points.maxOf { it.second }).toInt()) {
                 val scan=y+.5
-                val crossings=points.indices.mapNotNull { i ->
-                    val a=points[i]; val b=points[(i+1)%points.size]
-                    if((a.second<=scan && b.second>scan)||(b.second<=scan && a.second>scan)) a.first+(scan-a.second)*(b.first-a.first)/(b.second-a.second) else null
-                }.sorted()
-                if(crossings.size>=2) g.fill(ceil(crossings.first()).toInt(),y,ceil(crossings.last()).toInt(),y+1,color)
+                // Each projected face is convex, so only the outermost crossings matter.
+                var left = Double.POSITIVE_INFINITY
+                var right = Double.NEGATIVE_INFINITY
+                for (i in points.indices) {
+                    val a = points[i]
+                    val b = points[(i + 1) % points.size]
+                    if ((a.second <= scan && b.second > scan) || (b.second <= scan && a.second > scan)) {
+                        val crossing = a.first + (scan - a.second) * (b.first - a.first) / (b.second - a.second)
+                        left = min(left, crossing)
+                        right = max(right, crossing)
+                    }
+                }
+                if (left < right) g.fill(ceil(left).toInt(), y, ceil(right).toInt(), y + 1, color)
             }
             points.indices.forEach { i ->
                 val a=points[i];val b=points[(i+1)%points.size];val steps=max(abs(b.first-a.first),abs(b.second-a.second)).roundToInt().coerceAtLeast(1)

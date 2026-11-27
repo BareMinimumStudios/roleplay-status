@@ -3,6 +3,8 @@ $ErrorActionPreference = 'Stop'
 $previousLoader = $env:RELEASE_LOADER
 Push-Location (Split-Path -Parent $PSScriptRoot)
 try {
+    & python scripts/release_notes.py --check
+    if ($LASTEXITCODE -ne 0) { throw "Changelog validation failed" }
     $task = if ($Loader -eq 'both') { 'build' } else { ":${Loader}:build" }
     & .\gradlew.bat $task --console=plain
     if ($LASTEXITCODE -ne 0) { throw 'Build failed' }

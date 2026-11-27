@@ -37,22 +37,18 @@ jobs:
             echo "::error::Configure MODRINTH_TOKEN with version upload access to project v5aMEMjW."
             exit 1
           fi
-      - name: Read release version
+      - name: Validate changelog and read release version
         id: meta
         shell: bash
         run: |
-          version=$(sed -n 's/^mod_version=//p' gradle.properties | tr -d '\r')
-          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+\+1\.21\.1$ ]]; then
-            echo "Invalid mod_version" >&2
-            exit 1
-          fi
+          version=$(python scripts/release_notes.py --version)
           echo "version=$version" >> "$GITHUB_OUTPUT"
       - name: Build and test both releases
         run: |
           chmod +x ./gradlew
           ./gradlew clean build --warning-mode all
           python scripts/verify_release.py
-          python scripts/release_notes.py > build/release-notes.md
+          python scripts/release_notes.py --output build/release-notes.md
       - uses: actions/upload-artifact@v4
         with:
           name: verified-standalone-releases

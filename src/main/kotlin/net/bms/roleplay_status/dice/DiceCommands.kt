@@ -33,25 +33,28 @@ object DiceCommands {
         val config = RoleplayStatus.DICE
         if (!config.enabled.get()) return fail("Dice rolls are disabled on this server.")
         val expression = DiceExpression.parse(notation) ?: return fail("Use /roll [1-20]d[2,4,6,8,10,12,20,100][+/-modifier] [optional reason]. Modifier limit: 1000.")
-        val now = player.serverLevel().gameTime
+        val level = player.serverLevel()
+        val now = level.gameTime
         val previous = lastRoll[player.uuid]
         if (previous != null && now - previous < config.cooldownTicks.get()) return fail("Please wait before rolling again.")
         val reason = DiceExpression.reason(rawReason)
         val results = expression.roll(random)
+        val total = expression.total(results)
+        val range = config.range.get()
         lastRoll[player.uuid] = now
         val packet = DicePayload(player.gameProfile.name,expression,results,reason)
         val message = Component.literal("[Roll] ").withStyle(ChatFormatting.GOLD)
             .append((player.displayName ?: player.name).copy().withStyle(ChatFormatting.WHITE))
             .append(Component.literal(" rolled ${expression.notation}: ").withStyle(ChatFormatting.GRAY))
-            .append(Component.literal(expression.total(results).toString()).withStyle(ChatFormatting.AQUA))
+            .append(Component.literal(total.toString()).withStyle(ChatFormatting.AQUA))
             .append(Component.literal(" [${results.joinToString(", ")}${if(expression.modifier != 0) "; modifier ${expression.modifier}" else ""}]").withStyle(ChatFormatting.GRAY))
         if (reason.isNotEmpty()) message.append(Component.literal(" - $reason").withStyle(ChatFormatting.GRAY))
-        player.server.playerList.players.forEach { recipient ->
-            if (DiceExpression.withinRange(recipient.level().dimension() == player.level().dimension(),recipient.distanceToSqr(player),config.range.get())) {
+        level.players().forEach { recipient ->
+            if (DiceExpression.withinRange(true, recipient.distanceToSqr(player), range)) {
                 recipient.sendSystemMessage(message)
                 sendAnimation(recipient,packet)
             }
         }
-        return expression.total(results)
+        return total
     }
 }

@@ -73,7 +73,7 @@ Use **Minecraft 1.21.1** and **Java 21**. Install the matching loader build and 
 | Fabric API 0.116.17+1.21.1 | — |
 | Fabric Language Kotlin 1.13.7+kotlin.2.2.21+ | Kotlin for Forge 5.11.0+ |
 | Fzzy Config 0.7.7+1.21 | Fzzy Config 0.7.7+fix1+1.21+neoforge |
-| `roleplay-status-fabric-2.0.3+1.21.1.jar` | `roleplay-status-neoforge-2.0.3+1.21.1.jar` |
+| `roleplay-status-fabric-2.0.4+1.21.1.jar` | `roleplay-status-neoforge-2.0.4+1.21.1.jar` |
 
 **Remove Status, older Roleplay Status, and Andromeda Status JARs before upgrading.** Version 2 replaces the addon with its own implementation. Keep `config/roleplay_status/statuses.json`; existing labels and colors retain their format. Legacy Andromeda labels and colors are imported when no new config exists, leaving the original file intact.
 
@@ -92,6 +92,7 @@ Server settings are saved in `config/roleplay_status/statuses.json` and `config/
 Java 21, Python 3.11+, and the supplied **Gradle 9.9.1** wrapper are used for release checks.
 
 ```text
+python scripts/release_notes.py --check
 gradlew.bat clean build
 python scripts/verify_release.py
 ```
@@ -100,7 +101,7 @@ Build one loader with `gradlew.bat :fabric:build` or `gradlew.bat :neoforge:buil
 
 Installable JARs are written to `fabric/build/libs` and `neoforge/build/libs`. Sources JARs are for development. The Gradle build uses Kotlin DSL. Shared Kotlin lives in `src/main/kotlin`, and each loader module contains its own integration. The Java mixins handle Tab indicators, join reminder spacing, and sleep counting. Fabric uses Loom 1.17.21, NeoForge uses ModDevGradle 2.0.148, and Mixin MCP 1.5.0 remains enabled in the Fabric module.
 
-[Build](.github/workflows/build.yml) tests each loader. [Publish](.github/workflows/publish.yml) first builds and verifies **both** JARs, then uploads a separate release for each loader to **Modrinth project v5aMEMjW** using the existing `MODRINTH_TOKEN` secret. Both use version `2.0.3+1.21.1`, with loader-specific titles and dependencies. CurseForge uploads remain disabled. See [RELEASING.md](RELEASING.md) and the [validation notes](docs/VALIDATION.md). Storefront copy is available in [MODRINTH.md](MODRINTH.md) and [CURSEFORGE.md](CURSEFORGE.md).
+[Build](.github/workflows/build.yml) tests each loader. [Publish](.github/workflows/publish.yml) first builds and verifies **both** JARs, then uploads a separate release for each loader to **Modrinth project v5aMEMjW** using the existing `MODRINTH_TOKEN` secret. Both use version `2.0.4+1.21.1`, with loader-specific titles and dependencies. CurseForge uploads remain disabled. See [RELEASING.md](RELEASING.md) and the [validation notes](docs/VALIDATION.md). Storefront copy is available in [MODRINTH.md](MODRINTH.md) and [CURSEFORGE.md](CURSEFORGE.md).
 
 ## Credits and license
 
