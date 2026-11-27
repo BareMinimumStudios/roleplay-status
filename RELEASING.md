@@ -15,7 +15,7 @@ The Modrinth job uses MC Publish to create a version for each selected loader.
 | Fabric | `fabric/build/libs/roleplay-status-fabric-2.0.4+1.21.1.jar` | Fabric API, Fabric Language Kotlin, Fzzy Config |
 | NeoForge | `neoforge/build/libs/roleplay-status-neoforge-2.0.4+1.21.1.jar` | Kotlin for Forge, Fzzy Config |
 
-Both use the exact version `2.0.4+1.21.1`. Loader labels appear in the release titles and loader metadata. The Status dependency is absent from both uploads. Sources/development JARs are never uploaded. The same Modrinth project and secret work for both loaders.
+Modrinth and CurseForge use the same loader-specific display names and versions, for example `2.0.4+1.21.1-fabric` and `2.0.4+1.21.1-neoforge`. The Status dependency is absent from both uploads. Sources/development JARs are never uploaded. The same Modrinth project and secret work for both loaders.
 
 Uploads are sequential and independent: Modrinth does not offer an atomic two-loader upload. If one succeeds and the other fails, inspect the project, then choose only the failed loader when retrying to avoid duplicating the successful upload. A failed preflight build prevents all uploads.
 

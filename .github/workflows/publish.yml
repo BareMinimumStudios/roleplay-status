@@ -64,13 +64,11 @@ jobs:
       matrix:
         include:
           - loader: fabric
-            label: Fabric
             dependencies: |
               fabric-api(required){modrinth:P7dR8mSH}
               fabric-language-kotlin(required){modrinth:fabric-language-kotlin}
               fzzy_config(required){modrinth:fzzy-config}
           - loader: neoforge
-            label: NeoForge
             dependencies: |
               kotlinforforge(required){modrinth:kotlin-for-forge}
               fzzy_config(required){modrinth:fzzy-config}
@@ -96,8 +94,8 @@ jobs:
           modrinth-id: v5aMEMjW
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           files: release/${{ matrix.loader }}/build/libs/roleplay-status-${{ matrix.loader }}-${{ needs.build.outputs.version }}.jar
-          name: Roleplay Status ${{ needs.build.outputs.version }} — ${{ matrix.label }}
-          version: ${{ needs.build.outputs.version }}
+          name: ${{ needs.build.outputs.version }}-${{ matrix.loader }}
+          version: ${{ needs.build.outputs.version }}-${{ matrix.loader }}
           version-type: release
           changelog-file: release/build/release-notes.md
           game-versions: 1.21.1
