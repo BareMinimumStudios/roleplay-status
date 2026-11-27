@@ -1,5 +1,7 @@
 package net.bms.roleplay_status
 
+import java.util.Map as JavaMap
+
 object StatusCatalog {
     const val IC = "roleplay_status:ic"
     const val OOC = "roleplay_status:ooc"
@@ -22,7 +24,7 @@ object StatusCatalog {
     )
 
     @JvmStatic fun defaults(): MutableList<Definition> = ArrayList(defaults.values)
-    @JvmStatic fun defaultMap(): Map<String, Definition> = java.util.Map.copyOf(defaults)
+    @JvmStatic fun defaultMap(): Map<String, Definition> = JavaMap.copyOf(defaults)
     @JvmStatic fun isAllowed(state: String?): Boolean = state != null && defaults.containsKey(state)
 
     @JvmStatic fun sanitize(state: String?): String {

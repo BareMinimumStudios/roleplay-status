@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/branding/roleplay-status-banner.png" alt="Roleplay Status â€” Bare Minimum Studios" width="900"></p>
+<p align="center"><img src="docs/branding/roleplay-status-banner.png" alt="Roleplay Status — Bare Minimum Studios" width="900"></p>
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/LICENSE-BML_1.0-FFFFFF?style=for-the-badge&amp;labelColor=1A1A1A" alt="BML 1.0"></a>
@@ -6,12 +6,12 @@
   <a href="https://github.com/BareMinimumStudios/roleplay-status/issues"><img src="https://img.shields.io/github/issues/BareMinimumStudios/roleplay-status?style=for-the-badge&amp;labelColor=1A1A1A&amp;color=FFFFFF" alt="Issues"></a>
 </p>
 
-<p align="center"><strong>Minecraft 1.21.1 Â· Fabric Â· Java 21 Â· Client &amp; Server</strong><br>
-<a href="https://modrinth.com/mod/roleplay-status">Modrinth</a> Â· <a href="CONFIGURATION.md">Configuration</a> Â· <a href="https://github.com/BareMinimumStudios/roleplay-status">Source</a> Â· <a href="https://discord.gg/pcRw79hwey">Discord</a></p>
+<p align="center"><strong>Minecraft 1.21.1 · Fabric &amp; NeoForge · Java 21 · Client &amp; Server</strong><br>
+<a href="https://modrinth.com/mod/roleplay-status">Modrinth</a> · <a href="CONFIGURATION.md">Configuration</a> · <a href="https://github.com/BareMinimumStudios/roleplay-status">Source</a> · <a href="https://discord.gg/pcRw79hwey">Discord</a></p>
 
 # Roleplay Status
 
-Share whether you are in character, available for roleplay, or taking a break. **Roleplay Status 2.0.0 is standalone**, with native Fabric and NeoForge builds for Minecraft 1.21.1. Created by **pokesmells / Bare Minimum Studios**.
+Share whether you are in character, available for roleplay, or taking a break. **Roleplay Status 2.x is standalone**, with native Fabric and NeoForge builds for Minecraft 1.21.1. Created by **pokesmells / Bare Minimum Studios**.
 
 Press **U** (rebindable under Roleplay Status) to choose a status, toggle **No Sleep**, or open **Configure**. A colored square appears beside each participating player's name in the Tab player list. The screen marks your current choice and shows full labels in tooltips.
 
@@ -63,7 +63,7 @@ python scripts/verify_release.py
 
 Build one loader with `gradlew.bat :fabric:build` or `gradlew.bat :neoforge:build`. On Linux/macOS use `./gradlew`. Helper scripts are available as `scripts/build.ps1` and `scripts/build.sh`, taking `both`, `fabric`, or `neoforge`.
 
-Installable JARs are written to `fabric/build/libs` and `neoforge/build/libs`. Sources JARs are for development. Shared Kotlin lives in `src/main/kotlin`; loader integration lives in each loader module. The two small Java mixins target Minecraft's Tab list and sleep counting. Fabric uses Loom 1.17.21, NeoForge uses ModDevGradle 2.0.148, and Mixin MCP 1.5.0 remains enabled in the Fabric module.
+Installable JARs are written to `fabric/build/libs` and `neoforge/build/libs`. Sources JARs are for development. The Gradle build uses Kotlin DSL. Shared Kotlin lives in `src/main/kotlin`, and each loader module contains its own integration. The two small Java mixins target Minecraft's Tab list and sleep counting. Fabric uses Loom 1.17.21, NeoForge uses ModDevGradle 2.0.148, and Mixin MCP 1.5.0 remains enabled in the Fabric module.
 
 [Build](.github/workflows/build.yml) tests each loader. [Publish](.github/workflows/publish.yml) first builds and verifies **both** JARs, then uploads a separate release for each loader to **Modrinth project v5aMEMjW** using the existing `MODRINTH_TOKEN` secret. Both use version `2.0.3+1.21.1`, with loader-specific titles and dependencies. CurseForge uploads remain disabled. See [RELEASING.md](RELEASING.md) and [validation notes](docs/VALIDATION.md).
 

@@ -1,10 +1,18 @@
 package net.bms.roleplay_status.client
 
+import kotlin.math.PI
+import kotlin.math.abs
+import kotlin.math.ceil
+import kotlin.math.floor
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.pow
+import kotlin.math.roundToInt
+import net.bms.roleplay_status.dice.DiceExpression
 import net.bms.roleplay_status.dice.DicePayload
 import net.bms.roleplay_status.dice.DieGeometry
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
-import kotlin.math.*
 
 /** Passive HUD only: results are authoritative, and chat is never delayed by this animation. */
 object DiceOverlay {
@@ -30,7 +38,7 @@ object DiceOverlay {
     }
     fun preview(g: GuiGraphics, x: Int, y: Int, scale: Int): DicePanelLayout.Bounds {
         val bounds=DicePanelLayout.bounds(g.guiWidth(),g.guiHeight(),x,y,scale)
-        drawPanel(g, DicePayload("Preview", net.bms.roleplay_status.dice.DiceExpression(1,20,3),listOf(17),"Stealth check"),2.0,bounds)
+        drawPanel(g, DicePayload("Preview", DiceExpression(1,20,3),listOf(17),"Stealth check"),2.0,bounds)
         return bounds
     }
     private fun drawPanel(g: GuiGraphics, packet: DicePayload, age: Double, bounds: DicePanelLayout.Bounds) {

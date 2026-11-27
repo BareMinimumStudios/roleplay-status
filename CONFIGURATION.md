@@ -30,7 +30,7 @@ An entry uses this structure (merge it into the generated file, keeping other se
 | `recording` | `recording` |
 | `streaming` | `streaming` |
 
-Labels accept 1â€“64 characters; control characters, formatting controls, and Minecraft formatting codes are rejected by the editor. Runtime labels are also trimmed and sanitized. Colors use red, green, and blue components from 0â€“255, without transparency. Fixed IDs keep unsupported or legacy availability values from becoming arbitrary status entries. Unknown saved states fall back to Out of Character. Unknown client requests are rejected.
+Labels accept 1–64 characters; control characters, formatting controls, and Minecraft formatting codes are rejected by the editor. Runtime labels are also trimmed and sanitized. Colors use red, green, and blue components from 0–255, without transparency. Fixed IDs keep unsupported or legacy availability values from becoming arbitrary status entries. Unknown saved states fall back to Out of Character. Unknown client requests are rejected.
 
 ## Upgrade from Andromeda Status
 

@@ -1,6 +1,11 @@
 package net.bms.roleplay_status.dice
 
-import kotlin.math.*
+import kotlin.math.PI
+import kotlin.math.abs
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 /** Convex tabletop dice. d10 is the dual of a pentagonal antiprism; d12 the dual of an icosahedron. */
 object DieGeometry {

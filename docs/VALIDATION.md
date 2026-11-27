@@ -4,18 +4,14 @@
 - Layout regression tests cover corner placements, normalized position round trips, clamping, 50–150% sizing, and resolution changes across 160–1920 pixel GUI widths and 90–1080 pixel GUI heights.
 - Both loader builds, all 72 tests (36 per loader), and release artifact verification pass. Live dragging and minimap interaction still require in-game verification.
 
-## Previous release validation
-
-# Roleplay Status 2.0.2+1.21.1 validation
+## 2.0.2+1.21.1
 
 - Both loader builds pass with 33 tests per loader (66 total).
 - Dice tests cover supported notation, limits, random result bounds, modifier arithmetic, reason sanitization, inclusive range boundaries, dimension filtering, payload validation, and correct polyhedral face counts.
 - Both release JARs include the dice command, configuration, network payload, and optional client animation.
 - Geometry previews are generated from the actual renderer meshes. Live multiplayer command and HUD testing remains outstanding.
 
-## Previous release validation
-
-# Roleplay Status 2.0.1+1.21.1 validation
+## 2.0.1+1.21.1
 
 - Both loader builds pass, with 26 regression tests each (52 total).
 - Tab badges now use a drawn rectangle and a private space-only font reserving ten pixels, independent of the server pack's text glyphs. Tests verify original TAB formatting and custom font styles remain intact and indicators are not duplicated.
@@ -38,10 +34,9 @@
 
 - Build tooling update: the complete Gradle wrapper was refreshed to stable 9.9.1. Distribution and wrapper JAR SHA-256 values match Gradle's official release metadata. Clean Fabric and NeoForge builds, all 52 tests, and both artifact verifications pass with the existing plugins on Java 21.
 
-## Previous release validation
-# Roleplay Status 2.0.0+1.21.1 validation
+## 2.0.0+1.21.1
 
-## Automated checks
+### Automated checks
 
 - Gradle 9.8.0 / Java 21 builds both standalone loader artifacts. Shared Kotlin sources compile against Fabric's official mappings and NeoForge separately.
 - Twelve regression tests per loader cover catalog normalization, UTF-16 label limits, client status validation, per-player NBT serialization, invalid saved UUIDs, legacy/unknown saved states, compressed world-data reload, bounded client packets, and packet/handshake round trips.
@@ -49,14 +44,14 @@
 - Artifact verification checks loader metadata, exact version and identity, loader-exclusive entrypoints, required config/Kotlin dependencies, common state storage and mixins, the icon, and absence of bundled Status/Fzzy classes or any Status bytecode references.
 - Current-release notes are extracted independently for publishing. Both JARs are verified before either Modrinth upload. Each upload has its own loader and dependency list; there is no Status dependency.
 
-## Background runtime checks
+### Background runtime checks
 
 - Fabric dedicated-server initialization loaded 2.0.0 without Status and registered Fzzy Config. The isolated run stopped at the EULA gate; the EULA was not accepted.
 - Fabric legacy config migration preserved labels and exact RGB channels (#123456 and #ABCDEF), used defaults for malformed fields, retained the original file, and generated exactly eight status sections plus schema version.
 - NeoForge loaded the standalone mod with Kotlin for Forge and Fzzy Config and reached a running world. Existing 1.x-format labels/colors loaded successfully. This used NeoForge's development launch, which bypasses the EULA gate by default; no EULA file was accepted or edited. The smoke-test process was stopped after startup, so its Gradle run task reports the intentional process termination.
 - No Minecraft client window or desktop input was used. Mixin MCP cannot inspect this project through the currently open IDE project; command-line Gradle checks are the build authority for this rewrite.
 
-## Remaining in-game release checks
+### Remaining in-game release checks
 
 These checks have not been claimed as complete. Test Fabric and NeoForge independently with matching server/client loader builds:
 

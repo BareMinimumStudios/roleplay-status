@@ -7,6 +7,7 @@ import me.fzzyhmstrs.fzzy_config.api.RegisterType
 import me.fzzyhmstrs.fzzy_config.config.Config
 import me.fzzyhmstrs.fzzy_config.util.Translatable
 import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedBoolean
+import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt
 import net.bms.roleplay_status.RoleplayStatus
 import net.minecraft.resources.ResourceLocation
 
@@ -27,13 +28,13 @@ class AccessibilityConfig : Config(ResourceLocation.fromNamespaceAndPath(Rolepla
 
     @Translatable.Name("Dice panel horizontal position")
     @Translatable.Desc("0 is the left edge, 100 is the right edge. You can also drag the panel using Position dice on the U screen.")
-    var dicePanelX = me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt(0, 100, 0)
+    var dicePanelX = ValidatedInt(0, 100, 0)
     @Translatable.Name("Dice panel vertical position")
     @Translatable.Desc("0 is the top edge, 100 is the bottom edge. Saved relative to your screen size.")
-    var dicePanelY = me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt(0, 100, 0)
+    var dicePanelY = ValidatedInt(0, 100, 0)
     @Translatable.Name("Dice panel size (%)")
     @Translatable.Desc("Scale the dice panel from 50% to 150%. Automatically fits within the screen at small resolutions.")
-    var dicePanelScale = me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt(100, 150, 50)
+    var dicePanelScale = ValidatedInt(100, 150, 50)
 
     override fun fileType() = FileType.JSON
 

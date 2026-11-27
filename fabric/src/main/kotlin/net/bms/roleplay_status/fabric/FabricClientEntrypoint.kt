@@ -1,20 +1,23 @@
 package net.bms.roleplay_status.fabric
 
 import net.bms.roleplay_status.client.ClientStatusRuntime
+import net.bms.roleplay_status.client.DiceOverlay
+import net.bms.roleplay_status.dice.DicePayload
 import net.bms.roleplay_status.network.StatusPayloads
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback
 
 class FabricClientEntrypoint : ClientModInitializer {
     override fun onInitializeClient() {
         ClientStatusRuntime.initialize()
-        ClientPlayNetworking.registerGlobalReceiver(net.bms.roleplay_status.dice.DicePayload.TYPE) { packet, context ->
-            context.client().execute { net.bms.roleplay_status.client.DiceOverlay.accept(packet) }
+        ClientPlayNetworking.registerGlobalReceiver(DicePayload.TYPE) { packet, context ->
+            context.client().execute { DiceOverlay.accept(packet) }
         }
-        net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback.EVENT.register { graphics, _ -> net.bms.roleplay_status.client.DiceOverlay.render(graphics) }
+        HudRenderCallback.EVENT.register { graphics, _ -> DiceOverlay.render(graphics) }
         KeyBindingHelper.registerKeyBinding(ClientStatusRuntime.KEY)
         ClientStatusRuntime.sendChange = { ClientPlayNetworking.send(it) }
         ClientStatusRuntime.sendHello = {

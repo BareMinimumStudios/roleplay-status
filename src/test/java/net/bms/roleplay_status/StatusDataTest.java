@@ -1,5 +1,11 @@
 package net.bms.roleplay_status;
 
+import java.nio.file.Path;
+import net.minecraft.nbt.NbtIo;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.util.datafix.DataFixers;
+import net.minecraft.world.level.storage.DimensionDataStorage;
+import org.junit.jupiter.api.io.TempDir;
 import net.bms.roleplay_status.state.PlayerStatus;
 import net.bms.roleplay_status.state.StatusData;
 import net.minecraft.core.RegistryAccess;
@@ -53,7 +59,7 @@ class StatusDataTest {
         }
     }
 
-    @Test void reloadsCompressedWorldDataFromDisk(@org.junit.jupiter.api.io.TempDir java.nio.file.Path dir) throws Exception {
+    @Test void reloadsCompressedWorldDataFromDisk(@TempDir Path dir) throws Exception {
         net.minecraft.SharedConstants.tryDetectVersion();
         var id = UUID.randomUUID();
         var expected = new PlayerStatus(StatusCatalog.EVENT, true);
@@ -61,10 +67,10 @@ class StatusDataTest {
         data.set(id, expected);
         var wrapper = new CompoundTag();
         wrapper.put("data", data.save(new CompoundTag(), RegistryAccess.EMPTY));
-        net.minecraft.nbt.NbtUtils.addCurrentDataVersion(wrapper);
-        net.minecraft.nbt.NbtIo.writeCompressed(wrapper, dir.resolve("roleplay_status.dat"));
-        var storage = new net.minecraft.world.level.storage.DimensionDataStorage(dir.toFile(),
-                net.minecraft.util.datafix.DataFixers.getDataFixer(), RegistryAccess.EMPTY);
+        NbtUtils.addCurrentDataVersion(wrapper);
+        NbtIo.writeCompressed(wrapper, dir.resolve("roleplay_status.dat"));
+        var storage = new DimensionDataStorage(dir.toFile(),
+                DataFixers.getDataFixer(), RegistryAccess.EMPTY);
         var loaded = storage.computeIfAbsent(StatusData.Companion.getFACTORY(), "roleplay_status");
         assertEquals(expected, loaded.get(id));
     }

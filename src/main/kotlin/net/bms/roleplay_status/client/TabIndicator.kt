@@ -3,6 +3,7 @@ package net.bms.roleplay_status.client
 import net.bms.roleplay_status.RoleplayStatus
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.HoverEvent
+import net.minecraft.network.chat.Style
 import net.minecraft.resources.ResourceLocation
 
 /** The private font reserves ten pixels; the actual badge is drawn as a rectangle. */
@@ -22,7 +23,7 @@ object TabIndicator {
         }
         // A neutral root prevents our font/color from leaking into TAB's formatted name.
         val result = Component.empty().append(spacer).append(original)
-        if (showLabel) result.append(Component.literal(" [$label]").withStyle { it.withColor(0xAAAAAA).withFont(net.minecraft.network.chat.Style.DEFAULT_FONT) })
+        if (showLabel) result.append(Component.literal(" [$label]").withStyle { it.withColor(0xAAAAAA).withFont(Style.DEFAULT_FONT) })
         return result
     }
 

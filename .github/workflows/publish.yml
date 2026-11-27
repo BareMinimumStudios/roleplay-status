@@ -92,7 +92,7 @@ jobs:
           modrinth-id: v5aMEMjW
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           files: release/${{ matrix.loader }}/build/libs/roleplay-status-${{ matrix.loader }}-${{ needs.build.outputs.version }}.jar
-          name: Roleplay Status ${{ needs.build.outputs.version }} â€” ${{ matrix.label }}
+          name: Roleplay Status ${{ needs.build.outputs.version }} — ${{ matrix.label }}
           version: ${{ needs.build.outputs.version }}
           version-type: release
           changelog-file: release/build/release-notes.md

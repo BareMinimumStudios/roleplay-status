@@ -1,5 +1,7 @@
 package net.bms.roleplay_status;
 
+import net.minecraft.server.Bootstrap;
+import org.junit.jupiter.api.BeforeAll;
 import net.bms.roleplay_status.client.IndicatorShapes;
 import net.bms.roleplay_status.client.TabIndicator;
 import net.minecraft.network.chat.Component;
@@ -9,9 +11,9 @@ import java.util.BitSet;
 import static org.junit.jupiter.api.Assertions.*;
 
 class IndicatorShapesTest {
-    @org.junit.jupiter.api.BeforeAll static void bootstrap() {
+    @BeforeAll static void bootstrap() {
         net.minecraft.SharedConstants.tryDetectVersion();
-        net.minecraft.server.Bootstrap.bootStrap();
+        Bootstrap.bootStrap();
     }
     @Test void allEightStatusesRemainDistinctWithoutAnyColor() {
         var masks = new HashSet<BitSet>();

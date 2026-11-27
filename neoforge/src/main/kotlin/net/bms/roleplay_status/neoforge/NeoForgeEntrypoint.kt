@@ -1,6 +1,8 @@
 package net.bms.roleplay_status.neoforge
 
 import net.bms.roleplay_status.RoleplayStatus
+import net.bms.roleplay_status.dice.DiceCommands
+import net.bms.roleplay_status.dice.DicePayload
 import net.bms.roleplay_status.network.StatusPayloads
 import net.bms.roleplay_status.state.ServerStatuses
 import net.minecraft.server.level.ServerPlayer
@@ -10,6 +12,7 @@ import net.neoforged.fml.common.Mod
 import net.neoforged.fml.loading.FMLEnvironment
 import net.neoforged.fml.loading.FMLPaths
 import net.neoforged.neoforge.common.NeoForge
+import net.neoforged.neoforge.event.RegisterCommandsEvent
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.server.ServerStartedEvent
 import net.neoforged.neoforge.event.server.ServerStoppedEvent
@@ -20,13 +23,13 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 class NeoForgeEntrypoint(bus: IEventBus) {
     init {
         RoleplayStatus.initialize(FMLPaths.CONFIGDIR.get())
-        NeoForge.EVENT_BUS.addListener<net.neoforged.neoforge.event.RegisterCommandsEvent> { event -> net.bms.roleplay_status.dice.DiceCommands.register(event.dispatcher) }
-        net.bms.roleplay_status.dice.DiceCommands.sendAnimation = { player, packet ->
-            if (player.connection.hasChannel(net.bms.roleplay_status.dice.DicePayload.TYPE)) PacketDistributor.sendToPlayer(player, packet)
+        NeoForge.EVENT_BUS.addListener<RegisterCommandsEvent> { event -> DiceCommands.register(event.dispatcher) }
+        DiceCommands.sendAnimation = { player, packet ->
+            if (player.connection.hasChannel(DicePayload.TYPE)) PacketDistributor.sendToPlayer(player, packet)
         }
         ServerStatuses.send = { player, packet -> PacketDistributor.sendToPlayer(player, packet) }
         bus.addListener<RegisterPayloadHandlersEvent> { event ->
-            event.registrar("1").optional().playToClient(net.bms.roleplay_status.dice.DicePayload.TYPE, net.bms.roleplay_status.dice.DicePayload.CODEC) { packet, context ->
+            event.registrar("1").optional().playToClient(DicePayload.TYPE, DicePayload.CODEC) { packet, context ->
                 context.enqueueWork { NeoForgeClient.dice(packet) }
             }
             val registrar = event.registrar(StatusPayloads.PROTOCOL.toString())
@@ -47,10 +50,10 @@ class NeoForgeEntrypoint(bus: IEventBus) {
             (event.entity as? ServerPlayer)?.let(ServerStatuses::join)
         }
         NeoForge.EVENT_BUS.addListener<PlayerEvent.PlayerLoggedOutEvent> { event ->
-            (event.entity as? ServerPlayer)?.let { ServerStatuses.leave(it); net.bms.roleplay_status.dice.DiceCommands.leave(it) }
+            (event.entity as? ServerPlayer)?.let { ServerStatuses.leave(it); DiceCommands.leave(it) }
         }
-        NeoForge.EVENT_BUS.addListener<ServerStartedEvent> { ServerStatuses.clear(); net.bms.roleplay_status.dice.DiceCommands.clear() }
-        NeoForge.EVENT_BUS.addListener<ServerStoppedEvent> { ServerStatuses.clear(); net.bms.roleplay_status.dice.DiceCommands.clear() }
+        NeoForge.EVENT_BUS.addListener<ServerStartedEvent> { ServerStatuses.clear(); DiceCommands.clear() }
+        NeoForge.EVENT_BUS.addListener<ServerStoppedEvent> { ServerStatuses.clear(); DiceCommands.clear() }
         if (FMLEnvironment.dist == Dist.CLIENT) NeoForgeClient.register(bus)
     }
 }

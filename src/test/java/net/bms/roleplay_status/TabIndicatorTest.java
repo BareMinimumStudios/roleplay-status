@@ -1,5 +1,7 @@
 package net.bms.roleplay_status;
 
+import net.minecraft.server.Bootstrap;
+import org.junit.jupiter.api.BeforeAll;
 import net.bms.roleplay_status.client.TabIndicator;
 import net.bms.roleplay_status.state.PlayerStatus;
 import net.bms.roleplay_status.state.StatusRoster;
@@ -10,9 +12,9 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TabIndicatorTest {
-    @org.junit.jupiter.api.BeforeAll static void bootstrapMinecraftText() {
+    @BeforeAll static void bootstrapMinecraftText() {
         net.minecraft.SharedConstants.tryDetectVersion();
-        net.minecraft.server.Bootstrap.bootStrap();
+        Bootstrap.bootStrap();
     }
     @Test void reservesBadgeSpaceWithoutChangingTabFormattingOrCustomFonts() {
         var original = Component.literal("[DEV] Vaelith").withStyle(style -> style.withColor(0xAA0011)

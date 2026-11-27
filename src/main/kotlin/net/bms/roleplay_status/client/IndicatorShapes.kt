@@ -1,5 +1,6 @@
 package net.bms.roleplay_status.client
 
+import kotlin.math.abs
 import net.bms.roleplay_status.StatusCatalog
 
 /** Eight distinct silhouettes; no status requires color recognition in accessibility mode. */
@@ -34,8 +35,8 @@ object IndicatorShapes {
             OUTLINE -> x == 0 || x == SIZE - 1 || y == 0 || y == SIZE - 1
             PLUS -> x in 2..3 || y in 2..3
             DASH -> y in 2..3
-            DIAMOND -> kotlin.math.abs(2 * x - 5) + kotlin.math.abs(2 * y - 5) <= 6
-            TRIANGLE -> kotlin.math.abs(2 * x - 5) <= y + 1
+            DIAMOND -> abs(2 * x - 5) + abs(2 * y - 5) <= 6
+            TRIANGLE -> abs(2 * x - 5) <= y + 1
             RIGHT -> x >= 3
             LEFT -> x < 3
             else -> true
