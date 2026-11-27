@@ -19,6 +19,24 @@ Uploads are sequential and independent: Modrinth does not offer an atomic two-lo
 
 Only Modrinth is configured. CurseForge and GitHub release publishing remain disabled. `MODRINTH.md` and `CURSEFORGE.md` contain updated standalone page copy; project description and icon updates are separate from version uploads. Upload `docs/branding/roleplay-status.png` as the project icon.
 
+## Create the CurseForge listing
+
+Use the [CurseForge author dashboard](https://authors.curseforge.com/#/projects/create/choose-game) with the Bare Minimum Studios publishing account.
+
+| Field | Value |
+| --- | --- |
+| Game and project type | Minecraft, Mods |
+| Project name | Roleplay Status |
+| Summary | Share roleplay statuses in Tab and roll dice with nearby players. Includes accessible indicators and a customizable dice HUD. |
+| Description | Paste [CURSEFORGE.md](CURSEFORGE.md) in Markdown mode. It matches the Modrinth feature copy and uses the same preview images. |
+| Logo | [Roleplay Status icon](docs/branding/roleplay-status.png) |
+| License | Bare Minimum License v1.0 ([text](LICENSE)) |
+| Environment | Client and server |
+| Source | https://github.com/BareMinimumStudios/roleplay-status |
+| Issues | https://github.com/BareMinimumStudios/roleplay-status/issues |
+
+When submitting the project for review, upload the verified JARs separately. Tag each with Minecraft **1.21.1** and its matching loader, and use the display names `2.0.3+1.21.1-fabric` and `2.0.3+1.21.1-neoforge`. Use the matching [changelog section](CHANGELOG.md#2031211) and the loader-specific dependencies listed above.
+
 ## Authentication errors
 
 For HTTP 401, replace `MODRINTH_TOKEN` with a valid Modrinth token with **Create versions** (`VERSION_CREATE`) scope. Its owner must own the project or have upload permission on its team/organization. A nonempty secret does not prove access. Never commit or paste tokens into logs, issues, or chat.

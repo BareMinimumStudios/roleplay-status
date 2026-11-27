@@ -12,7 +12,7 @@
 
 # Roleplay Status
 
-Let other players know whether you are in character, available for roleplay, or taking a break. Choose your status, customize its appearance, and roll dice with nearby players.
+Share your roleplay status in the Tab player list and roll dice with nearby players. Customize status labels and colors, choose accessible indicators, and move or resize the optional dice HUD.
 
 Created by **pokesmells / Bare Minimum Studios**. Previously named Andromeda Status.
 
@@ -55,6 +55,18 @@ The server generates every result and shares the total, individual rolls, modifi
 
 *Renderer preview, not an in-game screenshot. A d2 is a coin; d100 uses two percentile d10s.*
 
+## Optional dice animations
+
+Nearby rolls can display a short animated dice panel on your HUD, using the matching polyhedral shapes.
+
+Disable it through **U → Configure → Accessibility → Dice animations**. Animations are enabled by default, never affect the result, and can be turned off without hiding chat results.
+
+The overlay previews up to four dice at a time and uses a pair of percentile dice for d100. Chat includes every individual result.
+
+![Dice HUD animation renderer preview](https://raw.githubusercontent.com/BareMinimumStudios/roleplay-status/main/docs/media/dice-animation.gif)
+
+*Animation preview generated from the renderer geometry, not a recording of Minecraft.*
+
 ## Move and resize the dice panel
 
 Open **U → Position dice** to drag a live preview away from your minimap or other HUD elements.
@@ -64,18 +76,6 @@ Use the **Dice size** slider (50–150%), then choose **Save**. **Cancel** or Es
 Position and size are personal settings, also available under **Configure → Accessibility**.
 They save locally and adapt to resolution and GUI scale changes. The panel automatically
 fits within your screen. This does not change chat results or anyone else's HUD.
-
-## Optional dice animations
-
-Nearby rolls can display a short animated dice panel on your HUD, using the matching polyhedral shapes.
-
-Disable it through **U → Configure → Accessibility → Dice animations**. Animations are enabled by default, never affect the result, and can be turned off without hiding chat results.
-
-For larger rolls, the overlay previews a limited number of dice; chat includes every individual result.
-
-![Dice HUD animation renderer preview](https://raw.githubusercontent.com/BareMinimumStudios/roleplay-status/main/docs/media/dice-animation.gif)
-
-*Animation preview generated from the renderer geometry, not a recording of Minecraft.*
 
 ## Colorblind-friendly indicators
 
@@ -102,7 +102,6 @@ These display preferences apply immediately, save locally, and are available to 
 
 Unedited in-game captures: [Standard indicators](https://raw.githubusercontent.com/BareMinimumStudios/roleplay-status/main/docs/media/tab-standard-original.png) · [Colorblind: Out of Character](https://raw.githubusercontent.com/BareMinimumStudios/roleplay-status/main/docs/media/tab-colorblind-ooc-original.png) · [Colorblind: Open to RP](https://raw.githubusercontent.com/BareMinimumStudios/roleplay-status/main/docs/media/tab-colorblind-open-rp-original.png)
 
-
 ## Configure
 
 Open **U → Configure** to access Fzzy Config. Server operators with permission level **2** can:
@@ -125,7 +124,7 @@ Stop the server before manually editing its JSON files, then restart to load you
 
 ## Install
 
-Use **Minecraft 1.21.1** and **Java 21**. Install the matching build and dependencies on the server and every participating client.
+Use **Minecraft 1.21.1** and **Java 21**. Install the matching loader build and its dependencies on the server and every participating client.
 
 - **Fabric:** Fabric Loader 0.19.5+, Fabric API, Fabric Language Kotlin 1.13.7+kotlin.2.2.21+, and Fzzy Config 0.7.7+1.21.
 - **NeoForge:** NeoForge 21.1.266+, Kotlin for Forge 5.11.0+, and Fzzy Config 0.7.7+fix1+1.21+neoforge.
