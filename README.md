@@ -1,7 +1,7 @@
 <p align="center"><img src="docs/branding/roleplay-status-banner.png" alt="Roleplay Status — Bare Minimum Studios" width="900"></p>
 
 <p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/LICENSE-BML_1.0-FFFFFF?style=for-the-badge&amp;labelColor=1A1A1A" alt="BML 1.0"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/LICENSE-BML_1.1-FFFFFF?style=for-the-badge&amp;labelColor=1A1A1A" alt="BML 1.1"></a>
   <a href="https://github.com/BareMinimumStudios/roleplay-status/actions/workflows/build.yml"><img src="https://github.com/BareMinimumStudios/roleplay-status/actions/workflows/build.yml/badge.svg?branch=main" alt="Build"></a>
   <a href="https://github.com/BareMinimumStudios/roleplay-status/issues"><img src="https://img.shields.io/github/issues/BareMinimumStudios/roleplay-status?style=for-the-badge&amp;labelColor=1A1A1A&amp;color=FFFFFF" alt="Issues"></a>
 </p>
@@ -107,4 +107,4 @@ Installable JARs are written to `fabric/build/libs` and `neoforge/build/libs`. S
 
 Roleplay Status originally began as an addon for Status by Max Henkel. Version 2 provides its own implementation and contains no Status code, assets, packets, or runtime dependency. Fzzy Config supplies the configuration editor and synchronization.
 
-Code and artwork use the [Bare Minimum License v1.0](LICENSE). Dependencies retain their own licenses; see [NOTICE.md](NOTICE.md).
+Code and artwork use the [Bare Minimum License v1.1](LICENSE). Dependencies retain their own licenses; see [NOTICE.md](NOTICE.md).

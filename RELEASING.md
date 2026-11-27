@@ -30,7 +30,7 @@ Use the [CurseForge author dashboard](https://authors.curseforge.com/#/projects/
 | Summary | Share roleplay statuses in Tab and roll dice with nearby players. Includes accessible indicators and a customizable dice HUD. |
 | Description | Paste [CURSEFORGE.md](CURSEFORGE.md) in Markdown mode. It matches the Modrinth feature copy and uses the same preview images. |
 | Logo | [Roleplay Status icon](docs/branding/roleplay-status.png) |
-| License | Bare Minimum License v1.0 ([text](LICENSE)) |
+| License | Bare Minimum License v1.1 ([text](LICENSE)) |
 | Environment | Client and server |
 | Source | https://github.com/BareMinimumStudios/roleplay-status |
 | Issues | https://github.com/BareMinimumStudios/roleplay-status/issues |

@@ -139,7 +139,7 @@ Roleplay Status began as an addon for **Status by Max Henkel**. Version 2 uses i
 
 **Fzzy Config** provides the configuration editor and synchronization.
 
-Code and artwork use the [Bare Minimum License v1.0](https://github.com/BareMinimumStudios/roleplay-status/blob/main/LICENSE). Dependencies retain their own licenses.
+Code and artwork use the [Bare Minimum License v1.1](https://github.com/BareMinimumStudios/roleplay-status/blob/main/LICENSE). Dependencies retain their own licenses.
 
 ## Sponsor
 

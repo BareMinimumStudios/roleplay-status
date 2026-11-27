@@ -8,7 +8,7 @@
     "pokesmells",
     "Bare Minimum Studios"
   ],
-  "license": "BML-1.0",
+  "license": "BML-1.1",
   "environment": "*",
   "entrypoints": {
     "main": [

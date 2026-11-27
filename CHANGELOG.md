@@ -4,6 +4,10 @@ This file records notable changes to Roleplay Status. The format follows [Keep a
 
 ## [Unreleased]
 
+### Changed
+
+- Adopt the Bare Minimum License v1.1.
+
 ## [2.0.4+1.21.1] - 2026-11-27
 
 ### Changed
