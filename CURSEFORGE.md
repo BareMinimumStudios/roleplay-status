@@ -1,8 +1,23 @@
-![Roleplay Status](https://raw.githubusercontent.com/BareMinimumStudios/roleplay-status/main/docs/branding/roleplay-status-banner.png)
+<p align="center" style="text-align: center;">
+<img src="https://raw.githubusercontent.com/BareMinimumStudios/roleplay-status/main/docs/branding/roleplay-status-banner.png" alt="Roleplay Status banner" width="900">
+</p>
 
-**Minecraft 1.21.1 · Fabric and NeoForge · Java 21 · Client and server**
+<p align="center" style="text-align: center;">
+<a href="https://modrinth.com/mod/roleplay-status"><img src="https://img.shields.io/badge/Modrinth-133329?logo=modrinth&amp;logoColor=8CFFCF&amp;style=for-the-badge" alt="Modrinth" height="28"></a>
+<a href="https://www.curseforge.com/minecraft/mc-mods/roleplay-status"><img src="https://img.shields.io/badge/CurseForge-39232B?logo=curseforge&amp;logoColor=FFA880&amp;style=for-the-badge" alt="CurseForge" height="28"></a>
+<a href="https://github.com/BareMinimumStudios/roleplay-status"><img src="https://img.shields.io/badge/Source-242B49?logo=github&amp;logoColor=EAF0FF&amp;style=for-the-badge" alt="GitHub source" height="28"></a>
+<a href="https://github.com/BareMinimumStudios/roleplay-status/issues"><img src="https://img.shields.io/github/issues/BareMinimumStudios/roleplay-status?style=for-the-badge&amp;labelColor=242B49&amp;color=364775" alt="Report an issue" height="28"></a>
+<a href="https://github.com/BareMinimumStudios/roleplay-status/forks"><img src="https://img.shields.io/github/forks/BareMinimumStudios/roleplay-status?style=for-the-badge&amp;labelColor=242B49&amp;color=364775" alt="Forks" height="28"></a>
+<a href="https://github.com/BareMinimumStudios/roleplay-status/stargazers"><img src="https://img.shields.io/github/stars/BareMinimumStudios/roleplay-status?style=for-the-badge&amp;labelColor=242B49&amp;color=364775" alt="Stars" height="28"></a>
+</p>
 
-[Source](https://github.com/BareMinimumStudios/roleplay-status) · [Issues](https://github.com/BareMinimumStudios/roleplay-status/issues) · [Configuration](https://github.com/BareMinimumStudios/roleplay-status/blob/main/CONFIGURATION.md) · [Discord](https://discord.gg/pcRw79hwey)
+<p align="center" style="text-align: center;">
+<strong>Minecraft 1.21.1 · Fabric + NeoForge · Java 21 · Client and server</strong>
+</p>
+
+<p align="center" style="text-align: center;">
+<a href="https://github.com/BareMinimumStudios/roleplay-status/blob/main/CONFIGURATION.md">Configuration</a> · <a href="https://discord.gg/pcRw79hwey">Discord</a>
+</p>
 
 # Roleplay Status
 
@@ -45,7 +60,9 @@ Supported dice: **d2, d4, d6, d8, d10, d12, d20, and d100**. Roll up to **20 dic
 
 The server generates every result and shares the total, individual rolls, modifier, and optional reason in chat. Results reach players within **25 blocks**, including the roller, in the **same dimension**. Operators can change the range through Fzzy Config.
 
-![Dice shapes renderer preview](https://raw.githubusercontent.com/BareMinimumStudios/roleplay-status/main/docs/media/dice-shapes.png)
+<p align="center" style="text-align: center;">
+<img src="https://raw.githubusercontent.com/BareMinimumStudios/roleplay-status/main/docs/media/dice-shapes.png" alt="Dice shapes renderer preview" width="750">
+</p>
 
 *Renderer preview, not an in-game screenshot. A d2 is a coin; d100 uses two percentile d10s.*
 
@@ -57,7 +74,9 @@ Disable it through **U → Configure → Accessibility → Dice animations**. An
 
 The overlay previews up to four dice at a time and uses a pair of percentile dice for d100. Chat includes every individual result.
 
-![Dice HUD animation renderer preview](https://raw.githubusercontent.com/BareMinimumStudios/roleplay-status/main/docs/media/dice-animation.gif)
+<p align="center" style="text-align: center;">
+<img src="https://raw.githubusercontent.com/BareMinimumStudios/roleplay-status/main/docs/media/dice-animation.gif" alt="Dice HUD animation renderer preview" width="750">
+</p>
 
 *Animation preview generated from the renderer geometry, not a recording of Minecraft.*
 
@@ -90,7 +109,9 @@ Enable **Colorblind mode** on the U screen or through **Configure → Accessibil
 
 These display preferences apply immediately, save locally, and are available to every player. They do not change other players’ settings.
 
-![Standard and colorblind Tab indicator comparison](https://raw.githubusercontent.com/BareMinimumStudios/roleplay-status/main/docs/media/tab-accessibility-comparison.png)
+<p align="center" style="text-align: center;">
+<img src="https://raw.githubusercontent.com/BareMinimumStudios/roleplay-status/main/docs/media/tab-accessibility-comparison.png" alt="Standard and colorblind Tab indicator comparison" width="750">
+</p>
 
 *Designed comparison based on user-provided Minecraft screenshots: standard indicators, an Out of Character outline, and an Open to RP plus shape. Both colorblind examples also have optional status labels enabled.*
 
@@ -137,6 +158,8 @@ Code and artwork use the [Bare Minimum License v1.1](https://github.com/BareMini
 
 ## Sponsor
 
-[![BisectHosting](https://www.bisecthosting.com/partners/custom-banners/db76a74a-a111-4660-98b7-5a75c15a5951.png)](https://bisecthosting.com/bareminimum)
+<p align="center" style="text-align: center;">
+<a href="https://bisecthosting.com/bareminimum"><img src="https://www.bisecthosting.com/partners/custom-banners/db76a74a-a111-4660-98b7-5a75c15a5951.png" alt="Sponsor Banner" width="750"></a>
+</p>
 
-Use code **bareminimum** for **25% off your first month**.
+Use code **`bareminimum`** to get **25% off your first month**!
