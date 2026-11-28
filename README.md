@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/branding/roleplay-status-banner.png" alt="Roleplay Status — Bare Minimum Studios" width="900"></p>
+<p align="center"><img src="docs/branding/roleplay-status-banner.png" alt="Roleplay Status pixel emblem and wordmark — Bare Minimum Studios" width="900"></p>
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/LICENSE-BML_1.1-FFFFFF?style=for-the-badge&amp;labelColor=1A1A1A" alt="BML 1.1"></a>

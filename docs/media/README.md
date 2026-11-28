@@ -13,7 +13,4 @@ User-provided actual Minecraft screenshots, preserved unchanged:
 - `tab-colorblind-ooc-original.png`: Out of Character outline with colorblind mode and labels on.
 - `tab-colorblind-open-rp-original.png`: Open to RP plus shape with colorblind mode and labels on.
 
-`tab-accessibility-comparison.png` is an AI-assisted presentation layout based on
-these captures, with matching panel styles and explanatory headings. It is not a
-pixel-identical substitute for the source screenshots. The page links all unedited
-captures alongside the designed comparison so the actual game output is available.
+`tab-accessibility-comparison.png` places the three original screenshots in a labeled, typeset layout. Each capture is pasted at native size with its original pixels.

@@ -1,5 +1,5 @@
 <p align="center" style="text-align: center;">
-<img src="https://raw.githubusercontent.com/BareMinimumStudios/roleplay-status/main/docs/branding/roleplay-status-banner.png" alt="Roleplay Status banner" width="900">
+<img src="https://raw.githubusercontent.com/BareMinimumStudios/roleplay-status/main/docs/branding/roleplay-status-banner.png?v=pixel-branding" alt="Roleplay Status pixel emblem and wordmark" width="900">
 </p>
 
 <p align="center" style="text-align: center;">
@@ -110,10 +110,10 @@ Enable **Colorblind mode** on the U screen or through **Configure → Accessibil
 These display preferences apply immediately, save locally, and are available to every player. They do not change other players’ settings.
 
 <p align="center" style="text-align: center;">
-<img src="https://raw.githubusercontent.com/BareMinimumStudios/roleplay-status/main/docs/media/tab-accessibility-comparison.png" alt="Standard and colorblind Tab indicator comparison" width="750">
+<img src="https://raw.githubusercontent.com/BareMinimumStudios/roleplay-status/main/docs/media/tab-accessibility-comparison.png?v=original-captures" alt="Standard and colorblind Tab indicator comparison" width="750">
 </p>
 
-*Designed comparison based on user-provided Minecraft screenshots: standard indicators, an Out of Character outline, and an Open to RP plus shape. Both colorblind examples also have optional status labels enabled.*
+*Three original Minecraft screenshots shown in the comparison above: standard indicators, an Out of Character outline, and an Open to RP plus shape. Both colorblind examples show optional status labels.*
 
 Unedited in-game captures: [Standard indicators](https://raw.githubusercontent.com/BareMinimumStudios/roleplay-status/main/docs/media/tab-standard-original.png) · [Colorblind: Out of Character](https://raw.githubusercontent.com/BareMinimumStudios/roleplay-status/main/docs/media/tab-colorblind-ooc-original.png) · [Colorblind: Open to RP](https://raw.githubusercontent.com/BareMinimumStudios/roleplay-status/main/docs/media/tab-colorblind-open-rp-original.png)
 
