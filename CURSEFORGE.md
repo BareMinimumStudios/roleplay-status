@@ -3,12 +3,12 @@
 </p>
 
 <p align="center" style="text-align: center;">
-<a href="https://modrinth.com/mod/roleplay-status"><img src="https://img.shields.io/badge/Modrinth-133329?logo=modrinth&amp;logoColor=8CFFCF&amp;style=for-the-badge" alt="Modrinth" height="28"></a>
-<a href="https://www.curseforge.com/minecraft/mc-mods/roleplay-status"><img src="https://img.shields.io/badge/CurseForge-39232B?logo=curseforge&amp;logoColor=FFA880&amp;style=for-the-badge" alt="CurseForge" height="28"></a>
-<a href="https://github.com/BareMinimumStudios/roleplay-status"><img src="https://img.shields.io/badge/Source-242B49?logo=github&amp;logoColor=EAF0FF&amp;style=for-the-badge" alt="GitHub source" height="28"></a>
-<a href="https://github.com/BareMinimumStudios/roleplay-status/issues"><img src="https://img.shields.io/github/issues/BareMinimumStudios/roleplay-status?style=for-the-badge&amp;labelColor=242B49&amp;color=364775" alt="Report an issue" height="28"></a>
-<a href="https://github.com/BareMinimumStudios/roleplay-status/forks"><img src="https://img.shields.io/github/forks/BareMinimumStudios/roleplay-status?style=for-the-badge&amp;labelColor=242B49&amp;color=364775" alt="Forks" height="28"></a>
-<a href="https://github.com/BareMinimumStudios/roleplay-status/stargazers"><img src="https://img.shields.io/github/stars/BareMinimumStudios/roleplay-status?style=for-the-badge&amp;labelColor=242B49&amp;color=364775" alt="Stars" height="28"></a>
+<a href="https://modrinth.com/mod/roleplay-status"><img src="https://img.shields.io/badge/Modrinth-24545A?logo=modrinth&amp;logoColor=68CDD1&amp;style=for-the-badge" alt="Modrinth" height="28"></a>
+<a href="https://www.curseforge.com/minecraft/mc-mods/roleplay-status"><img src="https://img.shields.io/badge/CurseForge-24545A?logo=curseforge&amp;logoColor=68CDD1&amp;style=for-the-badge" alt="CurseForge" height="28"></a>
+<a href="https://github.com/BareMinimumStudios/roleplay-status"><img src="https://img.shields.io/badge/Source-1A1A1A?logo=github&amp;logoColor=F2F2F2&amp;style=for-the-badge" alt="GitHub source" height="28"></a>
+<a href="https://github.com/BareMinimumStudios/roleplay-status/issues"><img src="https://img.shields.io/github/issues/BareMinimumStudios/roleplay-status?style=for-the-badge&amp;labelColor=1A1A1A&amp;color=24545A" alt="Report an issue" height="28"></a>
+<a href="https://github.com/BareMinimumStudios/roleplay-status/forks"><img src="https://img.shields.io/github/forks/BareMinimumStudios/roleplay-status?style=for-the-badge&amp;labelColor=1A1A1A&amp;color=24545A" alt="Forks" height="28"></a>
+<a href="https://github.com/BareMinimumStudios/roleplay-status/stargazers"><img src="https://img.shields.io/github/stars/BareMinimumStudios/roleplay-status?style=for-the-badge&amp;labelColor=1A1A1A&amp;color=24545A" alt="Stars" height="28"></a>
 </p>
 
 <p align="center" style="text-align: center;">
